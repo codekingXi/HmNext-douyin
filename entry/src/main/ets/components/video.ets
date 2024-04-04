@@ -11,12 +11,12 @@ struct videoPage {
     {
       title: '复古',
       src: $rawfile('media/video2.mp4'),
-      id: 1,
+      id: 2,
     },
     {
       title: '城市',
       src: $rawfile('media/video3.mp4'),
-      id: 1,
+      id: 3,
     }
   ]
 
