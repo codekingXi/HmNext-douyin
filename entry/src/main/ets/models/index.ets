@@ -1,0 +1,1 @@
+export { mediaInfo } from './mediaData'
