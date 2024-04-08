@@ -19,20 +19,6 @@ struct videoPage {
       id: 3,
     }
   ]
-
-  build() {
-    Swiper() {
-      ForEach(this.mediaList, (item: mediaInfoModel) => {
-        this.Playvideo(item)
-      })
-    }
-    //关闭滚动条
-    .indicator(false)
-    .duration(200)
-    .loop(true)
-    .vertical(true)
-  }
-
   @Builder
   Playvideo(item: mediaInfoModel) {
     Video({
@@ -40,10 +26,27 @@ struct videoPage {
     })
       .autoPlay(true)
       .loop(true)
-      //隐藏控制条
+        //隐藏控制条
       .controls(false)
       .width('100%')
   }
+  build() {
+      Swiper() {
+        ForEach(this.mediaList, (item: mediaInfoModel) => {
+          this.Playvideo(item)
+        })
+      }
+      //关闭滚动条
+      .indicator(false)
+      .duration(200)
+      .loop(true)
+      .vertical(true)
+
+
+  }
+
+
+
 }
 
 export { videoPage }
