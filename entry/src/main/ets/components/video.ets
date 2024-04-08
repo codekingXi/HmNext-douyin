@@ -51,7 +51,7 @@ struct Playvideo {
   controller:VideoController=new VideoController()
   //初始化就加载程序
   aboutToAppear(): void {
-    this.updateActiveIndex()
+
   }
   //更新切换索引的状态
   updateActiveIndex(){
@@ -70,6 +70,9 @@ struct Playvideo {
       controller:this.controller,
 
     })
+      .onAppear(() => {
+        this.updateActiveIndex()
+      })
       .borderRadius({
         topLeft:10,
         topRight:10
