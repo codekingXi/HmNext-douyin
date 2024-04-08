@@ -24,6 +24,10 @@ struct videoPage {
     Video({
       src: item.src
     })
+      .borderRadius({
+        topLeft:10,
+        topRight:10
+      })
       .autoPlay(true)
       .loop(true)
         //隐藏控制条
@@ -41,12 +45,7 @@ struct videoPage {
       .duration(200)
       .loop(true)
       .vertical(true)
-
-
   }
-
-
-
 }
 
 export { videoPage }
