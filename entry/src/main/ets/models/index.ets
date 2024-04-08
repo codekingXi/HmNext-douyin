@@ -1,3 +1,4 @@
 //统一导出
 export { mediaInfo } from './mediaData'
-export { TabBarClass } from './barData'
+export { BarClass } from './barData'
+export { sideData } from './sidebarData'

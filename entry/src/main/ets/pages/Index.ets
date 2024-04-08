@@ -2,6 +2,7 @@ import { TabBar } from '../components/TabBar'
 import { TopNav } from '../components/TopNav'
 import { videoPage } from '../components/video'
 import { window } from '@kit.ArkUI'
+import { sidebar } from '../components/sidebar'
 
 @Entry
 @Component
@@ -9,12 +10,14 @@ struct Index {
   async aboutToAppear(): Promise<void> {
     await window.getLastWindow(getContext())
       .then(win=>{
-        win.setWindowBackgroundColor("#ff302f2f")
+        win.setWindowBackgroundColor("#ff1c1b1b")
       })
   }
   build() {
     Stack() {
+      //顶部导航栏
       TopNav()
+
       //视频组件
       videoPage()
         .position({
@@ -22,6 +25,13 @@ struct Index {
         })
         .layoutWeight(1)
         .zIndex(0)
+
+      //侧边栏
+      sidebar()
+        .position({
+          x:'85%',
+          y:'50%'
+        })
       //导航栏 底部
       TabBar()
         .backgroundColor('#ff373636')
