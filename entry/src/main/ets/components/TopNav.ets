@@ -9,6 +9,7 @@ function T(){
 struct TopNav {
 
   build() {
+
       Row({space:20}){
         Text('音乐').T()
         Text('推荐').T()
@@ -20,6 +21,8 @@ struct TopNav {
       })
       .width('100%')
       .height(50)
+
+
   }
 }
 export { TopNav }
