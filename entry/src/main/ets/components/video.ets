@@ -58,6 +58,7 @@ struct Playvideo {
     if(this.activeIndex===this.index){
       //播放
       this.controller.start()
+
     }else{
       //暂停
       this.controller.pause()
@@ -73,6 +74,8 @@ struct Playvideo {
       .onAppear(() => {
         this.updateActiveIndex()
       })
+      .muted(this.activeIndex===this.index?false:true)
+      .autoPlay(true)
       .borderRadius({
         topLeft:10,
         topRight:10
