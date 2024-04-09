@@ -21,26 +21,13 @@ struct Index {
 
       //视频组件
       videoPage()
-        .position({
-          y: '0%'
-        })
-        .layoutWeight(1)
-        .zIndex(0)
 
       //侧边栏
       sidebar()
-        .position({
-          x:'85%',
-          y:'50%'
-        })
+
       //导航栏 底部
       TabBar()
-        .backgroundColor('#ff373636')
-        .layoutWeight(1)
-        .zIndex(2)
-        .position({
-          y:'97.5%'
-        })
+
     }
 
     .width('100%')
@@ -48,4 +35,3 @@ struct Index {
 
   }
 }
-

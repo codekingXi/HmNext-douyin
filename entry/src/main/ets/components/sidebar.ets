@@ -144,6 +144,10 @@ struct sidebar {
       })
 
     }
+    .position({
+      x:'85%',
+      y:'50%'
+    })
     .bindSheet($$this.showDialog, this.Dialog, {
       height: '65%',
       backgroundColor: '#ffefecec'

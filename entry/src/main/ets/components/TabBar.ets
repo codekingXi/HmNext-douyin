@@ -59,7 +59,12 @@ struct TabBar {
 
     }.barPosition(BarPosition.End)
     .height(50)
-
+    .backgroundColor('#ff373636')
+    .layoutWeight(1)
+    .zIndex(2)
+    .position({
+      y:'97.5%'
+    })
   }
 }
 

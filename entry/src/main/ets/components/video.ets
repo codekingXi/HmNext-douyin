@@ -36,6 +36,11 @@ struct videoPage {
       .loop(true)
       //允许滚动
       .vertical(true)
+      .position({
+        y: '0%'
+      })
+      .layoutWeight(1)
+      .zIndex(0)
   }
 }
 
