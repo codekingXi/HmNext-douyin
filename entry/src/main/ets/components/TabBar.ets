@@ -25,7 +25,9 @@ struct TabBar {
     {
       id: 3,
       title: '+',
-      click: () => {}
+      click: () => {
+        this.showDialog=!this.showDialog
+      }
     },
     {
       id: 4,
@@ -39,7 +41,29 @@ struct TabBar {
   ]
   @State
   currentIndex: number = 0
-
+  @State
+  showDialog: boolean = false
+  @Builder
+  contentDialog(){
+    Column(){
+      Row(){
+        Text('x')
+          .fontSize(44)
+          .fontColor(Color.White)
+          .onClick(()=>{
+            this.showDialog=!this.showDialog
+          })
+      }.width('100%')
+      .margin({
+        top:30,
+        left:20
+      })
+      .justifyContent(FlexAlign.Start)
+    }.width('100%')
+    .height('120%')
+    .backgroundColor(Color.Black)
+    .zIndex(999)
+  }
   @Builder
   Tabcontent(item: BarClass) {
     if (item.id === 3) {
@@ -81,6 +105,9 @@ struct TabBar {
     .zIndex(2)
     .position({
       y: '97.5%'
+    })
+    .bindContentCover($$this.showDialog,this.contentDialog(),{
+      modalTransition:ModalTransition.DEFAULT
     })
   }
 }
