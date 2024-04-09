@@ -4,27 +4,34 @@ import { comment } from './comment'
 
 @Component
 struct sidebar {
-  sideDataList:sideData[]=[
+  @State
+  showDialog: boolean = false
+  sideDataList: sideData[] = [
     {
-      id:1,
-      imgUrl:$r('app.media.love'),
-      loveNum:2010
+      id: 1,
+      imgUrl: $r('app.media.love'),
+      loveNum: 2010,
+      click:()=>{}
     },
     {
-      id:2,
-      imgUrl:$r('app.media.chat'),
-      loveNum:1650,
-
+      id: 2,
+      imgUrl: $r('app.media.chat'),
+      loveNum: 1650,
+      click: () => {
+        this.showDialog = !this.showDialog
+      }
     },
     {
-      id:3,
-      imgUrl:$r('app.media.collect'),
-      loveNum:344
+      id: 3,
+      imgUrl: $r('app.media.collect'),
+      loveNum: 344,
+      click:()=>{}
     },
     {
-      id:4,
-      imgUrl:$r('app.media.transmit'),
-      loveNum:568
+      id: 4,
+      imgUrl: $r('app.media.transmit'),
+      loveNum: 568,
+      click:()=>{}
     },
   ]
   @State commentList: commentDataModel[] = [
@@ -37,7 +44,7 @@ struct sidebar {
       area: '海南',
       likeNum: 34,
       likeFlag: false
-    }) ,
+    }),
     new commentDataModel({
       id: 2,
       avatar: 'https://pic1.zhimg.com/v2-5a3f5190369ae59c12bee33abfe0c5cc_xl.jpg?source=32738c0c',
@@ -89,15 +96,14 @@ struct sidebar {
       likeFlag: false
     })
   ]
+
   @Builder
-  side(item:sideData){
-    Column(){
+  side(item: sideData) {
+    Column() {
       Image(item.imgUrl)
         .width(50)
         .onClick(() => {
-          if(item.id===2){
-            this.showDialog=!this.showDialog
-          }
+            item.click && item.click()
         })
       Text(item.loveNum.toString())
         .fontColor(Color.White)
@@ -105,43 +111,45 @@ struct sidebar {
     }
 
   }
-  @State
-  showDialog:boolean=false
+
   @Builder
-  Dialog(){
-    Column(){
-      Row(){
+  Dialog() {
+    Column() {
+      Row() {
         Text(`${this.commentList.length}条评论`)
           .fontColor(Color.Black)
           .fontSize(16)
       }.margin({
-        top:50
+        top: 50
       })
-      List({space:20}){
-        ForEach(this.commentList,(item:commentDataModel)=>{
-          ListItem(){
-              comment({item:item})
+
+      List({ space: 20 }) {
+        ForEach(this.commentList, (item: commentDataModel) => {
+          ListItem() {
+            comment({ item: item })
           }
-          .layoutWeight(1)
+
         })
-      }
+      }.layoutWeight(1)
     }
     .width('100%')
     .height('100%')
   }
-  build() {
-    Column(){
 
-      ForEach(this.sideDataList,(item:sideData)=>{
+  build() {
+    Column() {
+
+      ForEach(this.sideDataList, (item: sideData) => {
         this.side(item)
       })
 
     }
-    .bindSheet($$this.showDialog,this.Dialog,{
-      height:'65%',
-      backgroundColor:'#ffefecec'
+    .bindSheet($$this.showDialog, this.Dialog, {
+      height: '65%',
+      backgroundColor: '#ffefecec'
     })
 
   }
 }
+
 export { sidebar }

@@ -8,7 +8,7 @@ export interface commentData{
   likeNum:number //点赞数
   likeFlag:boolean |null //当前用户是否点过赞
 }
-@Observed
+@Observed //观察类的变化
 export class commentDataModel implements commentData {
   avatar: ResourceStr = ''
   id: number = 0
