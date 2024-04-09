@@ -1,4 +1,4 @@
-import { commentData, commentDataModel } from '../models'
+import { commentDataModel } from '../models'
 
 @Preview
 @Component

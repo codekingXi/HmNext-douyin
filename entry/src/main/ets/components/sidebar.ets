@@ -1,6 +1,7 @@
 import { sideData } from '../models'
 import { commentDataModel } from '../models/commentData'
 import { comment } from './comment'
+import { ReplyInput } from './ReplyInput'
 
 @Component
 struct sidebar {
@@ -96,7 +97,20 @@ struct sidebar {
       likeFlag: false
     })
   ]
+  //添加评论方法
+  addComment(content:string){
+    this.commentList.unshift(new commentDataModel({
+      id: Math.random(),
+      avatar: 'https://picx.zhimg.com/027729d02bdf060e24973c3726fea9da_l.jpg?source=06d4cd63',
+      author: 'smallMiSu7',
+      content,
+      time: `0${(new Date().getMonth()+1).toString().padStart(2,'')}-${(new Date().getDate().toString().padStart(2,'0'))}`,
+      area: '上海',
+      likeNum: 34,
+      likeFlag: false
+    }))
 
+  }
   @Builder
   side(item: sideData) {
     Column() {
@@ -128,9 +142,14 @@ struct sidebar {
           ListItem() {
             comment({ item: item })
           }
-
         })
       }.layoutWeight(1)
+      //评论组件
+      ReplyInput({
+        publishComment:(content:string)=>{
+          this.addComment(content)
+        }
+      })
     }
     .width('100%')
     .height('100%')
@@ -138,21 +157,19 @@ struct sidebar {
 
   build() {
     Column() {
-
       ForEach(this.sideDataList, (item: sideData) => {
         this.side(item)
       })
-
     }
     .position({
       x:'85%',
       y:'50%'
     })
+    //弹层
     .bindSheet($$this.showDialog, this.Dialog, {
       height: '65%',
       backgroundColor: '#ffefecec'
     })
-
   }
 }
 

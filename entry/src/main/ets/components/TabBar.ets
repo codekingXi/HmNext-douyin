@@ -12,14 +12,30 @@ function tabTsty() {
 struct TabBar {
   @State
   tabList: BarClass[] = [
-    { title: '首页' },
-    { title: '音乐' },
+    {
+      id: 1,
+      title: '首页',
+      click: () => {}
+    },
+    {
+      id: 2,
+      title: '朋友',
+      click: () => {}
+    },
     {
       id: 3,
       title: '+',
+      click: () => {}
     },
-    { title: '朋友' },
-    { title: '我' },
+    {
+      id: 4,
+      title: '信息',
+      click: () => {}
+    },
+    {
+      id: 5, title: '我',
+      click: () => {}
+    },
   ]
   @State
   currentIndex: number = 0
@@ -29,7 +45,7 @@ struct TabBar {
     if (item.id === 3) {
       Text(item.title)
         .margin({
-          top:10
+          top: 10
         })
         .textAlign(TextAlign.Center)
         .fontColor(Color.White)
@@ -42,7 +58,7 @@ struct TabBar {
         })
         .borderRadius(8)
         .onClick(() => {
-            //待定
+          item.click&&item.click()
         })
     }
     Text(item.title).tabTsty()
@@ -53,17 +69,18 @@ struct TabBar {
       ForEach(this.tabList, (item: BarClass) => {
         TabContent() {
 
-        }.tabIndex(this.currentIndex)
+        }
         .tabBar(this.Tabcontent(item))
       })
 
-    }.barPosition(BarPosition.End)
+    }
+    .barPosition(BarPosition.End)
     .height(50)
     .backgroundColor('#ff373636')
     .layoutWeight(1)
     .zIndex(2)
     .position({
-      y:'97.5%'
+      y: '97.5%'
     })
   }
 }
