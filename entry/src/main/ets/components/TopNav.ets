@@ -1,3 +1,4 @@
+import { videoPage } from './video'
 
 @Extend(Text)
 function T(){
@@ -17,7 +18,7 @@ struct TopNav {
       .zIndex(2)
       .justifyContent(FlexAlign.Center)
       .position({
-        y:"0%"
+        y:'0%'
       })
       .width('100%')
       .height(50)

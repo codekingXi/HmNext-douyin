@@ -5,7 +5,15 @@ import { commentDataModel } from '../models'
 struct comment {
   @ObjectLink
   item: commentDataModel
-
+  changeLike(){
+    if(this.item.likeFlag){ //如果点过赞
+      this.item.likeNum--
+    }//没点过赞
+    else{
+      this.item.likeNum++
+    }
+    this.item.likeFlag=!this.item.likeFlag
+  }
   build() {
 
     Row({ space: 10 }) {
@@ -20,12 +28,23 @@ struct comment {
           .fontColor('#ff1c1c1c')
           .fontSize(22)
         Row({ space: 10 }) {
-          Text(`${this.item.time}-${this.item.area}`)
-            .fontColor('#ff8d8b8b')
-            .fontSize(18)
-          Image($r('app.media.ic_public_love'))
-            .width(20)
-            .height(20)
+          Row(){
+            Text(`${this.item.time}-${this.item.area}`)
+              .fontColor('#ff8d8b8b')
+              .fontSize(18)
+          }
+          Row(){
+            Image($r('app.media.ic_public_love'))
+              .fillColor(this.item.likeFlag?Color.Red: '#ff868585')
+              .width(20)
+              .height(20)
+              .onClick(()=>{
+                this.changeLike()
+              })
+            Text(this.item.likeNum.toString())
+              .fontColor(this.item.likeFlag?Color.Red:'#ff868585')
+              .fontSize(16)
+          }
         }
         .width('100%')
 

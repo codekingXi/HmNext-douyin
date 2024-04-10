@@ -1,5 +1,6 @@
 import { BarClass } from '../models/barData'
 import { promptAction } from '@kit.ArkUI'
+import { videoPage } from './video'
 
 @Extend(Text)
 function tabTsty() {
@@ -15,48 +16,55 @@ struct TabBar {
     {
       id: 1,
       title: '首页',
-      click: () => {}
+      name: 'Home',
+
     },
     {
       id: 2,
       title: '朋友',
-      click: () => {}
+      name: 'Friend',
+
     },
     {
       id: 3,
       title: '+',
+      name: 'Function',
       click: () => {
-        this.showDialog=!this.showDialog
+        this.showDialog = !this.showDialog
       }
     },
     {
       id: 4,
       title: '信息',
-      click: () => {}
+      name: 'Message',
+
     },
     {
-      id: 5, title: '我',
-      click: () => {}
-    },
+      id: 5,
+      title: '我',
+      name: 'My',
+
+    }
   ]
   @State
   currentIndex: number = 0
   @State
   showDialog: boolean = false
+
   @Builder
-  contentDialog(){
-    Column(){
-      Row(){
+  contentDialog() {
+    Column() {
+      Row() {
         Text('x')
           .fontSize(44)
           .fontColor(Color.White)
-          .onClick(()=>{
-            this.showDialog=!this.showDialog
+          .onClick(() => {
+            this.showDialog = !this.showDialog
           })
       }.width('100%')
       .margin({
-        top:30,
-        left:20
+        top: 30,
+        left: 20
       })
       .justifyContent(FlexAlign.Start)
     }.width('100%')
@@ -64,6 +72,7 @@ struct TabBar {
     .backgroundColor(Color.Black)
     .zIndex(999)
   }
+
   @Builder
   Tabcontent(item: BarClass) {
     if (item.id === 3) {
@@ -82,7 +91,7 @@ struct TabBar {
         })
         .borderRadius(8)
         .onClick(() => {
-          item.click&&item.click()
+          item.click && item.click()
         })
     }
     Text(item.title).tabTsty()
@@ -92,12 +101,24 @@ struct TabBar {
     Tabs({ index: $$this.currentIndex }) {
       ForEach(this.tabList, (item: BarClass) => {
         TabContent() {
-
+          //判断切换视图区域内容
+          if (item.name === 'Home') {
+            videoPage()
+          } else
+            if (item.name === 'Friend') {
+              Text('friend').zIndex(9999)
+            } else
+            if (item.name === 'Message') {
+              Text('Message').zIndex(999)
+            } else
+            if (item.name === 'My') {
+              Text('My Home').zIndex(99)
+            }
         }
-        .tabBar(this.Tabcontent(item))
+        .tabBar(this.Tabcontent(item)).zIndex(3)
       })
-
     }
+    .animationDuration(200)
     .barPosition(BarPosition.End)
     .height(50)
     .backgroundColor('#ff373636')
@@ -106,8 +127,8 @@ struct TabBar {
     .position({
       y: '97.5%'
     })
-    .bindContentCover($$this.showDialog,this.contentDialog(),{
-      modalTransition:ModalTransition.DEFAULT
+    .bindContentCover($$this.showDialog, this.contentDialog(), {
+      modalTransition: ModalTransition.DEFAULT
     })
   }
 }
