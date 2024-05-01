@@ -1,10 +1,10 @@
 import { sideData } from '../models'
 import { commentDataModel } from '../models/commentData'
-import { comment } from './comment'
+import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
 
 @Component
-struct sidebar {
+struct Sidebar {
   @State
   showDialog: boolean = false
   sideDataList: sideData[] = [
@@ -140,7 +140,7 @@ struct sidebar {
       List({ space: 20 }) {
         ForEach(this.commentList, (item: commentDataModel) => {
           ListItem() {
-            comment({ item: item })
+            Comment({ item: item })
           }
         })
       }.layoutWeight(1)
@@ -161,10 +161,6 @@ struct sidebar {
         this.side(item)
       })
     }
-    .position({
-      x:'85%',
-      y:'50%'
-    })
     //弹层
     .bindSheet($$this.showDialog, this.Dialog, {
       height: '65%',
@@ -173,4 +169,4 @@ struct sidebar {
   }
 }
 
-export { sidebar }
+export { Sidebar }

@@ -1,6 +1,6 @@
 import { BarClass } from '../models/barData'
 import { promptAction } from '@kit.ArkUI'
-import { videoPage } from './video'
+import { videoPage } from './VideoCom'
 
 @Extend(Text)
 function tabTsty() {
@@ -16,19 +16,19 @@ struct TabBar {
     {
       id: 1,
       title: '首页',
-      name: 'Home',
+      name: "Home",
 
     },
     {
       id: 2,
       title: '朋友',
-      name: 'Friend',
+      name: "Friend",
 
     },
     {
       id: 3,
       title: '+',
-      name: 'Function',
+      name: "Function",
       click: () => {
         this.showDialog = !this.showDialog
       }
@@ -36,18 +36,17 @@ struct TabBar {
     {
       id: 4,
       title: '信息',
-      name: 'Message',
+      name: "Message",
 
     },
     {
       id: 5,
       title: '我',
-      name: 'My',
+      name: "My",
 
     }
   ]
-  @State
-  currentIndex: number = 0
+
   @State
   showDialog: boolean = false
 
@@ -73,63 +72,8 @@ struct TabBar {
     .zIndex(999)
   }
 
-  @Builder
-  Tabcontent(item: BarClass) {
-    if (item.id === 3) {
-      Text(item.title)
-        .margin({
-          top: 10
-        })
-        .textAlign(TextAlign.Center)
-        .fontColor(Color.White)
-        .width(40)
-        .aspectRatio(1)
-        .fontSize(26)
-        .border({
-          width: 3,
-          color: '#fffaf9f9'
-        })
-        .borderRadius(8)
-        .onClick(() => {
-          item.click && item.click()
-        })
-    }
-    Text(item.title).tabTsty()
-  }
-
   build() {
-    Tabs({ index: $$this.currentIndex }) {
-      ForEach(this.tabList, (item: BarClass) => {
-        TabContent() {
-          //判断切换视图区域内容
-          if (item.name === 'Home') {
-            videoPage()
-          } else
-            if (item.name === 'Friend') {
-              Text('friend').zIndex(9999)
-            } else
-            if (item.name === 'Message') {
-              Text('Message').zIndex(999)
-            } else
-            if (item.name === 'My') {
-              Text('My Home').zIndex(99)
-            }
-        }
-        .tabBar(this.Tabcontent(item)).zIndex(3)
-      })
-    }
-    .animationDuration(200)
-    .barPosition(BarPosition.End)
-    .height(50)
-    .backgroundColor('#ff373636')
-    .layoutWeight(1)
-    .zIndex(2)
-    .position({
-      y: '97.5%'
-    })
-    .bindContentCover($$this.showDialog, this.contentDialog(), {
-      modalTransition: ModalTransition.DEFAULT
-    })
+
   }
 }
 

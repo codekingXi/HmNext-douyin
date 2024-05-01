@@ -2,9 +2,10 @@ import { commentDataModel } from '../models'
 
 @Preview
 @Component
-struct comment {
+struct Comment {
   @ObjectLink
   item: commentDataModel
+  //点赞方法
   changeLike(){
     if(this.item.likeFlag){ //如果点过赞
       this.item.likeNum--
@@ -61,4 +62,4 @@ struct comment {
   }
 }
 
-export { comment }
+export { Comment }
