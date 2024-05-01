@@ -93,8 +93,8 @@ struct Playvideo {
           topLeft: 10,
           topRight: 10
         })
-        .loop(true)//隐藏控制条
-        .controls(false)
+        .loop(true)
+        .controls(false)//隐藏控制条
         .width('100%')
         .height('100%')
       Column(){

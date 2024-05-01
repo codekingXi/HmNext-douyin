@@ -1,6 +1,5 @@
 import { BarClass } from '../models'
 import { videoPage } from './VideoCom'
-import { promptAction } from '@kit.ArkUI'
 
 @Extend(Text)
 function T() {
@@ -10,7 +9,7 @@ function T() {
 
 @Preview
 @Component
-struct TopNav {
+struct topNav {
   @State
   TopNavList: BarClass[] = [
     {
@@ -23,9 +22,11 @@ struct TopNav {
     name: "shop"
     }
   ]
+
   aboutToAppear(): void {
     this.updateIndex()
   }
+
   @State
   @Watch("updateIndex")
   currentIndex: number = 0
@@ -61,4 +62,4 @@ struct TopNav {
   }
 }
 
-export { TopNav }
+export { topNav }

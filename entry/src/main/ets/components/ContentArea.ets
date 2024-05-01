@@ -1,12 +1,11 @@
 import { Sidebar } from './SideBar'
-import { TopNav } from './TopNav'
-import { videoPage } from './VideoCom'
+import { topNav } from './topNav'
 
 @Component
 struct ContentArea {
   build() {
     Column(){
-      TopNav()
+      topNav()
       Sidebar()
         .zIndex(2).position({
         x:'85%',

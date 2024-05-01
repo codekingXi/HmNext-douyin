@@ -1,4 +1,4 @@
-import { TabBar } from '../components/TabBar'
+import { bottomNav } from '../components/bottomNav'
 import { window } from '@kit.ArkUI'
 import { ContentArea } from '../components/ContentArea'
 
@@ -17,7 +17,7 @@ struct Index {
       // 内容区域
       ContentArea()
       //导航栏 底部
-      TabBar()
+      bottomNav()
 
     }
 
