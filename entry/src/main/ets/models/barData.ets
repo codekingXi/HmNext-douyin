@@ -1,7 +1,8 @@
 // tabs
 export class BarClass {
   id:number=0
-  title: string = ""
+  title?: string = ""
   name?:string=""
-  click?:()=>void=()=>{}
+  click?:()=>void
+  image?:ResourceStr=""
 }

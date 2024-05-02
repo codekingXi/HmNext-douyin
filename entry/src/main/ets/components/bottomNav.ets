@@ -16,16 +16,16 @@ struct bottomNav {
       id: 1,
       title: '首页',
       name: "Home",
-      click:()=>{
-        promptAction.showToast({message:'success'})
+      click: () => {
+        promptAction.showToast({ message: 'Home' })
       }
     },
     {
       id: 2,
       title: '朋友',
       name: "Friend",
-      click:()=>{
-        promptAction.showToast({message:'success'})
+      click: () => {
+        promptAction.showToast({ message: '朋友' })
       }
     },
     {
@@ -34,22 +34,23 @@ struct bottomNav {
       name: "Function",
       click: () => {
         this.showDialog = !this.showDialog
-      }
+      },
+      image: $r("app.media.ic_uploading")
     },
     {
       id: 4,
       title: '信息',
       name: "Message",
-      click:()=>{
-        promptAction.showToast({message:'success'})
+      click: () => {
+        promptAction.showToast({ message: 'mesg' })
       }
     },
     {
       id: 5,
       title: '我',
       name: "My",
-      click:()=>{
-        promptAction.showToast({message:'success'})
+      click: () => {
+        promptAction.showToast({ message: 'me' })
       }
     }
   ]
@@ -80,29 +81,20 @@ struct bottomNav {
 
   build() {
     Row() {
-      Stack() {
+      ForEach(this.tabList, (item: BarClass) => {
         Row() {
-          ForEach(this.tabList, (item: BarClass) => {
-            Text(item.title).tabSty()
-              .onClick(() => {
-                item.click && item.click()
-              })
-          })
-        }.justifyContent(FlexAlign.SpaceEvenly)
-        .zIndex(2)
-        .width('100%')
-        Row() {
-          Text()
-            .tabSty()
-            .width(40)
-            .aspectRatio(1)
-            .borderRadius(8)
-            .border({
-              width: 3,
-              color: Color.White
-            })
-        }.position({x:'47.5%'}).zIndex(1)
-      }
+          if (item.name === "Function") {
+            Image(item.image)
+              .width(48)
+              .aspectRatio(1)
+          } else {
+            Text(item.title)
+              .tabSty()
+          }
+        }.onClick(() => {
+          item.click && item.click()
+        })
+      })
     }
     //模态弹窗
     .bindContentCover($$this.showDialog, this.contentDialog, {
@@ -111,7 +103,7 @@ struct bottomNav {
     .backgroundColor('#ff1d1d1d')
     .width('100%')
     .height(80)
-
+    .justifyContent(FlexAlign.SpaceEvenly)
     .alignItems(VerticalAlign.Center)
     .position({
       y: '95%'

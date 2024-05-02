@@ -1,7 +1,7 @@
-import { mediaInfo, mediaInfoModel } from '../models/mediaData'
-
+import { mediaInfo, mediaInfoModel } from '../../models'
+@Entry
 @Component
-struct videoPage {
+struct VideoPage {
   mediaList: mediaInfo[] = [
     {
       title: '草原',
@@ -44,7 +44,7 @@ struct videoPage {
   }
 }
 
-export { videoPage }
+
 
 @Component
 struct Playvideo {
@@ -109,3 +109,4 @@ struct Playvideo {
 
   }
 }
+export { VideoPage }

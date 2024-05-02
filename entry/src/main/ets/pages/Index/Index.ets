@@ -1,5 +1,8 @@
-import { BarClass } from '../models'
-import { videoPage } from './VideoCom'
+import { BarClass } from '../../models'
+import { window } from '@kit.ArkUI'
+import { VideoPage } from '../VideoPage/VideoPage'
+import { bottomNav, Sidebar } from '../../components'
+
 
 @Extend(Text)
 function T() {
@@ -7,9 +10,9 @@ function T() {
   .fontSize(24)
 }
 
-@Preview
+@Entry
 @Component
-struct topNav {
+struct Index {
   @State
   TopNavList: BarClass[] = [
     {
@@ -20,10 +23,14 @@ struct topNav {
     id: 1,
     title: "商场",
     name: "shop"
-    }
+  }
   ]
 
-  aboutToAppear(): void {
+  async aboutToAppear(): Promise<void> {
+    await window.getLastWindow(getContext())
+      .then(win => {
+        win.setWindowBackgroundColor('#000000');
+      })
     this.updateIndex()
   }
 
@@ -48,18 +55,22 @@ struct topNav {
         ForEach(this.TopNavList, (item: BarClass) => {
           TabContent() {
             if (item.name === "shop") {
-
+              Text('Shop')
             } else
               if (item.name === "forYou") {
-                videoPage()
+                VideoPage()
               }
           }
           .tabBar(this.Common(item))
         })
       }.barWidth('40%')
-    }
 
+      Sidebar().zIndex(2).position({
+        x: '85%',
+        y: '50%'
+      })
+      bottomNav()
+    }
   }
 }
 
-export { topNav }
