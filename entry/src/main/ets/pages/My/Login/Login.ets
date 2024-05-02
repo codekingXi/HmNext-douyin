@@ -22,36 +22,37 @@ struct Login {
   loading: boolean = false
   @State
   accountForm: LoginFormModel = new LoginFormModel({
-    account: 'admin',
-    password: '123456'
+    account: '',
+    password: ''
   } as LoginForm)
 
   getBtnEnable() {
     return !!(this.accountForm.account && this.accountForm.password)
   }
 
-  async login() {
+  login() {
     //因为没有真实数据，模拟登录
     this.loading = true
-    const token = await login(this.accountForm)
-    AppStorage.setOrCreate(TOKEN_KEY,token)//写入全局状态
-    new UserSettingClass(getContext()).setUserToken(token)
+    setTimeout(async ()=>{
+      const token = await login(this.accountForm)
+      AppStorage.setOrCreate(TOKEN_KEY,token)//写入全局状态
+      new UserSettingClass(getContext()).setUserToken(token) //写入首选项
       if (this.accountForm.account === 'admin' && this.accountForm.password === '123456') {
-        AlertDialog.show({ message: "success" })
+        AlertDialog.show({ message: "登录成功" })
         this.loading = false
         router.replaceUrl({ url: 'pages/Index/Index' })
       } else {
-        AlertDialog.show({ message: "error" })
+        AlertDialog.show({ message: "账号或密码错误!" })
         this.loading = false
         return
       }
-
+    },750)
   }
 
   build() {
     Column({ space: 20 }) {
-      Text("Welcome to 鸿蒙").fontSize(34)
-        .fontColor('#5ef53817')
+      Text("Welcome to 鸿蒙版抖音").fontSize(34)
+        .fontColor(Color.Black)
       Row() {
         TextInput({ placeholder: "请输入用户名", text: this.accountForm.account })
           .onChange(value => { //因为数据只能监视到第一层的变化,只能用onchange绑定
