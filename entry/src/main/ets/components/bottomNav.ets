@@ -42,7 +42,7 @@ struct bottomNav {
       title: '信息',
       name: "Message",
       click: () => {
-        promptAction.showToast({ message: 'mesg' })
+        promptAction.showToast({ message: 'meg' })
       }
     },
     {
