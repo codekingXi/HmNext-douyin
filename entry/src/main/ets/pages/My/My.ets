@@ -21,16 +21,6 @@ struct My {
       Text(`token状态:${this.message}`)
         .fontSize(44)
       Row(){
-        if(AppStorage.prop("")){
-          Button('前往登录')
-            .onClick(()=>{
-              router.pushUrl({
-                url:'pages/My/Login/Login'
-              })
-            })
-        }
-
-
         Button('退出登录')
           .onClick(()=>{
             this.logout()
