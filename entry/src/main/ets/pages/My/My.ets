@@ -6,13 +6,6 @@ import { UserSettingClass } from '../../utils/setting'
 struct My {
   @State
   message: string="已登录"
-  aboutToAppear(): void {
-    if(AppStorage.prop(TOKEN_KEY)){
-
-    }else{
-      this.message="未登录"
-    }
-  }
   /**
    * 退出登录
    * */
