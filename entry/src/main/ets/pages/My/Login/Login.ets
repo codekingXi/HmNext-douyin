@@ -1,8 +1,8 @@
 import { LoginForm, LoginFormModel } from '../../../models'
 import { router } from '@kit.ArkUI'
-import { login } from '../../../api'
 import { TOKEN_KEY } from '../../../constants/token'
 import { UserSettingClass } from '../../../utils/setting'
+import { loginData } from '../../../api/user'
 
 @Entry
 @Component
@@ -34,7 +34,7 @@ struct Login {
     //因为没有真实数据，模拟登录
     this.loading = true
     setTimeout(async ()=>{
-      const token = await login(this.accountForm)
+      const token = await loginData(this.accountForm)
       AppStorage.setOrCreate(TOKEN_KEY,token)//写入全局状态
       new UserSettingClass(getContext()).setUserToken(token) //写入首选项
       if (this.accountForm.account === 'admin' && this.accountForm.password === '123456') {
