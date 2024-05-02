@@ -1,3 +1,4 @@
+import { Sidebar } from '../../components'
 import { mediaInfo, mediaInfoModel } from '../../models'
 @Entry
 @Component
@@ -21,7 +22,6 @@ struct VideoPage {
   ]
   @Provide
   activeIndex: number = 0
-
   build() {
     Swiper() {
       ForEach(this.mediaList, (item: mediaInfoModel, index: number | undefined) => {
@@ -36,15 +36,8 @@ struct VideoPage {
     .loop(true)
     //允许滚动
     .vertical(true)
-    .position({
-      y: '0%'
-    })
-    .layoutWeight(1)
-    .zIndex(0)
   }
 }
-
-
 
 @Component
 struct Playvideo {
@@ -72,7 +65,7 @@ struct Playvideo {
   }
 
   build() {
-    Stack({alignContent:Alignment.Center}) {
+    Stack() {
       Video({
         src: this.item.src,
         controller: this.controller
@@ -91,7 +84,9 @@ struct Playvideo {
         .muted(this.activeIndex === this.index ? false : true)
         .borderRadius({
           topLeft: 10,
-          topRight: 10
+          topRight: 10,
+          bottomLeft: 10,
+          bottomRight: 10
         })
         .loop(true)
         .controls(false)//隐藏控制条
@@ -105,8 +100,9 @@ struct Playvideo {
             .opacity(.7)
         }
       }.justifyContent(FlexAlign.Center)
+      Sidebar().zIndex(2)
+        .position({ x: '85%', y: '50%' })
     }
-
   }
 }
 export { VideoPage }

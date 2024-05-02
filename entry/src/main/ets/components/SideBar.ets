@@ -161,6 +161,7 @@ struct Sidebar {
         this.side(item)
       })
     }
+
     //弹层
     .bindSheet($$this.showDialog, this.Dialog, {
       height: '65%',
