@@ -39,7 +39,7 @@ struct Index {
       Text(item.title).tabSty()
     }
     .width('100%')
-    .height(50)
+    .height(55)
     .justifyContent(FlexAlign.SpaceAround)
     .alignItems(VerticalAlign.Center)
     .backgroundColor(Color.Black)
@@ -48,23 +48,14 @@ struct Index {
   @State
   currentIndex: number = 0
 
- async aboutToAppear(): Promise<void> {
-     await window.getLastWindow(getContext())
-      .then(win => {
-        win.setWindowLayoutFullScreen(true)
-        win.setWindowBackgroundColor('#ff2f2e2e')
-      })
-  }
-
   build() {
     Column() {
-
       Tabs({ index: $$this.currentIndex, barPosition: BarPosition.End }) {
         ForEach(this.tabList, (item: BarClass) => {
           TabContent() {
             if (item.name === "Home") {
               TopBar().margin({
-                top:50
+                top:35
               })
             } else if (item.name === "Friend") {
 
@@ -77,10 +68,14 @@ struct Index {
             }
           }.tabBar(this.bottomBar(item))
         })
-      }.barPosition(BarPosition.End)
-      .zIndex(1)
-      .backgroundColor(Color.Black)
-
+      }.onAppear(()=>{
+        window.getLastWindow(getContext())
+          .then(win => {
+            win.setWindowLayoutFullScreen(true)
+            win.setWindowBackgroundColor('#ff5b5a5a')
+          })
+      })
+      .barPosition(BarPosition.End)
     }
   }
 }

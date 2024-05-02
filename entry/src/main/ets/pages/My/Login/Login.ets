@@ -39,7 +39,7 @@ struct Login {
       if (this.accountForm.account === 'admin' && this.accountForm.password === '123456') {
         AlertDialog.show({ message: "success" })
         this.loading = false
-        router.pushUrl({ url: 'pages/Index/Index' })
+        router.replaceUrl({ url: 'pages/Index/Index' })
       } else {
         AlertDialog.show({ message: "error" })
         this.loading = false
@@ -50,6 +50,8 @@ struct Login {
 
   build() {
     Column({ space: 20 }) {
+      Text("Welcome to 鸿蒙").fontSize(34)
+        .fontColor('#5ef53817')
       Row() {
         TextInput({ placeholder: "请输入用户名", text: this.accountForm.account })
           .onChange(value => { //因为数据只能监视到第一层的变化,只能用onchange绑定

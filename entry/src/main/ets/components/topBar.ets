@@ -22,13 +22,10 @@ struct TopBar {
   }
   ]
 
-  async aboutToAppear(): Promise<void> {
-    await window.getLastWindow(getContext())
-      .then(win => {
-        win.setWindowBackgroundColor('#ff373737');
-      })
-    this.updateIndex()
-  }
+  // async aboutToAppear(): Promise<void> {
+  //
+  //   this.updateIndex()
+  // }
 
   @State
   @Watch("updateIndex")
