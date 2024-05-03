@@ -77,9 +77,7 @@ struct Index {
         ForEach(this.tabList, (item: BarClass) => {
           TabContent() {
             if (item.name === "Home") {
-              TopBar().margin({
-                top:35
-              })
+              TopBar()
             } else if (item.name === "Friend") {
 
             }
