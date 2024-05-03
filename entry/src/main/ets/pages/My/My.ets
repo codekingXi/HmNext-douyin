@@ -95,7 +95,7 @@ struct My {
           .width('100%').height('50%')
           .linearGradient({
             direction: GradientDirection.Top, //渐变方向
-            colors: [['rgba(7, 7, 7, 0.75)', 0.4], ['rgba(78, 77, 77, 0)', 1.0]]
+            colors: [['rgba(7, 7, 7, 0.7)', 0.4], ['rgba(78, 77, 77, 0)', 1.0]]
           })
         }.zIndex(2)
       }.layoutWeight(3.5).width('100%')
