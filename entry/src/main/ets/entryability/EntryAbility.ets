@@ -22,7 +22,7 @@ export default class EntryAbility extends UIAbility {
       AppStorage.setOrCreate(TOKEN_KEY,token)
       windowStage.loadContent('pages/Index/Index')
     }else{
-      windowStage.loadContent('pages/My/Login/Login')
+      windowStage.loadContent('pages/Login/Login')
 
     }
   }
