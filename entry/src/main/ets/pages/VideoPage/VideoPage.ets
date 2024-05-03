@@ -49,7 +49,7 @@ struct Playvideo {
 
   controller: VideoController = new VideoController()
   @State
-  playIng:boolean = false
+  playIng:boolean=false
 
   //更新切换索引的状态
   updateActiveIndex() {

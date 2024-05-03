@@ -14,26 +14,17 @@ struct TopBar {
   @State
   TopNavList: BarClass[] = [
     {
+      title: "商场",
+      name: "shop"
+    },
+    {
       title: "推荐",
       name: "forYou"
-    }, {
-    title: "商场",
-    name: "shop"
-  }
+    }
   ]
 
-  // async aboutToAppear(): Promise<void> {
-  //
-  //   this.updateIndex()
-  // }
-
   @State
-  @Watch("updateIndex")
-  currentIndex: number = 0
-
-  updateIndex() {
-
-  }
+  currentIndex: number = this.TopNavList.length-1
 
   @Builder
   titleCommon(item: BarClass) {
@@ -42,8 +33,9 @@ struct TopBar {
     }
   }
 
+
   build() {
-    Stack({alignContent:Alignment.Top}){
+    Stack({ alignContent: Alignment.Top }) {
       Tabs({ index: $$this.currentIndex, barPosition: BarPosition.Start }) { //绑定当前索引
         ForEach(this.TopNavList, (item: BarClass) => {
           TabContent() {
@@ -58,6 +50,7 @@ struct TopBar {
 
         })
       }
+
       .barWidth('40%')
     }
 
