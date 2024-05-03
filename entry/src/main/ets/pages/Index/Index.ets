@@ -1,7 +1,7 @@
 import { BarClass } from '../../models'
-import My from '../My/My'
 import { TopBar } from '../../components'
 import { window } from '@kit.ArkUI'
+import My from '../My/My'
 
 @Extend(Text)
 function tabSty() {

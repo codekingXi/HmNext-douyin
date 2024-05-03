@@ -1,8 +1,8 @@
-import { LoginForm, LoginFormModel } from '../../../models'
+import { LoginForm, LoginFormModel } from '../../models/index'
 import { router } from '@kit.ArkUI'
-import { TOKEN_KEY } from '../../../constants/token'
-import { UserSettingClass } from '../../../utils/setting'
-import { loginData } from '../../../api/user'
+import { TOKEN_KEY } from '../../constants/token'
+import { UserSettingClass } from '../../utils/setting'
+import { loginData } from '../../api'
 
 @Entry
 @Component
@@ -35,9 +35,9 @@ struct Login {
     this.loading = true
     setTimeout(async ()=>{
       const token = await loginData(this.accountForm)
-      AppStorage.setOrCreate(TOKEN_KEY,token)//写入全局状态
-      new UserSettingClass(getContext()).setUserToken(token) //写入首选项
       if (this.accountForm.account === 'admin' && this.accountForm.password === '123456') {
+        AppStorage.setOrCreate(TOKEN_KEY,token)//写入全局状态
+        await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
         AlertDialog.show({ message: "登录成功" })
         this.loading = false
         router.replaceUrl({ url: 'pages/Index/Index' })
@@ -51,7 +51,7 @@ struct Login {
 
   build() {
     Column({ space: 20 }) {
-      Text("Welcome to 鸿蒙版抖音").fontSize(34)
+      Text("账号登录").fontSize(34)
         .fontColor(Color.Black)
       Row() {
         TextInput({ placeholder: "请输入用户名", text: this.accountForm.account })
