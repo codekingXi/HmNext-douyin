@@ -63,6 +63,7 @@ struct Playvideo {
       this.playIng=false
     }
   }
+  @Builder
 
   build() {
     Stack() {
@@ -73,6 +74,8 @@ struct Playvideo {
         .onClick(()=>{
           if(this.playIng){
             this.controller.pause()
+
+
           }else{
             this.controller.start()
           }

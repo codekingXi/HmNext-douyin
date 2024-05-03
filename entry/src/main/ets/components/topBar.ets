@@ -37,6 +37,7 @@ struct TopBar {
   build() {
     Stack({ alignContent: Alignment.Top }) {
       Tabs({ index: $$this.currentIndex, barPosition: BarPosition.Start }) { //绑定当前索引
+
         ForEach(this.TopNavList, (item: BarClass) => {
           TabContent() {
             if (item.name === "shop") {
@@ -47,11 +48,11 @@ struct TopBar {
             }
           }.layoutWeight(1)
           .tabBar(this.titleCommon(item))
-
         })
-      }
 
+      }
       .barWidth('40%')
+
     }
 
   }

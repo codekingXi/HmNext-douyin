@@ -34,7 +34,9 @@ struct My {
           Row() {
             Video({
               src: $rawfile("media/myTopBgMedia/Bg-video.mp4")
-            })
+            }).width('100%')
+              .height('100%')
+              .objectFit(ImageFit.Cover)
               .muted(true)
               .loop(true)
               .autoPlay(true)

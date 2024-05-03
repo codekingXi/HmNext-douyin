@@ -39,8 +39,8 @@ struct Index {
       Text(item.title).tabSty()
     }
     .width('100%')
-    .height(60)
-    .justifyContent(FlexAlign.SpaceAround)
+    .layoutWeight(1)
+    .justifyContent(FlexAlign.SpaceEvenly)
     .alignItems(VerticalAlign.Center)
     .backgroundColor(Color.Black)
   }
@@ -91,7 +91,9 @@ struct Index {
             }
           }.tabBar(this.bottomBar(item))
         })
-      }.barPosition(BarPosition.End)
+      }
+      .scrollable(false)
+      .barPosition(BarPosition.End)
       Row(){
         Image($r("app.media.ic_uploading"))
           .width(48)
@@ -104,7 +106,7 @@ struct Index {
         window.getLastWindow(getContext())
           .then(win => {
             win.setWindowLayoutFullScreen(true)
-            win.setWindowBackgroundColor('#ff5b5a5a')
+            win.setWindowBackgroundColor('#ff373737')
           })
       })
     }.bindContentCover($$this.showDialog,this.contentDialog,{
