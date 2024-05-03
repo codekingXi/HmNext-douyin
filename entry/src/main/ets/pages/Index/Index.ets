@@ -39,17 +39,40 @@ struct Index {
       Text(item.title).tabSty()
     }
     .width('100%')
-    .height(55)
+    .height(60)
     .justifyContent(FlexAlign.SpaceAround)
     .alignItems(VerticalAlign.Center)
     .backgroundColor(Color.Black)
   }
-
   @State
   currentIndex: number = 0
 
-  build() {
+  @State
+  showDialog: boolean = false
+
+  @Builder
+  contentDialog() {
     Column() {
+      Row() {
+        Text('x')
+          .fontSize(44)
+          .fontColor(Color.White)
+          .onClick(() => {
+            this.showDialog = !this.showDialog
+          })
+      }.width('100%')
+      .margin({
+        top: 30,
+        left: 20
+      })
+      .justifyContent(FlexAlign.Start)
+    }.width('100%')
+    .height('110%')
+    .backgroundColor(Color.Black)
+    .zIndex(999)
+  }
+  build() {
+    Stack() {
       Tabs({ index: $$this.currentIndex, barPosition: BarPosition.End }) {
         ForEach(this.tabList, (item: BarClass) => {
           TabContent() {
@@ -68,15 +91,25 @@ struct Index {
             }
           }.tabBar(this.bottomBar(item))
         })
-      }.onAppear(()=>{
+      }.barPosition(BarPosition.End)
+      Row(){
+        Image($r("app.media.ic_uploading"))
+          .width(48)
+          .height(48)
+          .onClick(()=>{
+            this.showDialog=!this.showDialog
+          })
+      }.position({x:'44%',y:'94%'})
+      .onAppear(()=>{
         window.getLastWindow(getContext())
           .then(win => {
             win.setWindowLayoutFullScreen(true)
             win.setWindowBackgroundColor('#ff5b5a5a')
           })
       })
-      .barPosition(BarPosition.End)
-    }
+    }.bindContentCover($$this.showDialog,this.contentDialog,{
+      modalTransition:ModalTransition.DEFAULT
+    })
   }
 }
 
