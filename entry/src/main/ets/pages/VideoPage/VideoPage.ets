@@ -24,7 +24,7 @@ struct VideoPage {
   activeIndex: number = 0
   build() {
     Swiper() {
-      ForEach(this.mediaList, (item: mediaInfoModel, index: number | undefined) => {
+      ForEach(this.mediaList, (item: mediaInfoModel, index: number) => {
         Playvideo({ item, index })
       })
     }
@@ -63,7 +63,6 @@ struct Playvideo {
       this.playIng=false
     }
   }
-  @Builder
 
   build() {
     Stack() {
@@ -84,12 +83,7 @@ struct Playvideo {
           this.updateActiveIndex()
         })
         .muted(this.activeIndex === this.index ? false : true)
-        .borderRadius({
-          topLeft: 10,
-          topRight: 10,
-          bottomLeft: 10,
-          bottomRight: 10
-        })
+        .borderRadius(10)
         .loop(true)
         .controls(false)//隐藏控制条
         .width('100%')
