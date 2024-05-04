@@ -32,6 +32,7 @@ struct TopBar {
     Column() {
       Text(item.title)
         .fontColor(Color.White)
+        .T()
         .fontWeight(600)
         .animation({
           duration: 300
