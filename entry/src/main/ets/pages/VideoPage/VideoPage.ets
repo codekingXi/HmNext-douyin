@@ -75,8 +75,6 @@ struct Playvideo {
         .onClick(()=>{
           if(this.playIng){
             this.controller.pause()
-
-
           }else{
             this.controller.start()
           }

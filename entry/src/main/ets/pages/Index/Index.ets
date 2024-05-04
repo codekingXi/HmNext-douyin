@@ -7,14 +7,14 @@ import My from '../My/My'
 function tabSty() {
   .fontColor(Color.White)
   .fontSize(24)
-
 }
 
 @Entry
 @Component
 struct Index {
+
   @State
-  tabList: BarClass[] = [
+  btmTabList: BarClass[] = [
     {
       title: '首页',
       name: "Home"
@@ -32,17 +32,18 @@ struct Index {
       name: "My",
     }
   ]
-
+  tabController:TabsController = new TabsController()
   @Builder
   bottomBar(item: BarClass) {
-    Row() {
+    Column(){
       Text(item.title).tabSty()
+
     }
-    .width('100%')
-    .layoutWeight(1)
-    .justifyContent(FlexAlign.SpaceEvenly)
-    .alignItems(VerticalAlign.Center)
-    .backgroundColor(Color.Black)
+    .onClick(()=>{
+      //通过获取索引值实现点击切换tab
+      const index = this.btmTabList.findIndex(obj=>obj.name===item.name)
+      this.tabController.changeIndex(index)
+    })
   }
   @State
   currentIndex: number = 0
@@ -72,26 +73,34 @@ struct Index {
     .zIndex(999)
   }
   build() {
-    Stack() {
-      Tabs({ index: $$this.currentIndex, barPosition: BarPosition.End }) {
-        ForEach(this.tabList, (item: BarClass) => {
+    Stack({alignContent:Alignment.Bottom}) {
+      Tabs({ index: $$this.currentIndex,controller:this.tabController, barPosition: BarPosition.End }) {
+        ForEach(this.btmTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === "Home") {
               TopBar()
             } else if (item.name === "Friend") {
-
+              Text('Friend')
             }
             else if (item.name === "Message") {
-
+              Text('meg')
             }
             else if (item.name === "My") {
               My()
             }
-          }.tabBar(this.bottomBar(item))
+          }.tabBar(item.title)
         })
       }
       .scrollable(false)
-      .barPosition(BarPosition.End)
+
+     Row({space:20}){
+        ForEach(this.btmTabList,(item:BarClass)=>{
+          this.bottomBar(item)
+        })
+     }
+     .width('100%').height(75)
+     .position({y:'91%'})
+     .backgroundColor(Color.Black).justifyContent(FlexAlign.SpaceAround)
       Row(){
         Image($r("app.media.ic_uploading"))
           .width(48)
@@ -99,7 +108,7 @@ struct Index {
           .onClick(()=>{
             this.showDialog=!this.showDialog
           })
-      }.position({x:'44%',y:'94%'})
+      }.position({x:'47%',y:'92.5%'})
       .onAppear(()=>{
         window.getLastWindow(getContext())
           .then(win => {

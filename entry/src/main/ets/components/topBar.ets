@@ -12,7 +12,7 @@ function T() {
 @Component
 struct TopBar {
   @State
-  TopNavList: BarClass[] = [
+  topTabList: BarClass[] = [
     {
       title: "商场",
       name: "shop"
@@ -23,8 +23,9 @@ struct TopBar {
     }
   ]
 
+  tabController:TabsController = new TabsController()
   @State
-  currentIndex: number = this.TopNavList.length-1
+  currentIndex: number = this.topTabList.length-1
 
   @Builder
   titleCommon(item: BarClass) {
@@ -42,17 +43,22 @@ struct TopBar {
         .strokeWidth(4)
         .color('#fffcfcfc')
         .lineCap(LineCapStyle.Round)
-        .width(this.TopNavList[this.currentIndex].name===item.name? 23:0)
+        .width(this.topTabList[this.currentIndex].name===item.name? 23:0)
         .animation({
           duration: 200
         })
     }
+    .onClick(()=>{
+      //通过name找到索引
+      const index = this.topTabList.findIndex(obj=>obj.name===item.name)
+      this.tabController.changeIndex(index) //切换索引值
+    })
   }
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      Tabs({ index: $$this.currentIndex, barPosition: BarPosition.Start }) { //绑定当前索引
-        ForEach(this.TopNavList, (item: BarClass) => {
+      Tabs({ index: $$this.currentIndex,controller:this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
+        ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === "shop") {
               Text('Shop')
@@ -60,7 +66,7 @@ struct TopBar {
             else if (item.name === "forYou") {
               VideoPage()
             }
-          }.height('100%')
+          }
           .tabBar()
         })
 
@@ -69,14 +75,13 @@ struct TopBar {
       .barWidth('40%')
 
       Row({space:20}){
-        ForEach(this.TopNavList, (item: BarClass) => {
+        ForEach(this.topTabList, (item: BarClass) => {
           this.titleCommon(item)
         })
       }.width('100%')
       .height(50).justifyContent(FlexAlign.Center)
       .position({y:'7.22%'})
-      .backgroundColor(Color.Transparent)
-    }
+    }.position({y:'-2.5%'})
 
   }
 }
