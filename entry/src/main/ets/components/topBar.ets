@@ -55,9 +55,17 @@ struct TopBar {
       this.tabController.changeIndex(index) //切换索引值
     })
   }
-
+  @State
+  areaHei:number = 0
+  async aboutToAppear(): Promise<void> {
+    //窗口类方法必须用promise包裹
+    const win = await window.getLastWindow(getContext())
+    //获取顶部避让矩形区域的高度
+    this.areaHei = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
+      .topRect.height)
+  }
   build() {
-    Stack({ alignContent: Alignment.Top }) {
+    Stack() {
       Tabs({ index: $$this.currentIndex,controller:this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
@@ -70,7 +78,6 @@ struct TopBar {
           }
           .tabBar()
         })
-
       }
       .animationDuration(200)
       .barWidth('40%')
