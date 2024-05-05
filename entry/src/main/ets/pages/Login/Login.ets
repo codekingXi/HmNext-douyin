@@ -38,7 +38,6 @@ struct Login {
       if (this.accountForm.account === 'admin' && this.accountForm.password === '123456') {
         AppStorage.setOrCreate(TOKEN_KEY,token)//写入全局状态
         await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
-        AlertDialog.show({ message: "登录成功" })
         this.loading = false
         router.replaceUrl({ url: 'pages/Index/Index' })
       } else {

@@ -13,6 +13,8 @@ function tabSty() {
 @Component
 struct Index {
 
+  @Provide
+  sideBarPosition:boolean=false
   @State
   btmTabList: BarClass[] = [
     {

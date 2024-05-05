@@ -2,6 +2,7 @@
   "src": [
     "pages/Index/Index",
     "pages/VideoPage/VideoPage",
-    "pages/Login/Login"
+    "pages/Login/Login",
+    "pages/Setting/Setting"
   ]
 }

@@ -1,5 +1,3 @@
-import { window } from '@kit.ArkUI'
-import { Sidebar } from '.'
 import { BarClass } from '../models'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 
