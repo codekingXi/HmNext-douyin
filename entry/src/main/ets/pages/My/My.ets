@@ -1,6 +1,5 @@
 import { SideBarCom } from '../../components'
-import { BarClass } from '../../models'
-import { UserInfo, UserInfoModel } from '../../models/user'
+import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { promptAction } from '@kit.ArkUI'
 
 @Preview
