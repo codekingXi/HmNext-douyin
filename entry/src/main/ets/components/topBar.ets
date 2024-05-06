@@ -51,6 +51,8 @@ struct TopBar {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj=>obj.name===item.name)
       this.tabController.changeIndex(index) //切换索引值
+
+
     })
   }
   // @State
