@@ -1,15 +1,12 @@
-import { SideBarCom } from '../../components'
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { promptAction } from '@kit.ArkUI'
+import { SideBarCom } from '../../components'
 
 @Preview
 @Component
 export default struct My {
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-  @State
-  SideBar_X: number = 0 //侧边栏的X坐标
-  @State
-  SideBarOpacity: number = 0
+
   @State
   itemData: BarClass[] = [
     {
@@ -128,6 +125,8 @@ export default struct My {
     }
   ]
 
+
+
   //随机的用户id
   randomNum() {
     const Uid = Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
@@ -147,6 +146,8 @@ export default struct My {
   imgBg(){
     .width(16).height(16)
   }
+  @Consume
+  IndexX:number|string
 
   @Builder
   contentItem(item: BarClass) {
@@ -180,7 +181,6 @@ export default struct My {
       }
     })
   }
-
   build() {
     Column() {
       //把上下两个模块包在一起
@@ -205,11 +205,11 @@ export default struct My {
 
               }.btnBg().justifyContent(FlexAlign.Center)
               .onClick(() => {
-                this.SideBar_X = -255
-                this.SideBarOpacity = 1
+                //更改移动的坐标位置
+                this.IndexX='-65%'
               })
-            }.zIndex(3)
-            .width('100%').justifyContent(FlexAlign.End).margin({ top: 10, right: 10 })
+            }
+            .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 10 })
           }.width('100%').height('50%').zIndex(3).position({ y: 0 })
 
           Stack({ alignContent: Alignment.BottomStart }) {
@@ -268,28 +268,20 @@ export default struct My {
         })
         .layoutWeight(6.5)
         .backgroundColor(Color.White)
-      }.onClick(() => {
-        this.SideBar_X = 360
-        this.SideBarOpacity = 0
-      })
+      }
 
-      SideBarCom({
-        sideWidth: 255,
-        itemData: this.itemData,
-        sideBgColor: '#ffffffff',
-        contentItem: (item: object) => {
-          this.contentItem(item as BarClass)
-        }
-      })
-        .opacity(this.SideBarOpacity)
-        .translate({ x: this.SideBar_X })
-        .position({ x: '100%' })
-        .animation({
-          duration: 200,
-          iterations: 1,
-          playMode: PlayMode.Normal
-        })
-    }
+    }//修改整个页面的坐标
+    .onClick(()=>{
+      if(this.IndexX==='-65%'){
+        this.IndexX='0%'
+      }
+    })
+    .animation({
+      duration:200,
+      iterations:1,
+      playMode:PlayMode.Normal
+
+    })
   }
 }
 

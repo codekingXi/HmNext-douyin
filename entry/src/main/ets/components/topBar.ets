@@ -4,9 +4,9 @@ import { VideoPage } from '../pages/VideoPage/VideoPage'
 @Extend(Text)
 function T() {
   .fontColor(Color.White)
-  .fontSize(24)
+  .fontSize(22)
 }
-
+@Preview
 @Component
 struct TopBar {
   @State
@@ -24,6 +24,8 @@ struct TopBar {
   tabController:TabsController = new TabsController()
   @State
   currentIndex: number = this.topTabList.length-1
+  @Consume
+  IndexX:number|string
 
   @Builder
   titleCommon(item: BarClass) {
@@ -42,7 +44,7 @@ struct TopBar {
         .strokeWidth(4)
         .color('#fffcfcfc')
         .lineCap(LineCapStyle.Round)
-        .width(this.topTabList[this.currentIndex].name===item.name? 23:0)
+        .width(this.topTabList[this.currentIndex].name===item.name? 20:0)
         .animation({
           duration: 200
         })
@@ -51,8 +53,6 @@ struct TopBar {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj=>obj.name===item.name)
       this.tabController.changeIndex(index) //切换索引值
-
-
     })
   }
   // @State
@@ -64,6 +64,7 @@ struct TopBar {
   //   this.areaHei = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
   //     .topRect.height)
   // }
+
   build() {
     Stack() {
       Tabs({ index: $$this.currentIndex,controller:this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
@@ -79,18 +80,29 @@ struct TopBar {
           .tabBar()
         })
       }
+
       .animationDuration(200)
       .barWidth('40%')
-
       Row({space:20}){
+        Row(){
+          Image($r("app.media.icon_index_nav"))
+            .width(28).height(28)
+            .onClick(()=>{
+              //更改坐标轴
+              this.IndexX='70%'
+          })
+        }.width(50).height(50).position({x:'5%'})
         ForEach(this.topTabList, (item: BarClass) => {
           this.titleCommon(item)
         })
+        Row(){
+          Image($r("app.media.icon_search"))
+            .width(32).height(32)
+        }.width(50).height(50).position({x:'90%'})
       }.width('100%')
       .height(50).justifyContent(FlexAlign.Center)
       .position({y:'7.22%'})
     }.position({y:'-2.5%'})
-
   }
 }
 
