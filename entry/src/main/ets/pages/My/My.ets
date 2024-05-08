@@ -126,17 +126,6 @@ export default struct My {
   ]
 
 
-
-  //随机的用户id
-  randomNum() {
-    const Uid = Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
-    return Uid
-  }
-
-  aboutToAppear(): void {
-    this.userInfo.tiktokNub = this.randomNum()
-  }
-
   @Styles
   btnBg(){
     .width(40).height(40).backgroundColor('rgba(48, 48, 48, 0.5)').border({ radius: 40 })
@@ -240,6 +229,9 @@ export default struct My {
                 Column({ space: 5 }) {
                   Text(this.userInfo.username)
                   Text(`抖音号: ${this.userInfo.tiktokNub}`)
+                    .onClick(()=>{
+                      promptAction.showToast({message:`${this.userInfo.tiktokNub}`})
+                    })
                     .fontColor('#ff807f7f')
                     .fontSize(16)
                 }

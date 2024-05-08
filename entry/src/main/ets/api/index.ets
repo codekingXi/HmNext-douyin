@@ -1,1 +1,1 @@
- export { loginData } from './user'
+ export { userData } from './user'

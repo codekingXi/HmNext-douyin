@@ -27,4 +27,6 @@ export class UserSettingClass {
     const Store = this.getStore()
     return Store.getSync(TOKEN_KEY, "") as string
   }
+
+
 }
