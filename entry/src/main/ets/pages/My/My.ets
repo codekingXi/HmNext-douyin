@@ -1,130 +1,17 @@
-import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { promptAction } from '@kit.ArkUI'
-import { SideBarCom } from '../../components'
+import { UserInfo, UserInfoModel } from '../../models'
+import { TOKEN_KEY } from '../../constants'
 
 @Preview
 @Component
 export default struct My {
-  userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-
   @State
-  itemData: BarClass[] = [
-    {
-      icon: $r('app.media.icon_shopCar'),
-      title: "我的订单",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_wallet'),
-      title: "我的钱包",
-      rightContent: '8.88',
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      }
-
-    },
-    {
-      icon: $r('app.media.icon_QRcode'),
-      title: "我的二维码",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-
-    },
-    {
-      icon: $r('app.media.icon_time'),
-      title: "观看历史",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-
-    },
-    {
-      icon: $r('app.media.icon_waitplay'),
-      title: "稍后再看",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-
-    },
-    {
-      icon: $r('app.media.icon_clouddownload'),
-      title: "离线模式",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_idea'),
-      title: "抖音创作着中心",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      }
-    },
-    {
-      icon: $r('app.media.icon_applet'),
-      title: "小程序",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_love'),
-      title: "抖音公益",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_sapling'),
-      title: "青少年模式",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_service'),
-      title: "我的客服",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_setting'),
-      title: "设置",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      }
-    },
-    {
-      icon: $r('app.media.icon_personedetail'),
-      title: "个人信息收集清单",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    },
-    {
-      icon: $r('app.media.icon_share'),
-      title: "第三方信息共享清单",
-      click:()=>{
-        promptAction.showToast({message: "功能未完善"})
-      },
-      bottomBorder:true
-    }
-  ]
-
+  userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
+  getUserInfo(){
+    this.userInfo = AppStorage.get(TOKEN_KEY)as UserInfoModel
+  }
+  aboutToAppear(): void {
+    this.getUserInfo()
+  }
 
   @Styles
   btnBg(){
@@ -138,38 +25,6 @@ export default struct My {
   @Consume
   IndexX:number|string
 
-  @Builder
-  contentItem(item: BarClass) {
-
-    Row() {
-      Row({ space: 10 }) {
-        Image(item.icon).width(20).height(20)
-        Text(item.title).fontSize(16)
-      }
-
-      if (item.rightContent) {
-        Row() {
-          Text('￥' + item.rightContent).textAlign(TextAlign.Center)
-            .fontSize(16)
-            .fontColor('#ff515151')
-
-        }
-        .width(60)
-        .height(30)
-        .justifyContent(FlexAlign.Center)
-        .backgroundColor('rgba(227, 227, 227, 0.50)')
-        .borderRadius(40)
-      }
-    }.width('100%').height(60).justifyContent(FlexAlign.SpaceBetween)
-    .onClick(()=>{
-      item.click&&item.click()
-    })
-    .border({
-      width: {
-        bottom: item.bottomBorder===true?0:0.5
-      }
-    })
-  }
   build() {
     Column() {
       //把上下两个模块包在一起
@@ -227,10 +82,10 @@ export default struct My {
                 }
 
                 Column({ space: 5 }) {
-                  Text(this.userInfo.username)
+                  Text(`${this.userInfo.username}`).margin({left:-50}).fontColor(Color.White)
                   Text(`抖音号: ${this.userInfo.tiktokNub}`)
                     .onClick(()=>{
-                      promptAction.showToast({message:`${this.userInfo.tiktokNub}`})
+                      AlertDialog.show({message:JSON.stringify(this.userInfo)})
                     })
                     .fontColor('#ff807f7f')
                     .fontSize(16)
@@ -262,7 +117,8 @@ export default struct My {
         .backgroundColor(Color.White)
       }
 
-    }//修改整个页面的坐标
+    }
+    //修改整个页面的坐标
     .onClick(()=>{
       if(this.IndexX==='-65%'){
         this.IndexX='0%'

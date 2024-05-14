@@ -25,7 +25,7 @@ struct VideoPage {
   build() {
     Swiper() {
       ForEach(this.mediaList, (item: mediaInfoModel, index: number) => {
-        Playvideo({ item, index })
+        playVideo({ item,index })
       })
     }
     .index($$this.activeIndex)
@@ -40,7 +40,7 @@ struct VideoPage {
 }
 
 @Component
-struct Playvideo {
+struct playVideo {
   item: mediaInfo = new mediaInfoModel({} as mediaInfo)
   index: number = -1
   @Consume

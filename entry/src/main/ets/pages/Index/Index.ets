@@ -1,6 +1,6 @@
 import { BarClass } from '../../models'
 import { SideBarCom, TopBar } from '../../components'
-import { window } from '@kit.ArkUI'
+import { promptAction, window } from '@kit.ArkUI'
 import My from '../My/My'
 
 @Extend(Text)
@@ -42,7 +42,156 @@ struct Index {
   showDialog: boolean = false
   @State
   sidePosition: boolean = false
+  @State
+  itemData: BarClass[] = [
+    {
+      icon: $r('app.media.icon_shopCar'),
+      title: "我的订单",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_wallet'),
+      title: "我的钱包",
+      rightContent: '8.88',
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      }
 
+    },
+    {
+      icon: $r('app.media.icon_QRcode'),
+      title: "我的二维码",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+
+    },
+    {
+      icon: $r('app.media.icon_time'),
+      title: "观看历史",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+
+    },
+    {
+      icon: $r('app.media.icon_waitplay'),
+      title: "稍后再看",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+
+    },
+    {
+      icon: $r('app.media.icon_clouddownload'),
+      title: "离线模式",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_idea'),
+      title: "抖音创作着中心",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      }
+    },
+    {
+      icon: $r('app.media.icon_applet'),
+      title: "小程序",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_love'),
+      title: "抖音公益",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_sapling'),
+      title: "青少年模式",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_service'),
+      title: "我的客服",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_setting'),
+      title: "设置",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      }
+    },
+    {
+      icon: $r('app.media.icon_personedetail'),
+      title: "个人信息收集清单",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    },
+    {
+      icon: $r('app.media.icon_share'),
+      title: "第三方信息共享清单",
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      },
+      bottomBorder:true
+    }
+  ]
+
+  @Builder
+  contentItem(item:BarClass) {
+
+    Row() {
+      Row({ space: 10 }) {
+        Image(item.icon).width(20).height(20)
+        Text(item.title).fontSize(16)
+      }
+
+      if (item.rightContent) {
+        Row() {
+          Text('￥' + item.rightContent).textAlign(TextAlign.Center)
+            .fontSize(16)
+            .fontColor('#ff515151')
+
+        }
+        .width(60)
+        .height(30)
+        .justifyContent(FlexAlign.Center)
+        .backgroundColor('rgba(227, 227, 227, 0.50)')
+        .borderRadius(40)
+      }
+    }.width('100%').height(60).justifyContent(FlexAlign.SpaceBetween)
+    .onClick(()=>{
+      item.click&&item.click()
+    })
+    .border({
+      width: {
+        bottom: item.bottomBorder===true?0:0.5
+      }
+    })
+  }
   @Builder
   bottomBar(item: BarClass) {
     Column() {
@@ -80,6 +229,11 @@ struct Index {
 
   build() {
     Column(){
+      //左侧边栏
+      SideBarCom({
+        sideWidth:'100%',
+        sidePositionX:'-100%'
+      })
       Stack({ alignContent: Alignment.Bottom }) {
         Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
           ForEach(this.btmTabList, (item: BarClass) => {
@@ -136,15 +290,14 @@ struct Index {
       .bindContentCover($$this.showDialog, this.contentDialog, {
         modalTransition: ModalTransition.DEFAULT
       })
-      //左侧边栏
-      SideBarCom({
-        sideWidth:'100%',
-        sidePositionX:'-100%'
-      })
+
       //右侧边栏
       SideBarCom({
         sideWidth:'100%',
-        sidePositionX:"100%"
+        sidePositionX:"100%",
+        contentItem:(item:object)=>{
+          this.contentItem(this.itemData as BarClass)
+        }
       })
     }
 
@@ -156,8 +309,6 @@ struct Index {
       iterations: 1,
       playMode: PlayMode.Normal
     })
-
-
   }
 }
 

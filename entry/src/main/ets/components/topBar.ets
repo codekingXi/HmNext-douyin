@@ -1,5 +1,7 @@
 import { BarClass } from '../models'
+import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
+import { promptAction } from '@kit.ArkUI'
 
 @Extend(Text)
 function T() {
@@ -20,7 +22,8 @@ struct TopBar {
       name: "forYou"
     }
   ]
-
+  @State
+  titleColor:ResourceColor=Color.White
   tabController:TabsController = new TabsController()
   @State
   currentIndex: number = this.topTabList.length-1
@@ -31,7 +34,7 @@ struct TopBar {
   titleCommon(item: BarClass) {
     Column() {
       Text(item.title)
-        .fontColor(Color.White)
+        .fontColor(this.titleColor)
         .T()
         .fontWeight(600)
         .animation({
@@ -53,6 +56,7 @@ struct TopBar {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj=>obj.name===item.name)
       this.tabController.changeIndex(index) //切换索引值
+      this.topTabList[this.currentIndex].name==="shop"?this.titleColor=Color.Black:this.titleColor=Color.White
     })
   }
   // @State
@@ -71,7 +75,7 @@ struct TopBar {
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === "shop") {
-              Text('Shop')
+              Shop()
             }
             else if (item.name === "forYou") {
               VideoPage()
@@ -98,6 +102,9 @@ struct TopBar {
         Row(){
           Image($r("app.media.icon_search"))
             .width(32).height(32)
+            .onClick(()=>{
+              promptAction.showToast({message:'功能未完善'})
+            })
         }.width(50).height(50).position({x:'90%'})
       }.width('100%')
       .height(50).justifyContent(FlexAlign.Center)

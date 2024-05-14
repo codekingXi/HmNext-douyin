@@ -3,6 +3,7 @@
     "pages/Index/Index",
     "pages/VideoPage/VideoPage",
     "pages/Login/Login",
-    "pages/Setting/Setting"
+    "pages/Setting/Setting",
+    "pages/Shop/Shop"
   ]
 }

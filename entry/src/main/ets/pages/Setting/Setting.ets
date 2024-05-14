@@ -1,7 +1,6 @@
 import { TOKEN_KEY } from '../../constants'
 import { router } from '@kit.ArkUI'
 import { UserSettingClass } from '../../utils/setting'
-import { Level } from '@ohos/hypium/src/main/Constant'
 
 @Entry
 @Component

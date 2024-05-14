@@ -55,10 +55,10 @@ struct Login {
       this.userInfo.tiktokNub = Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
       setTimeout(async () => {
         const token = userData(this.userInfo)
-        promptAction.showToast({ message: token })
         if (this.userInfo.username && this.userInfo.password) {
           AppStorage.setOrCreate(TOKEN_KEY, token) //写入全局状态
           await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
+          AlertDialog.show({message:token})
           this.loading = false
           router.replaceUrl({ url: 'pages/Index/Index' })
         } else {
