@@ -1,10 +1,11 @@
 /**
- * 自定义全局侧边栏*/
+ * 自定义全局侧边栏
+ * itemData 数据源必须传！！！
+ * */
 @Component
 export struct SideBarCom {
   @State
   sideWidth: number | string = ""
-
   @State
   itemData: object[] = []
   @BuilderParam

@@ -87,7 +87,9 @@ struct TopBar {
 
       .animationDuration(200)
       .barWidth('40%')
+      //自定义样式覆盖原来的tabs
       Row({space:20}){
+        //顶部nav的左方的按钮
         Row(){
           Image($r("app.media.icon_index_nav"))
             .width(28).height(28)
@@ -96,9 +98,11 @@ struct TopBar {
               this.IndexX='70%'
           })
         }.width(50).height(50).position({x:'5%'})
+
         ForEach(this.topTabList, (item: BarClass) => {
           this.titleCommon(item)
         })
+        //顶部nav的右方的按钮
         Row(){
           Image($r("app.media.icon_search"))
             .width(32).height(32)
@@ -106,11 +110,13 @@ struct TopBar {
               promptAction.showToast({message:'功能未完善'})
             })
         }.width(50).height(50).position({x:'90%'})
+
       }.width('100%')
       .height(50).justifyContent(FlexAlign.Center)
       .position({y:'7.22%'})
     }.position({y:'-2.5%'})
   }
 }
+
 
 export { TopBar }

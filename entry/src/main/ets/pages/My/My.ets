@@ -1,5 +1,6 @@
-import { UserInfo, UserInfoModel } from '../../models'
+import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { TOKEN_KEY } from '../../constants'
+import { promptAction } from '@kit.ArkUI'
 
 @Preview
 @Component
@@ -7,7 +8,7 @@ export default struct My {
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
   getUserInfo(){
-    this.userInfo = AppStorage.get(TOKEN_KEY)as UserInfoModel
+    this.userInfo = AppStorage.get(TOKEN_KEY) as UserInfoModel
   }
   aboutToAppear(): void {
     this.getUserInfo()
@@ -17,14 +18,20 @@ export default struct My {
   btnBg(){
     .width(40).height(40).backgroundColor('rgba(48, 48, 48, 0.5)').border({ radius: 40 })
   }
-
+  infoTitle:BarClass[] = [
+    {title:'1504',rightContent:'获赞'},
+    {title:'46',rightContent:'朋友'},
+    {title:'125',rightContent:'关注'},
+    {title:'564',rightContent:'粉丝'}
+  ]
   @Styles
   imgBg(){
     .width(16).height(16)
   }
   @Consume
   IndexX:number|string
-
+  @State
+  private personInfo:ResourceStr|undefined=undefined
   build() {
     Column() {
       //把上下两个模块包在一起
@@ -39,11 +46,15 @@ export default struct My {
                   .imgBg()
                 Text("新访客1").fontSize(14).fontColor(Color.White)
               }.btnBg().width(90).justifyContent(FlexAlign.Center)
-
+              .onClick(()=>{
+                promptAction.showToast({message:'功能未完善'})
+              })
               Row() {
                 Image($r("app.media.icon_search")).width(28).height(28)
               }.btnBg().justifyContent(FlexAlign.Center)
-
+              .onClick(()=>{
+                promptAction.showToast({message:'功能未完善'})
+              })
               Row() {
                 Image($r("app.media.icon_Tab")).imgBg()
 
@@ -99,11 +110,27 @@ export default struct My {
             })
           }.zIndex(2)
         }.layoutWeight(3.5).width('100%')
-
         //白色个人内容区
         Column() {
-          Row() {
-            Text('内容').fontColor(Color.Black)
+          //顶部个人信息
+          Row({space:20}) {
+            ForEach(this.infoTitle,(item:BarClass)=>{
+              Row({space:5}){
+                Text(item.title).fontWeight(600).fontSize(20)
+                Text(`${item.rightContent}`).fontSize(16).fontColor('#ff6b6a6a')
+              }.onClick(()=>{
+                promptAction.showToast({message:'功能未完善'})
+              })
+            })
+          }.width('100%')
+          .padding(15)
+          //个人介绍
+          Row(){
+            Text(this.personInfo===undefined?'I‘m form UK❥(^_-)':this.personInfo).fontSize(14)
+              .fontColor(Color.Black).textAlign(TextAlign.Start)
+          }.width('100%').padding(10)
+          Row(){
+
           }
         }
         .width('100%')
@@ -128,10 +155,6 @@ export default struct My {
       duration:200,
       iterations:1,
       playMode:PlayMode.Normal
-
     })
   }
 }
-
-
-
