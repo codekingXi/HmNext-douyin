@@ -70,7 +70,7 @@ struct playVideo {
         src: this.item.src,
         controller: this.controller
       })
-        .objectFit(ImageFit.Cover)
+        .objectFit(ImageFit.Contain)
         .onClick(()=>{
           if(this.playIng){
             this.controller.pause()
