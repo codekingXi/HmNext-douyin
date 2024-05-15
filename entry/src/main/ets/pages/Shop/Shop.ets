@@ -4,6 +4,7 @@ import { promptAction } from '@kit.ArkUI'
 @Entry
 @Component
 export default struct Shop {
+  //商品结构
   @Builder
   waterFlowItem(index: number) {
     Column({ space: 10 }) {
@@ -38,7 +39,7 @@ export default struct Shop {
           width: 2,
           radius: 10
         })
-
+        //渲染商品列表数据
         WaterFlow() {
           ForEach(goods, (item: string, index: number) => {
             FlowItem() {
