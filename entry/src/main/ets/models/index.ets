@@ -1,6 +1,6 @@
 //统一导出
-export { mediaInfo,mediaInfoModel } from './mediaData'
-export { BarClass,itemData,btmTabList } from './barData'
+export { mediaInfo, mediaInfoModel } from './mediaData'
+export { BarClass, btmTabList } from './barData'
 export { sideData } from './sidebarData'
-export { commentData,commentDataModel } from './commentData'
-export { UserInfo,UserInfoModel } from './user'
+export { commentData, commentDataModel } from './commentData'
+export { UserInfo, UserInfoModel } from './user'

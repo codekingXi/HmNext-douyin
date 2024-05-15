@@ -29,7 +29,8 @@ struct TopBar {
   currentIndex: number = this.topTabList.length-1
   @Consume
   IndexX:number|string
-
+  @Consume
+  showDialog:boolean
   @Builder
   titleCommon(item: BarClass) {
     Column() {
@@ -94,6 +95,7 @@ struct TopBar {
           Image($r("app.media.icon_index_nav"))
             .width(28).height(28)
             .onClick(()=>{
+              this.showDialog=!this.showDialog
               //更改坐标轴
               this.IndexX='70%'
           })
