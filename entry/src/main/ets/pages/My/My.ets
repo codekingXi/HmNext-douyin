@@ -1,8 +1,6 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { TOKEN_KEY } from '../../constants'
 import { promptAction } from '@kit.ArkUI'
-import customDialog from '../../components/customDialog'
-
 @Preview
 @Component
 export default struct My {

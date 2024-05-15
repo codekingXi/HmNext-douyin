@@ -1,6 +1,5 @@
-@CustomDialog
+@Component
 export default struct customDialog {
-  controller: CustomDialogController
   build() {
     Column() {
     }

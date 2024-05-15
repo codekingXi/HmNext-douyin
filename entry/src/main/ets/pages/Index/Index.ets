@@ -143,10 +143,6 @@ struct Index {
       bottomBorder: true
     }
   ]
-  preview: CustomDialogController = new CustomDialogController({
-    builder: customDialog(),
-    customStyle: true,
-  })
 
   @Builder
   contentItem(item: BarClass) {
@@ -292,12 +288,12 @@ struct Index {
       //TODO:封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
       SideBarCom({
-        sideWidth: '100%',
-        sidePositionX: '-100%'
+        sideWidth: '70%',
+        sidePositionX: '-70%'
       })
       //右侧边栏
       SideBarCom({
-        sideWidth: '100%',
+        sideWidth: '65%',
         sidePositionX: "100%",
         //必须传的值 关键数据！！！
         itemData: this.itemData,

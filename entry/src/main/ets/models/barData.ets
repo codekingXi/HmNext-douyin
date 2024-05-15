@@ -2,6 +2,7 @@
 import { promptAction } from '@kit.ArkUI'
 
 export interface BarClass {
+  id?:number
   icon?: ResourceStr
   title?: string
   name?: string
@@ -11,6 +12,7 @@ export interface BarClass {
 }
 
 export class BarClassModel implements BarClass {
+  id?:number=0
   icon?: ResourceStr = ""
   title?: string = ""
   name?: string = ""
@@ -18,6 +20,7 @@ export class BarClassModel implements BarClass {
   click?: () => void
 
   constructor(model: BarClass) {
+    this.id=model.id
     this.icon = model.icon
     this.title = model.title
     this.name = model.name

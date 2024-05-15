@@ -3,27 +3,25 @@ import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { promptAction } from '@kit.ArkUI'
 
-@Extend(Text)
-function T() {
-  .fontColor(Color.White)
-  .fontSize(22)
-}
+
 @Preview
 @Component
 struct TopBar {
   @State
   topTabList: BarClass[] = [
     {
+      id: 0,
       title: "商场",
       name: "shop"
     },
     {
+      id: 1,
       title: "推荐",
       name: "forYou"
     }
   ]
   @State
-  titleColor:ResourceColor=Color.White
+  titleColor:ResourceColor[]=[Color.White,Color.Black]
   tabController:TabsController = new TabsController()
   @State
   currentIndex: number = this.topTabList.length-1
@@ -35,14 +33,14 @@ struct TopBar {
   titleCommon(item: BarClass) {
     Column() {
       Text(item.title)
-        .fontColor(this.titleColor)
-        .T()
+        .fontColor(this.topTabList[this.currentIndex].id===1?this.titleColor[0]:this.titleColor[1])
+        .fontSize(22)
         .fontWeight(600)
-        .animation({
-          duration: 300
-        })
         .margin({
           bottom: 5
+        })
+        .animation({
+          duration:50
         })
       Divider()
         .strokeWidth(4)
@@ -50,14 +48,13 @@ struct TopBar {
         .lineCap(LineCapStyle.Round)
         .width(this.topTabList[this.currentIndex].name===item.name? 20:0)
         .animation({
-          duration: 200
+          duration: 50
         })
     }
     .onClick(()=>{
       //通过name找到索引
       const index = this.topTabList.findIndex(obj=>obj.name===item.name)
       this.tabController.changeIndex(index) //切换索引值
-      this.topTabList[this.currentIndex].name==="shop"?this.titleColor=Color.Black:this.titleColor=Color.White
     })
   }
   // @State
