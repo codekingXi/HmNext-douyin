@@ -215,6 +215,14 @@ struct Index {
   //   .backgroundColor(Color.Black)
   //   .zIndex(999)
   // }
+  aboutToAppear(): void {
+    window.getLastWindow(getContext())
+      .then(win => {
+        win.setWindowLayoutFullScreen(true)
+        win.setWindowBackgroundColor('#ff373737')
+      })
+
+  }
 
   build() {
     Column() {
@@ -223,17 +231,10 @@ struct Index {
         Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
           ForEach(this.btmTabList, (item: BarClass) => {
             TabContent() {
-              if (item.name === "Home") {
-                TopBar()
-              } else if (item.name === "Friend") {
-                Text('Friend')
-              }
-              else if (item.name === "Message") {
-                Text('meg')
-              }
-              else if (item.name === "My") {
-                My()
-              }
+              if (item.name === "Home") TopBar()
+              else if (item.name === "Friend") Text('Friend')
+              else if (item.name === "Message") Text('meg')
+              else if (item.name === "My") My()
             }.tabBar(item.title)
 
           })
@@ -261,14 +262,6 @@ struct Index {
         //       this.showDialog = !this.showDialog
         //     })
         // }.position({ x: '47%', y: '92.5%' })
-        .onAppear(() => {
-          window.getLastWindow(getContext())
-            .then(win => {
-              win.setWindowLayoutFullScreen(true)
-              win.setWindowBackgroundColor('#ff373737')
-            })
-
-        })
         //默认不显示遮罩层
         if (this.showDialog) {
           customDialog()

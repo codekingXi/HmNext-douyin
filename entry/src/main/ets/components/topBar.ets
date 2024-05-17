@@ -21,42 +21,44 @@ struct TopBar {
     }
   ]
   @State
-  titleColor:ResourceColor[]=[Color.White,Color.Black]
-  tabController:TabsController = new TabsController()
+  titleColor: ResourceColor[] = [Color.White, Color.Black]
+  tabController: TabsController = new TabsController()
   @State
-  currentIndex: number = this.topTabList.length-1
+  currentIndex: number = this.topTabList.length - 1
   @Consume
-  IndexX:number|string
+  IndexX: number | string
   @Consume
-  showDialog:boolean
+  showDialog: boolean
+
   @Builder
   titleCommon(item: BarClass) {
     Column() {
       Text(item.title)
-        .fontColor(this.topTabList[this.currentIndex].id===1?this.titleColor[0]:this.titleColor[1])
+        .fontColor(this.topTabList[this.currentIndex].id === 1 ? this.titleColor[0] : this.titleColor[1])
         .fontSize(22)
         .fontWeight(600)
         .margin({
           bottom: 5
         })
         .animation({
-          duration:50
+          duration: 50
         })
       Divider()
         .strokeWidth(4)
         .color('#fffcfcfc')
         .lineCap(LineCapStyle.Round)
-        .width(this.topTabList[this.currentIndex].name===item.name? 20:0)
+        .width(this.topTabList[this.currentIndex].name === item.name ? 20 : 0)
         .animation({
           duration: 50
         })
     }
-    .onClick(()=>{
+    .onClick(() => {
       //通过name找到索引
-      const index = this.topTabList.findIndex(obj=>obj.name===item.name)
+      const index = this.topTabList.findIndex(obj => obj.name === item.name)
       this.tabController.changeIndex(index) //切换索引值
     })
   }
+
   // @State
   // areaHei:number = 0
   // async aboutToAppear(): Promise<void> {
@@ -69,51 +71,51 @@ struct TopBar {
 
   build() {
     Stack() {
-      Tabs({ index: $$this.currentIndex,controller:this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
+      Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
-            if (item.name === "shop") {
-              Shop()
-            }
-            else if (item.name === "forYou") {
-              VideoPage()
-            }
+            if (item.id === 0) Shop()
+            else if (item.id === 1) VideoPage()
           }
           .tabBar()
         })
       }
+      .height('105%')
+      .position({y:'-5%'})
 
       .animationDuration(200)
       .barWidth('40%')
+
       //自定义样式覆盖原来的tabs
-      Row({space:20}){
+      Row({ space: 20 }) {
         //顶部nav的左方的按钮
-        Row(){
+        Row() {
           Image($r("app.media.icon_index_nav"))
             .width(28).height(28)
-            .onClick(()=>{
-              this.showDialog=!this.showDialog
+            .onClick(() => {
+              this.showDialog = !this.showDialog
               //更改坐标轴
-              this.IndexX='70%'
-          })
-        }.width(50).height(50).position({x:'5%'})
+              this.IndexX = '70%'
+            })
+        }.width(50).height(50).position({ x: '5%' })
 
         ForEach(this.topTabList, (item: BarClass) => {
           this.titleCommon(item)
         })
         //顶部nav的右方的按钮
-        Row(){
+        Row() {
           Image($r("app.media.icon_search"))
             .width(32).height(32)
-            .onClick(()=>{
-              promptAction.showToast({message:'功能未完善'})
+            .onClick(() => {
+              promptAction.showToast({ message: '功能未完善' })
             })
-        }.width(50).height(50).position({x:'90%'})
+        }.width(50).height(50).position({ x: '90%' })
 
       }.width('100%')
       .height(50).justifyContent(FlexAlign.Center)
-      .position({y:'7.22%'})
-    }.position({y:'-2.5%'})
+      .position({ y: '7.22%' })
+    }
+    .position({ y: '-2.5%' })
   }
 }
 

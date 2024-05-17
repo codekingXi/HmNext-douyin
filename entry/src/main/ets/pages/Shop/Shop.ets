@@ -61,7 +61,7 @@ export default struct Shop {
           promptAction.showToast({message:'功能未完善'})
         })
       }
-      .margin({ top: 50 })
+      .margin({ top: 100 })
 
     }.width('100%')
     .height('100%').backgroundColor('rgba(255, 255, 255, 0.85)')

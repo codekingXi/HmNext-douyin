@@ -58,7 +58,6 @@ struct Login {
         if (this.userInfo.username && this.userInfo.password) {
           AppStorage.setOrCreate(TOKEN_KEY, token) //写入全局状态
           await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
-          AlertDialog.show({message:token})
           this.loading = false
           router.replaceUrl({ url: 'pages/Index/Index' })
         } else {
