@@ -1,8 +1,9 @@
 import { BarClass, btmTabList } from '../../models'
 import { SideBarCom, TopBar } from '../../components'
-import { promptAction, window } from '@kit.ArkUI'
+import { promptAction, router, window } from '@kit.ArkUI'
 import My from '../My/My'
 import customDialog from '../../components/customDialog'
+import Message from '../Message/Message'
 
 
 @Extend(Text)
@@ -123,7 +124,9 @@ struct Index {
       icon: $r('app.media.icon_setting'),
       title: "设置",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        router.pushUrl({
+          url:'pages/Setting/Setting'
+        })
       }
     },
     {
@@ -233,7 +236,7 @@ struct Index {
             TabContent() {
               if (item.name === "Home") TopBar()
               else if (item.name === "Friend") Text('Friend')
-              else if (item.name === "Message") Text('meg')
+              else if (item.name === "Message") Message()
               else if (item.name === "My") My()
             }.tabBar(item.title)
 

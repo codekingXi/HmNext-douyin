@@ -4,6 +4,7 @@
     "pages/VideoPage/VideoPage",
     "pages/Login/Login",
     "pages/Setting/Setting",
-    "pages/Shop/Shop"
+    "pages/Shop/Shop",
+    "pages/Message/Message"
   ]
 }
