@@ -6,11 +6,6 @@ import customDialog from '../../components/customDialog'
 import Message from '../Message/Message'
 
 
-@Extend(Text)
-function tabSty() {
-  .fontColor(Color.White)
-  .fontSize(24)
-}
 
 @Entry
 @Component
@@ -146,7 +141,8 @@ struct Index {
       bottomBorder: true
     }
   ]
-
+  @State
+  titleColor:ResourceColor[]=[Color.White, '#ff838383']
   @Builder
   contentItem(item: BarClass) {
 
@@ -186,7 +182,9 @@ struct Index {
   @Builder
   bottomBar(item: BarClass) {
     Column() {
-      Text(item.title).tabSty()
+      Text(item.title)
+        .fontSize(24)
+        .fontColor(this.btmTabList[this.currentIndex].id===item.id?this.titleColor[0]:this.titleColor[1])
 
     }
     .onClick(() => {
@@ -234,10 +232,10 @@ struct Index {
         Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
           ForEach(this.btmTabList, (item: BarClass) => {
             TabContent() {
-              if (item.name === "Home") TopBar()
-              else if (item.name === "Friend") Text('Friend')
-              else if (item.name === "Message") Message()
-              else if (item.name === "My") My()
+              if (item.id===1) TopBar()
+              else if (item.id===2) Text('Friend')
+              else if (item.id===3) Message()
+              else if (item.id===4) My()
             }.tabBar(item.title)
 
           })
