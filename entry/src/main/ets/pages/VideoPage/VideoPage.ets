@@ -83,7 +83,6 @@ struct playVideo {
           this.updateActiveIndex()
         })
         .muted(this.activeIndex === this.index ? false : true)
-        .borderRadius(10)
         .loop(true)
         .controls(false)//隐藏控制条
         .width('100%')
