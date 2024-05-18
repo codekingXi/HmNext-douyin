@@ -3,6 +3,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { UserSettingClass } from '../utils/setting';
 import { TOKEN_KEY } from '../constants/token';
+import { UserInfo, UserInfoModel } from '../models';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -18,8 +19,8 @@ export default class EntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
     const userSetting = new UserSettingClass(this.context)
     const token = await userSetting.getUserToken()
+    AppStorage.setOrCreate(TOKEN_KEY,new UserInfoModel({} as UserInfo))
     if(token){
-      AppStorage.setOrCreate(TOKEN_KEY,token)
       windowStage.loadContent('pages/Index/Index')
     }else{
       windowStage.loadContent('pages/Login/Login')
