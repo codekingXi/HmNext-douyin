@@ -1,18 +1,15 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { TOKEN_KEY } from '../../constants'
-import { promptAction } from '@kit.ArkUI'
+import { promptAction, router } from '@kit.ArkUI'
+
 @Preview
 @Component
 export default struct My {
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
 
-  getUserInfo() {
-    this.userInfo = AppStorage.get(TOKEN_KEY) as UserInfoModel
-  }
-
   aboutToAppear(): void {
-    this.getUserInfo()
+    this.userInfo = AppStorage.get(TOKEN_KEY) as UserInfoModel
   }
 
   @Styles
@@ -26,7 +23,7 @@ export default struct My {
   }
 
   @Consume
-  showDialog:boolean
+  showDialog: boolean
   @State
   infoTitle: BarClass[] = [
     { title: '1504', rightContent: '获赞' },
@@ -38,7 +35,9 @@ export default struct My {
   personFn: BarClass[] = [
     {
       icon: $r('app.media.icon_shopCar'), title: '抖音商城', click: () => {
-      promptAction.showToast({ message: '功能未完善' })
+      router.pushUrl({
+        url: 'pages/Shop/Shop'
+      })
     }
     },
     {
@@ -68,7 +67,7 @@ export default struct My {
     },
     {
       icon: $r('app.media.icon_moreFn'), title: '查看更多', click: () => {
-      this.showDialog=true
+      this.showDialog = true
       this.IndexX = '-65%'
     }
     }
@@ -109,7 +108,7 @@ export default struct My {
               }.btnBg().justifyContent(FlexAlign.Center)
               .onClick(() => {
                 //显示遮罩
-                this.showDialog=!this.showDialog
+                this.showDialog = !this.showDialog
                 //更改移动的坐标位置
                 this.IndexX = '-65%'
               })
@@ -143,14 +142,12 @@ export default struct My {
                 }
 
                 Column({ space: 5 }) {
-                  Text(`${this.userInfo.username}`).margin({ left: -50 }).fontColor(Color.White)
-                  Text(`抖音号: ${this.userInfo.tiktokNub}`)
-                    .onClick(() => {
-                      AlertDialog.show({ message: JSON.stringify(this.userInfo) })
-                    })
+                  Text(`${this.userInfo.username}`).fontColor(Color.White)
+                  Text(`抖音号:${this.userInfo.tiktokNub}`)
                     .fontColor('#ff807f7f')
                     .fontSize(16)
-                }
+                }.width('100%').alignItems(HorizontalAlign.Start)
+
               }.margin({ left: 20 })
             }
             .width('100%').height('50%')
@@ -189,7 +186,7 @@ export default struct My {
                   Image(item.icon).width(32).height(32)
                   Text(item.title)
                 }.onClick(() => {
-                  item.click&&item.click()
+                  item.click && item.click()
                 })
               }
             })
