@@ -2,7 +2,7 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { UserSettingClass } from '../utils/setting';
-import { TOKEN_KEY } from '../constants/token';
+import { TOKEN_KEY } from '../constants';
 import { UserInfo, UserInfoModel } from '../models';
 
 export default class EntryAbility extends UIAbility {

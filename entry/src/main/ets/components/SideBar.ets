@@ -2,6 +2,7 @@ import { sideData } from '../models'
 import { commentDataModel } from '../models/commentData'
 import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
+import { promptAction } from '@kit.ArkUI'
 
 @Component
 struct Sidebar {
@@ -12,7 +13,9 @@ struct Sidebar {
       id: 1,
       imgUrl: $r('app.media.love'),
       loveNum: 2010,
-      click:()=>{}
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      }
     },
     {
       id: 2,
@@ -26,13 +29,17 @@ struct Sidebar {
       id: 3,
       imgUrl: $r('app.media.collect'),
       loveNum: 344,
-      click:()=>{}
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      }
     },
     {
       id: 4,
       imgUrl: $r('app.media.transmit'),
       loveNum: 568,
-      click:()=>{}
+      click:()=>{
+        promptAction.showToast({message: "功能未完善"})
+      }
     },
   ]
   @State commentList: commentDataModel[] = [

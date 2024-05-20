@@ -1,5 +1,4 @@
 // tabs
-import { promptAction } from '@kit.ArkUI'
 
 export interface BarClass {
   id?:number
@@ -33,17 +32,21 @@ export const btmTabList: BarClass[] = [
   {
     title: '首页',
     name: "Home",
+    id:1
   },
   {
     title: '朋友',
     name: "Friend",
+    id:2
   },
   {
     title: '信息',
     name: "Message",
+    id:3
   },
   {
     title: '我',
     name: "My",
+    id:4
   }
 ]

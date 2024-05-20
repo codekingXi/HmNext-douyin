@@ -1,1 +1,0 @@
-export const USER_SETTING = "Tiktok_setting" //仓库Key

@@ -1,9 +1,8 @@
 import { UserInfo, UserInfoModel } from '../../models/index'
 import { promptAction, router } from '@kit.ArkUI'
-import { TOKEN_KEY } from '../../constants/token'
+import { TOKEN_KEY } from '../../constants'
 import { UserSettingClass } from '../../utils/setting'
 import { userData } from '../../api'
-
 @Extend(Text)
 function textStyle() {
   .fontColor(Color.Red).fontSize(16)
@@ -42,7 +41,15 @@ struct Login {
   getBtnEnable() {
     return !!(this.userInfo.username && this.userInfo.password)
   }
-
+  creteRandom(){
+    //生成11位数的抖音号
+    this.userInfo.tiktokNub = Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
+  }
+  /*
+   *params 该声明周期函数只会执行一次*/
+   aboutToAppear(): void {
+     this.creteRandom()
+  }
   login() {
     //因为没有真实数据，模拟登录
     if (this.userInfo.username.length < 6 && this.userInfo.password.length < 6 ||
@@ -52,18 +59,27 @@ struct Login {
       this.userPwd = '密码长度不能小于6位'
     } else {
       this.loading = true
-      this.userInfo.tiktokNub = Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
+
+      //750毫秒后执行该异步任务
       setTimeout(async () => {
+        //token就是用户信息数据
         const token = userData(this.userInfo)
+        //用户信息校验
         if (this.userInfo.username && this.userInfo.password) {
-          AppStorage.setOrCreate(TOKEN_KEY, token) //写入全局状态
+          AppStorage.set(TOKEN_KEY,new UserInfoModel({
+            username:this.userInfo.username,
+            password:this.userInfo.password,
+            tiktokNub:this.userInfo.tiktokNub,
+            avatar:this.userInfo.avatar
+          })) //写入全局状态
+          PersistentStorage.persistProp(TOKEN_KEY,token)
           await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
           this.loading = false
           router.replaceUrl({ url: 'pages/Index/Index' })
         } else {
           promptAction.showToast({ message: "账号或密码错误!" })
           this.loading = false
-          return
+          return //执行完毕 跳出任务
         }
       }, 750)
     }
