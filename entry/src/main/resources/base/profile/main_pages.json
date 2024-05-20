@@ -5,6 +5,7 @@
     "pages/Login/Login",
     "pages/Setting/Setting",
     "pages/Shop/Shop",
-    "pages/Message/Message"
+    "pages/Message/Message",
+    "pages/Search/SearchPage"
   ]
 }

@@ -1,7 +1,7 @@
 import { BarClass } from '../models'
 import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
-import { promptAction } from '@kit.ArkUI'
+import { promptAction, router } from '@kit.ArkUI'
 
 
 @Preview
@@ -90,7 +90,7 @@ struct TopBar {
       Row({ space: 20 }) {
         //顶部nav的左方的按钮
         Row() {
-          Image($r("app.media.icon_index_nav"))
+          Image(this.topTabList[this.currentIndex].id === 1 ?$r("app.media.icon_index_nav"):$r("app.media.icon_bar_sideBtn"))
             .width(28).height(28)
             .onClick(() => {
               this.showDialog = !this.showDialog
@@ -104,10 +104,12 @@ struct TopBar {
         })
         //顶部nav的右方的按钮
         Row() {
-          Image($r("app.media.icon_search"))
-            .width(32).height(32)
+          Image(this.topTabList[this.currentIndex].id === 1 ?$r("app.media.icon_search"):$r("app.media.icon_meg_search"))
+            .width(30).height(30)
             .onClick(() => {
-              promptAction.showToast({ message: '功能未完善' })
+              router.pushUrl({
+                url:'pages/Search/SearchPage'
+              })
             })
         }.width(50).height(50).position({ x: '90%' })
 

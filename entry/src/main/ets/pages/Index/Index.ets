@@ -10,6 +10,7 @@ import Message from '../Message/Message'
 @Entry
 @Component
 struct Index {
+  //底部tab的数据
   @State
   btmTabList: BarClass[] = btmTabList
   tabController: TabsController = new TabsController()
@@ -22,6 +23,7 @@ struct Index {
   @State
   sidePosition: boolean = false
   //因为有改变页面元素的事件所以不能和接口放在一个文件
+  //右侧边栏的数据
   @State
   itemData: BarClass[] = [
     {
@@ -141,8 +143,10 @@ struct Index {
       bottomBorder: true
     }
   ]
+  //底部title字体的颜色
   @State
   titleColor:ResourceColor[]=[Color.White, '#ff838383']
+  //右侧侧边栏的结构
   @Builder
   contentItem(item: BarClass) {
 
@@ -178,14 +182,13 @@ struct Index {
       }
     })
   }
-
+  //底部tab的的结构
   @Builder
   bottomBar(item: BarClass) {
     Column() {
       Text(item.title)
         .fontSize(24)
         .fontColor(this.btmTabList[this.currentIndex].id===item.id?this.titleColor[0]:this.titleColor[1])
-
     }
     .onClick(() => {
       //通过获取索引值实现点击切换tab

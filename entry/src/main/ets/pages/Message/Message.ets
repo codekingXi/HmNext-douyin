@@ -1,12 +1,43 @@
-import { defaultUserInfo, TalkUserInfo } from '../../models/user'
+import { TalkUserInfo } from '../../models/user'
+import { UserSettingClass } from '../../utils/setting'
+import { router } from '@kit.ArkUI'
 
 @Entry
 @Component
 export default struct Message {
   @State
-  userList:TalkUserInfo[]= defaultUserInfo //渲染默认用户列表
+  userList:TalkUserInfo[] = [] //渲染默认用户列表
+
+  @Consume
+  showDialog: boolean
+  @Consume
+  IndexX: number | string
+  aboutToAppear(): void {
+    this.getUserList()
+  }
+  getUserList() {
+    this.userList = new UserSettingClass(getContext()).getTikTokConnect()
+  }
+  @Styles
+  img(){
+    .width(28).height(28)
+  }
   build() {
     Column(){
+      Row(){
+        Image($r("app.media.icon_bar_sideBtn")).img()
+          .onClick(()=>{
+            this.showDialog=true
+            this.IndexX = '70%'
+          })
+        Image($r('app.media.icon_meg_search')).img()
+          .onClick(()=>{
+            router.pushUrl({
+              url:'pages/Search/SearchPage'
+            })
+          })
+      }.width('100%').padding({left:15,top:'15%',right:15})
+      .justifyContent(FlexAlign.SpaceBetween)
       List({space:15}){
         ForEach(this.userList,(item:TalkUserInfo)=>{
           ListItem(){
@@ -23,7 +54,7 @@ export default struct Message {
           }.layoutWeight(1)
         })
 
-      }.scrollBar(BarState.Off).margin({top:50,left:15,right:15})
+      }.scrollBar(BarState.Off).margin({top:20,left:15,right:15})
     }.width('100%').height('100%').backgroundColor('#ffffffff')
 
   }
