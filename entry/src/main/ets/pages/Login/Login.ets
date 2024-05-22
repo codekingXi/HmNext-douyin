@@ -3,6 +3,8 @@ import { promptAction, router } from '@kit.ArkUI'
 import { TOKEN_KEY } from '../../constants'
 import { UserSettingClass } from '../../utils/setting'
 import { userData } from '../../api'
+import commonFunction from '../../public/Function/commonFunction'
+
 @Extend(Text)
 function textStyle() {
   .fontColor(Color.Red).fontSize(16)
@@ -35,20 +37,18 @@ struct Login {
   userInfo: UserInfoModel = new UserInfoModel({
     username: '',
     password: '',
-    tiktokNub: 0
+    tiktokNub: 0,
+    avatar:''
   } as UserInfo)
 
   getBtnEnable() {
     return !!(this.userInfo.username && this.userInfo.password)
   }
-  creteRandom(){
-    //生成11位数的抖音号
-    this.userInfo.tiktokNub = Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
-  }
+
   /*
    *params 该声明周期函数只会执行一次*/
    aboutToAppear(): void {
-     this.creteRandom()
+     this.userInfo.tiktokNub = new commonFunction().creteRandom() //获取随机生成的抖音号
   }
   login() {
     //因为没有真实数据，模拟登录
@@ -70,7 +70,9 @@ struct Login {
             username:this.userInfo.username,
             password:this.userInfo.password,
             tiktokNub:this.userInfo.tiktokNub,
-            avatar:this.userInfo.avatar
+            avatar:'https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg',
+            user_id:this.userInfo.user_id,
+            content:this.userInfo.content
           })) //写入全局状态
           PersistentStorage.persistProp(TOKEN_KEY,token)
           await new UserSettingClass(getContext()).setUserToken(token) //写入首选项

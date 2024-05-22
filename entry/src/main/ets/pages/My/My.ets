@@ -132,7 +132,7 @@ export default struct My {
               Row({ space: 20 }) {
                 Row() {
                   //头像
-                  Image('https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg')
+                  Image(this.userInfo.avatar)
                     .width(100).height(100)
                     .border({
                       width: 3,
@@ -142,7 +142,7 @@ export default struct My {
                 }
 
                 Column({ space: 5 }) {
-                  Text(`${this.userInfo.username}`).fontColor(Color.White)
+                  Text(this.userInfo.username).fontColor(Color.White)
                   Text(`抖音号:${this.userInfo.tiktokNub}`)
                     .fontColor('#ff807f7f')
                     .fontSize(16)
