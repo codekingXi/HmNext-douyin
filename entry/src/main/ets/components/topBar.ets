@@ -29,7 +29,6 @@ struct TopBar {
   IndexX: number | string
   @Consume
   showDialog: boolean
-
   @Builder
   titleCommon(item: BarClass) {
     Column() {
@@ -43,14 +42,7 @@ struct TopBar {
         .animation({
           duration: 50
         })
-      Divider()
-        .strokeWidth(4)
-        .color('#fffcfcfc')
-        .lineCap(LineCapStyle.Round)
-        .width(this.topTabList[this.currentIndex].name === item.name ? 20 : 0)
-        .animation({
-          duration: 50
-        })
+
     }
     .onClick(() => {
       //通过name找到索引
@@ -81,7 +73,7 @@ struct TopBar {
         })
       }
       .height('105%')
-      .position({y:'-5%'})
+      .position({y:'-4.8%'})
 
       .animationDuration(200)
       .barWidth('40%')
@@ -102,6 +94,16 @@ struct TopBar {
         ForEach(this.topTabList, (item: BarClass) => {
           this.titleCommon(item)
         })
+        Divider()
+          .strokeWidth(4)
+          .color('#fffcfcfc')
+          .lineCap(LineCapStyle.Round)
+          .width(25)
+          .translate(this.topTabList[this.currentIndex].id===0?{x:35}:{x:100})
+          .animation({
+            duration:300
+          })
+          .position({x:115,y:40})
         //顶部nav的右方的按钮
         Row() {
           Image(this.topTabList[this.currentIndex].id === 1 ?$r("app.media.icon_search"):$r("app.media.icon_meg_search"))
