@@ -6,7 +6,6 @@ import customDialog from '../../components/customDialog'
 import Message from '../Message/Message'
 
 
-
 @Entry
 @Component
 struct Index {
@@ -122,7 +121,7 @@ struct Index {
       title: "设置",
       click: () => {
         router.pushUrl({
-          url:'pages/Setting/Setting'
+          url: 'pages/Setting/Setting'
         })
       }
     },
@@ -145,7 +144,8 @@ struct Index {
   ]
   //底部title字体的颜色
   @State
-  titleColor:ResourceColor[]=[Color.White, '#ff838383']
+  titleColor: ResourceColor[] = [Color.White, '#ff838383']
+
   //右侧侧边栏的结构
   @Builder
   contentItem(item: BarClass) {
@@ -182,18 +182,41 @@ struct Index {
       }
     })
   }
+
   //底部tab的的结构
   @Builder
   bottomBar(item: BarClass) {
     Column() {
       Text(item.title)
         .fontSize(24)
-        .fontColor(this.btmTabList[this.currentIndex].id===item.id?this.titleColor[0]:this.titleColor[1])
+        .fontColor(this.btmTabList[this.currentIndex].id === item.id ? this.titleColor[0] : this.titleColor[1])
     }
     .onClick(() => {
       //通过获取索引值实现点击切换tab
       const index = this.btmTabList.findIndex(obj => obj.name === item.name)
       this.tabController.changeIndex(index)
+    })
+  }
+  //更多功能
+  @Builder
+  moreFn() {
+    Button() {
+      Row({space:10}) {
+        Image($r("app.media.icon_moreFn")).width(24).height(24)
+        Text('更多功能')
+      }.width('100%').justifyContent(FlexAlign.Center)
+    }
+    .type(ButtonType.Normal)
+    .backgroundColor(Color.White)
+    .width('55%').height(50)
+    .border({
+      radius: 4,
+      width: .7,
+      color:'#ff1d1d1d'
+    })
+    .margin({ top: 5, left: 15, right: 15, bottom: 20 })
+    .onClick(()=>{
+      promptAction.showToast({message:'功能未完善'})
     })
   }
 
@@ -219,14 +242,10 @@ struct Index {
   //   .backgroundColor(Color.Black)
   //   .zIndex(999)
   // }
-  aboutToAppear(): void {
-    window.getLastWindow(getContext())
-      .then(win => {
-        win.setWindowLayoutFullScreen(true)
-        win.setWindowBackgroundColor('#ff373737')
-      })
-
-  }
+  //开启顶部的沉浸式
+  // aboutToAppear(): void {
+  //
+  // }
 
   build() {
     Column() {
@@ -235,10 +254,10 @@ struct Index {
         Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
           ForEach(this.btmTabList, (item: BarClass) => {
             TabContent() {
-              if (item.id===1) TopBar()
-              else if (item.id===2) Text('Friend')
-              else if (item.id===3) Message()
-              else if (item.id===4) My()
+              if (item.id === 1) TopBar()
+              else if (item.id === 2) Text('Friend')
+              else if (item.id === 3) Message()
+              else if (item.id === 4) My()
             }.tabBar(item.title)
 
           })
@@ -254,7 +273,7 @@ struct Index {
         }
         .width('100%')
         .height(75)
-        .position({ y: '91%' })
+        .position({ y: '91.1%' })
         .backgroundColor(Color.Black)
         .justifyContent(FlexAlign.SpaceAround)
 
@@ -296,6 +315,9 @@ struct Index {
         itemData: this.itemData,
         contentItem: (item: object) => {
           this.contentItem(item as BarClass)
+        },
+        contentMore: () => {
+          this.moreFn()
         }
       })
     }

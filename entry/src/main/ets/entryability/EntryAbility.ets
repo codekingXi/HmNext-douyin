@@ -18,11 +18,14 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
     const userSetting = new UserSettingClass(this.context)
+    const win = windowStage.getMainWindowSync()
+    win.setWindowLayoutFullScreen(true) //设置窗口全屏
+
     const token = await userSetting.getUserToken()
-    AppStorage.setOrCreate(TOKEN_KEY,new UserInfoModel({} as UserInfo))
-    if(token){
+    AppStorage.setOrCreate(TOKEN_KEY, new UserInfoModel({} as UserInfo))
+    if (token) {
       windowStage.loadContent('pages/Index/Index')
-    }else{
+    } else {
       windowStage.loadContent('pages/Login/Login')
 
     }
