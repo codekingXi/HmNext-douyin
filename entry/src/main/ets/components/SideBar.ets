@@ -116,7 +116,6 @@ struct Sidebar {
       likeNum: 34,
       likeFlag: false
     }))
-
   }
   @Builder
   side(item: sideData) {
@@ -155,7 +154,8 @@ struct Sidebar {
       ReplyInput({
         publishComment:(content:string)=>{
           this.addComment(content)
-        }
+        },
+        iptContent:'善语结善缘,恶言伤人心'
       })
     }
     .width('100%')
