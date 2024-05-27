@@ -1,4 +1,4 @@
-import { TalkUserInfo } from '../../models/user'
+import { UserInfo } from '../../models/user'
 import { UserSettingClass } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
 
@@ -6,7 +6,7 @@ import { router } from '@kit.ArkUI'
 @Component
 export default struct Message {
   @State
-  userList:TalkUserInfo[] = [] //渲染默认用户列表
+  userList:UserInfo[] = [] //渲染默认用户列表
 
   @Consume
   showDialog: boolean
@@ -39,19 +39,25 @@ export default struct Message {
       }.width('100%').padding({left:15,top:'15%',right:15})
       .justifyContent(FlexAlign.SpaceBetween)
       List({space:15}){
-        ForEach(this.userList,(item:TalkUserInfo)=>{
+        ForEach(this.userList,(item:UserInfo)=>{
           ListItem(){
             Row({space:10}){
-              Image(item.talkAvatar).width(70).height(70).border({radius:35})
+              Image(item.avatar).width(70).height(70).border({radius:35})
               Row(){
                 Column(){
-                  Text(item.talkUsername).fontWeight(600).fontSize(24)
-                  Text(item.talkContent)
+                  Text(item.username).fontWeight(600).fontSize(24)
+                  Text(item.content)
                 }.width('100%').alignItems(HorizontalAlign.Start)
               }
 
             }.width('100%')
           }.layoutWeight(1)
+          .onClick(()=>{
+            router.pushUrl({
+              url:'pages/ChatDetail/ChatDetail',
+              params:item
+            })
+          })
         })
 
       }.scrollBar(BarState.Off).margin({top:20,left:15,right:15})
