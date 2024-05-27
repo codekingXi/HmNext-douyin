@@ -1,6 +1,6 @@
 import { USER_SETTING, TOKEN_KEY, TIKTOK_CONNECT } from '../constants'
 import { preferences } from '@kit.ArkData'
-import { defaultUserInfo, TalkUserInfoModel } from '../models/user'
+import { defaultUserInfo, UserInfoModel } from '../models/user'
 
 export class UserSettingClass {
   //上下文
@@ -31,6 +31,11 @@ export class UserSettingClass {
   //获取抖音联系人
   getTikTokConnect(){
     const Store = this.getStore()
-    return JSON.parse(Store.getSync(TIKTOK_CONNECT,JSON.stringify(defaultUserInfo))as string)as TalkUserInfoModel[]
+    return JSON.parse(Store.getSync(TIKTOK_CONNECT,JSON.stringify(defaultUserInfo))as string)as UserInfoModel[]
   }
+  //获取当前用户
+  // getCurrentUser(){
+  //   const Store = this.getStore()
+  //   return JSON.parse(Store.getSync(CURRENT_USER,JSON.stringify(CURRENT_USER))as string)as UserInfoModel[]
+  // }
 }
