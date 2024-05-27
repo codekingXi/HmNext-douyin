@@ -17,12 +17,13 @@ export default class EntryAbility extends UIAbility {
   async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
-    const userSetting = new UserSettingClass(this.context)
+
+    const userSetting = new UserSettingClass(this.context)  //上下文
     const win = windowStage.getMainWindowSync()
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
 
     const token = await userSetting.getUserToken()
-    AppStorage.setOrCreate(TOKEN_KEY, new UserInfoModel({} as UserInfo))
+    AppStorage.setOrCreate(TOKEN_KEY, token)
     if (token) {
       windowStage.loadContent('pages/Index/Index')
     } else {
