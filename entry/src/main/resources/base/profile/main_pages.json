@@ -6,6 +6,7 @@
     "pages/Setting/Setting",
     "pages/Shop/Shop",
     "pages/Message/Message",
-    "pages/Search/SearchPage"
+    "pages/Search/SearchPage",
+    "pages/ChatDetail/ChatDetail"
   ]
 }

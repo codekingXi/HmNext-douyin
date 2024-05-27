@@ -1,16 +1,43 @@
 import { router } from '@kit.ArkUI'
+import { UserInfo, UserInfoModel } from '../../models/user'
+import { UserSettingClass } from '../../utils/setting'
+
 @Entry
 @Component
 struct SearchPage {
+  @State
+  userList:UserInfo[]=[]
+  @State
+  @Watch('updateFilterList')
+  searchName: string=''
+  @State
+  filterList: UserInfoModel[]=[]
+  @State
+  isMsg:boolean = false
+  aboutToAppear(): void {
+    this.getUserList()
+  }
+  getUserList() {
+    this.userList = new UserSettingClass(getContext()).getTikTokConnect()
+    this.updateFilterList()
+  }
+  updateFilterList(){
+    if(this.searchName){
+      this.filterList=this.userList.filter(item=>item.username.includes(this.searchName))
+      return
+    }
+    this.filterList=[] //列表为空
+  }
   build() {
     Column() {
+      //搜索框
       Row({space:10}) {
-        Search({ placeholder: '搜索' })
+        Search({ placeholder: '搜索',value:$$this.searchName })
           .caretStyle({color:Color.Red})
           .border({
             radius: 8
           })
-          .width('80%')
+          .width('85%')
           .backgroundColor('#ffececec')
         Row(){
           Text('取消')
@@ -19,14 +46,41 @@ struct SearchPage {
             })
             .fontColor(Color.Black)
             .fontSize(20)
-            .textAlign(TextAlign.Center)
+            .textAlign(TextAlign.Start)
             .layoutWeight(1)
-        }.width(80)
+        }.padding({left:10})
 
       }.margin({
         top:'15%'
       })
       .width('100%').height(50)
+      //内容区域
+      //判断接收值渲染相应内容
+      if(this.isMsg){
+        List({space:15}){
+          ForEach(this.filterList,(item:UserInfo)=>{
+            ListItem(){
+              Row({space:10}){
+                Image(item.avatar).width(70).height(70).border({radius:35})
+                Row(){
+                  Column(){
+                    Text(item.username).fontWeight(600).fontSize(24)
+                    Text(item.content)
+                  }.width('100%').alignItems(HorizontalAlign.Start)
+                }
+
+              }.width('100%')
+            }.layoutWeight(1)
+            .onClick(()=>{
+              router.pushUrl({
+                url:'pages/ChatDetail/ChatDetail'
+              })
+            })
+          })
+
+        }.scrollBar(BarState.Off).margin({top:20,left:10,right:15})
+      }
+
     }.padding({left:20,right:20}).width('100%').height('100%').backgroundColor(Color.White)
   }
 }
