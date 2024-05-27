@@ -7,9 +7,17 @@ import { promptAction, router } from '@kit.ArkUI'
 export default struct My {
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-
+  @State
+  name: string =''
+  @State
+  tiktokNum:number=0
+  @State
+  avatar:string=''
   aboutToAppear(): void {
     this.userInfo = AppStorage.get(TOKEN_KEY) as UserInfoModel
+    this.name=this.userInfo.username
+    this.tiktokNum=this.userInfo.tiktokNub
+    this.avatar=this.userInfo.avatar
   }
 
   @Styles
@@ -115,7 +123,6 @@ export default struct My {
             }
             .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 10 })
           }.width('100%').height('50%').zIndex(3).position({ y: 0 })
-
           Stack({ alignContent: Alignment.BottomStart }) {
             Row() {
               //背景视频
@@ -132,7 +139,7 @@ export default struct My {
               Row({ space: 20 }) {
                 Row() {
                   //头像
-                  Image(this.userInfo.avatar)
+                  Image(this.avatar)
                     .width(100).height(100)
                     .border({
                       width: 3,
@@ -142,8 +149,8 @@ export default struct My {
                 }
 
                 Column({ space: 5 }) {
-                  Text(this.userInfo.username).fontColor(Color.White)
-                  Text(`抖音号:${this.userInfo.tiktokNub}`)
+                  Text(this.name).fontColor(Color.White)
+                  Text(`抖音号:${this.tiktokNum}`)
                     .fontColor('#ff807f7f')
                     .fontSize(16)
                 }.width('100%').alignItems(HorizontalAlign.Start)
