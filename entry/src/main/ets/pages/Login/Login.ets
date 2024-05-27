@@ -41,9 +41,6 @@ struct Login {
     avatar:''
   } as UserInfo)
 
-  getBtnEnable() {
-    return !!(this.userInfo.username && this.userInfo.password)
-  }
 
   /*
    *params 该声明周期函数只会执行一次*/
@@ -134,7 +131,6 @@ struct Login {
       .height(50)
       .borderRadius(8)
       .backgroundColor('#fff80606')
-      .enabled(this.getBtnEnable())
       .onClick(() => {
         this.login()
       })
