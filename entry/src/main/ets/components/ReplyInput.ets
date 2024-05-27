@@ -6,9 +6,11 @@ struct ReplyInput {
   @State
   content:string='' //输入框内容
   publishComment:(content:string)=>void=()=>{}
+
+  iptContent:string=''
   build() {
     Row({space:10}){
-      TextInput({placeholder:'~请输入留言',text:$$this.content})
+      TextInput({placeholder:this.iptContent,text:$$this.content})
         .layoutWeight(1)
         .height(40)
         .borderRadius(40)
