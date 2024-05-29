@@ -1,16 +1,15 @@
-import { TOKEN_KEY } from '../../constants'
+import { CURRENT_USER } from '../../constants'
 import { router } from '@kit.ArkUI'
 import { UserSettingClass } from '../../utils/setting'
-
 @Entry
 @Component
 struct Setting {
   @BuilderParam
   CardItem:()=>void
   /** 退出登录 */
-  logout() {
-    AppStorage.set(TOKEN_KEY, null) //清空全局状态
-    new UserSettingClass(getContext()).setUserToken("") //清空首选项
+  async logout():Promise<void> {
+    AppStorage.set(CURRENT_USER,"") //清空全局状态
+    await new UserSettingClass(getContext()).setCurrentUser("") //清空首选项
     router.replaceUrl({
       url: 'pages/Login/Login'
     })

@@ -1,17 +1,66 @@
-import { BarClass, btmTabList } from '../../models'
+import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { SideBarCom, TopBar } from '../../components'
-import { promptAction, router, window } from '@kit.ArkUI'
+import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
 import customDialog from '../../components/customDialog'
 import Message from '../Message/Message'
+import { CURRENT_USER, TOKEN_KEY } from '../../constants'
+import { UserSettingClass } from '../../utils/setting'
+import Login from '../Login/Login'
+import { CurrentUser } from '../../models/user'
 
+const Store = new UserSettingClass(getContext()).getStore()
 
 @Entry
 @Component
 struct Index {
+  // aboutToAppear(): void {
+  //
+  // }
+
+  @State
+  userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
+  //跳转页面 重定向
+  redirect(){
+    if (!Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
+      router.replaceUrl({
+        url: 'pages/Login/Login'
+      })
+    }
+  }
   //底部tab的数据
   @State
-  btmTabList: BarClass[] = btmTabList
+  btmTabList: BarClass[] = [
+    {
+      title: '首页',
+      name: "Home",
+      id: 1
+    },
+    {
+      title: '朋友',
+      name: "Friend",
+      id: 2,
+      click: () => {
+        this.redirect()
+      }
+    },
+    {
+      title: '信息',
+      name: "Message",
+      id: 3,
+      click: () => {
+        this.redirect()
+      }
+    },
+    {
+      title: '我',
+      name: "My",
+      id: 4,
+      click: () => {
+        this.redirect()
+      }
+    }
+  ]
   tabController: TabsController = new TabsController()
   @Provide
   IndexX: number | string = '' //整个index页面的x坐标
@@ -19,6 +68,8 @@ struct Index {
   currentIndex: number = 0
   @Provide
   showDialog: boolean = false
+  @Provide
+  bgColor: string = '' //修改渐变背景色只能通过#00000000的方式
   @State
   sidePosition: boolean = false
   //因为有改变页面元素的事件所以不能和接口放在一个文件
@@ -194,29 +245,32 @@ struct Index {
     .onClick(() => {
       //通过获取索引值实现点击切换tab
       const index = this.btmTabList.findIndex(obj => obj.name === item.name)
+      item.click && item.click()
       this.tabController.changeIndex(index)
     })
   }
+
   //更多功能
   @Builder
   moreFn() {
     Button() {
-      Row({space:10}) {
+      Row({ space: 10 }) {
         Image($r("app.media.icon_moreFn")).width(24).height(24)
         Text('更多功能')
       }.width('100%').justifyContent(FlexAlign.Center)
     }
     .type(ButtonType.Normal)
     .backgroundColor(Color.White)
-    .width('55%').height(50)
+    .width('55%')
+    .height(50)
     .border({
       radius: 4,
       width: .7,
-      color:'#ff1d1d1d'
+      color: '#ff1d1d1d'
     })
     .margin({ top: 5, left: 15, right: 15, bottom: 20 })
-    .onClick(()=>{
-      promptAction.showToast({message:'功能未完善'})
+    .onClick(() => {
+      promptAction.showToast({ message: '功能未完善' })
     })
   }
 
@@ -254,10 +308,18 @@ struct Index {
         Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
           ForEach(this.btmTabList, (item: BarClass) => {
             TabContent() {
-              if (item.id === 1) TopBar()
-              else if (item.id === 2) Text('Friend')
-              else if (item.id === 3) Message()
-              else if (item.id === 4) My()
+              if (item.id === 1) {
+                TopBar()
+              }
+              else if (item.id === 2 ) {
+                Text('Friend')
+              }
+              else if (item.id === 3 ) {
+                Message()
+              }
+              else if (item.id === 4 ) {
+                My()
+              }
             }.tabBar(item.title)
 
           })
@@ -289,9 +351,9 @@ struct Index {
         if (this.showDialog) {
           customDialog()
             .onClick(() => {
+              this.bgColor = 'rgba(0,0,0,.5)'
               this.showDialog = !this.showDialog
               this.IndexX = '0%' //修改整个Index界面的x坐标
-
             })
         }
 
@@ -301,7 +363,7 @@ struct Index {
       //   modalTransition: ModalTransition.DEFAULT
       // })
 
-      //TODO:封装好的侧边栏放在一个位置 方便改内容
+      //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
       SideBarCom({
         sideWidth: '70%',

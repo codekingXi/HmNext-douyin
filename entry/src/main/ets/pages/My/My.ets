@@ -1,6 +1,8 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { TOKEN_KEY } from '../../constants'
 import { promptAction, router } from '@kit.ArkUI'
+import { picker } from '@kit.CoreFileKit'
+import { UserSettingClass } from '../../utils/setting'
+import { ImageList } from '../../models/common'
 
 @Preview
 @Component
@@ -8,16 +10,19 @@ export default struct My {
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
   @State
-  name: string =''
+  name: string = ''
   @State
-  tiktokNum:number=0
+  tiktokNum: number = 0
   @State
-  avatar:string=''
+  avatar: string = ''
+
   aboutToAppear(): void {
-    this.userInfo = AppStorage.get(TOKEN_KEY) as UserInfoModel
-    this.name=this.userInfo.username
-    this.tiktokNum=this.userInfo.tiktokNub
-    this.avatar=this.userInfo.avatar
+    //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
+    const info = new UserSettingClass(getContext()).getCurrentUser()
+    this.userInfo = info
+    this.name = this.userInfo.username
+    this.tiktokNum = this.userInfo.tiktokNub
+    this.avatar = this.userInfo.avatar
   }
 
   @Styles
@@ -32,6 +37,8 @@ export default struct My {
 
   @Consume
   showDialog: boolean
+  @Consume
+  bgColor: string
   @State
   infoTitle: BarClass[] = [
     { title: '1504', rightContent: '获赞' },
@@ -84,6 +91,22 @@ export default struct My {
   IndexX: number | string
   @State
   private personInfo: ResourceStr | undefined = undefined
+  maxImgNumber: number = 1 //最多可选1张图片
+  @State
+  imgList:ImageList[]=[] //提交接口
+  async selectPhoto() {
+    const photo = new picker.PhotoViewPicker() //图片选择对象
+    const result = await photo.select({
+      MIMEType: picker.PhotoViewMIMETypes.IMAGE_TYPE,
+      maxSelectNumber: this.maxImgNumber
+    })
+    //如果有图片
+    if(result.photoUris.length){
+      this.imgList = result.photoUris.map(url=>({
+        url
+      }as ImageList))
+    }
+  }
 
   build() {
     Column() {
@@ -117,12 +140,14 @@ export default struct My {
               .onClick(() => {
                 //显示遮罩
                 this.showDialog = !this.showDialog
+                this.bgColor = '#80000000'
                 //更改移动的坐标位置
                 this.IndexX = '-65%'
               })
             }
             .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 10 })
           }.width('100%').height('50%').zIndex(3).position({ y: 0 })
+
           Stack({ alignContent: Alignment.BottomStart }) {
             Row() {
               //背景视频
@@ -145,6 +170,11 @@ export default struct My {
                       width: 3,
                       color: Color.White,
                       radius: 50
+                    })
+                    .onClick(() => {
+                      //打开自定义弹窗
+                      this.showDialog = true
+                      this.bgColor = '#000'
                     })
                 }
 

@@ -1,9 +1,10 @@
 import { UserInfo, UserInfoModel } from '../../models/index'
 import { promptAction, router } from '@kit.ArkUI'
-import { TOKEN_KEY } from '../../constants'
+import { CURRENT_USER, TOKEN_KEY } from '../../constants'
 import { UserSettingClass } from '../../utils/setting'
 import { userData } from '../../api'
 import commonFunction from '../../public/Function/commonFunction'
+
 
 @Extend(Text)
 function textStyle() {
@@ -40,14 +41,19 @@ struct Login {
     tiktokNub: 0,
     avatar:''
   } as UserInfo)
-
-
   /*
    *params 该声明周期函数只会执行一次*/
    aboutToAppear(): void {
      this.userInfo.tiktokNub = new commonFunction().creteRandom() //获取随机生成的抖音号
+     this.userInfo.avatar='https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
+
   }
+
+
+
+
   login() {
+
     //因为没有真实数据，模拟登录
     if (this.userInfo.username.length < 6 && this.userInfo.password.length < 6 ||
       this.userInfo.username.length < 6 || this.userInfo.password.length < 6) {
@@ -63,16 +69,18 @@ struct Login {
         const token = userData(this.userInfo)
         //用户信息校验
         if (this.userInfo.username && this.userInfo.password) {
-          AppStorage.set(TOKEN_KEY,new UserInfoModel({
+          AppStorage.set(CURRENT_USER,new UserInfoModel({
             username:this.userInfo.username,
             password:this.userInfo.password,
             tiktokNub:this.userInfo.tiktokNub,
-            avatar:'https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg',
+            avatar:this.userInfo.avatar,
             user_id:this.userInfo.user_id,
             content:this.userInfo.content
           })) //写入全局状态
-          PersistentStorage.persistProp(TOKEN_KEY,token)
+
           await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
+          await new UserSettingClass(getContext()).setCurrentUser(token) //写入首选项
+
           this.loading = false
           router.replaceUrl({ url: 'pages/Index/Index' })
         } else {
@@ -85,7 +93,6 @@ struct Login {
 
 
   }
-
   build() {
     Column({ space: 30 }) {
       Text("账号登录").fontSize(34)
@@ -141,6 +148,7 @@ struct Login {
     .backgroundColor('#ff29e980')
     .justifyContent(FlexAlign.Center)
     .alignItems(HorizontalAlign.Center)
+
   }
 }
 

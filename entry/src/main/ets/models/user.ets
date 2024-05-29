@@ -1,4 +1,4 @@
-import { TOKEN_KEY } from '../constants'
+import { CURRENT_USER } from '../constants'
 import commonFunction from '../public/Function/commonFunction'
 
 export interface UserInfo {
@@ -113,4 +113,4 @@ export const defaultUserInfo: UserInfo[] = [
 ]
 
 
-export const CurrentUser: UserInfo = AppStorage.get(TOKEN_KEY) as UserInfoModel
+export const CurrentUser: UserInfo = AppStorage.get(CURRENT_USER) as UserInfoModel

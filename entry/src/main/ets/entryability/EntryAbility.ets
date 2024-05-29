@@ -2,8 +2,9 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { UserSettingClass } from '../utils/setting';
-import { TOKEN_KEY } from '../constants';
+import { CURRENT_USER, TOKEN_KEY } from '../constants';
 import { UserInfo, UserInfoModel } from '../models';
+
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -18,18 +19,15 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
-    const userSetting = new UserSettingClass(this.context)  //上下文
+
     const win = windowStage.getMainWindowSync()
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
-
-    const token = await userSetting.getUserToken()
+    const token = new UserSettingClass(this.context).getUserToken()
     AppStorage.setOrCreate(TOKEN_KEY, token)
-    if (token) {
-      windowStage.loadContent('pages/Index/Index')
-    } else {
-      windowStage.loadContent('pages/Login/Login')
+    const info = new UserSettingClass(this.context).getCurrentUser()
+    AppStorage.setOrCreate(CURRENT_USER,info)
+    windowStage.loadContent('pages/Index/Index')
 
-    }
   }
 
   onWindowStageDestroy(): void {
