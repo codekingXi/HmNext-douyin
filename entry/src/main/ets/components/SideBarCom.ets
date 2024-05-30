@@ -18,7 +18,6 @@ export struct SideBarCom {
   sidePositionX: string = ''
 
   build() {
-    //Column() {
       List() {
         ForEach(this.itemData, (item: object) => {
           ListItem() {
@@ -30,23 +29,16 @@ export struct SideBarCom {
             }
           }
         })
+        if(this.contentMore){
+          this.contentMore()
+        }
       }
       .scrollBar(BarState.Off)
-      .padding({ left: 20, right: 20, top: 50, bottom: 50 })
+      .padding({ left: 20, right: 20, top: 50, bottom: 10 })
       .width(this.sideWidth)
       .height('95%')
       //侧边栏的默认绝对定位
       .position({ x: this.sidePositionX })
 
-      // Row() {
-      //   if (this.contentMore) {
-      //     this.contentMore()
-      //   }
-      // }.layoutWeight(1)
-      // .position({
-      //   x: '100%',
-      //   y: '90%'
-      // })
-    //}
   }
 }
