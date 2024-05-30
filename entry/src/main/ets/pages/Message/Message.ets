@@ -7,7 +7,8 @@ import { router } from '@kit.ArkUI'
 export default struct Message {
   @State
   userList:UserInfo[] = [] //渲染默认用户列表
-
+  @Consume
+  bgColor: string
   @Consume
   showDialog: boolean
   @Consume
@@ -28,6 +29,7 @@ export default struct Message {
         Image($r("app.media.icon_bar_sideBtn")).img()
           .onClick(()=>{
             this.showDialog=true
+            this.bgColor='#80000000'
             this.IndexX = '70%'
           })
         Image($r('app.media.icon_meg_search')).img()

@@ -41,10 +41,11 @@ export class UserSettingClass {
   //获取当前用户
   getCurrentUser(){
     const Store = this.getStore()
-    //如果首选项的用户数据不为空返回相关数据
+    //如果首选项的用户数据是空字符串返回相关数据
     if(Store.getSync(CURRENT_USER,JSON.stringify(CurrentUser))){
       return JSON.parse(Store.getSync(CURRENT_USER,JSON.stringify(CurrentUser))as string)as UserInfoModel
     }else {
+      //首次进入程序首选项没有任何数据返回一个空对象 防止出现无法进入程序等报错
       return new UserInfoModel({} as UserInfo)
     }
 

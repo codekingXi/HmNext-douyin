@@ -29,6 +29,8 @@ struct TopBar {
   IndexX: number | string
   @Consume
   showDialog: boolean
+  @Consume
+  bgColor: string
   @Builder
   titleCommon(item: BarClass) {
     Column() {
@@ -86,6 +88,7 @@ struct TopBar {
             .width(28).height(28)
             .onClick(() => {
               this.showDialog = !this.showDialog
+              this.bgColor='#80000000'
               //更改坐标轴
               this.IndexX = '70%'
             })
@@ -109,8 +112,10 @@ struct TopBar {
           Image(this.topTabList[this.currentIndex].id === 1 ?$r("app.media.icon_search"):$r("app.media.icon_meg_search"))
             .width(30).height(30)
             .onClick(() => {
-              router.pushUrl({
-                url:'pages/Search/SearchPage'
+              animateTo({duration:0},()=>{
+                router.pushUrl({
+                  url:'pages/Search/SearchPage'
+                })
               })
             })
         }.width(50).height(50).position({ x: '90%' })

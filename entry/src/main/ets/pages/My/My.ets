@@ -1,30 +1,25 @@
-import { BarClass, UserInfo, UserInfoModel } from '../../models'
+import { BarClass, UserInfoModel } from '../../models'
 import { promptAction, router } from '@kit.ArkUI'
-import { picker } from '@kit.CoreFileKit'
 import { UserSettingClass } from '../../utils/setting'
-import { ImageList } from '../../models/common'
 
 @Preview
 @Component
 export default struct My {
-  @State
-  userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
+  @Consume
+  info: UserInfoModel
   @State
   name: string = ''
   @State
   tiktokNum: number = 0
   @State
   avatar: string = ''
-
   aboutToAppear(): void {
     //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
-    const info = new UserSettingClass(getContext()).getCurrentUser()
-    this.userInfo = info
-    this.name = this.userInfo.username
-    this.tiktokNum = this.userInfo.tiktokNub
-    this.avatar = this.userInfo.avatar
+    this.info  = new UserSettingClass(getContext()).getCurrentUser()
+    this.name = this.info.username
+    this.tiktokNum = this.info.tiktokNub
+    this.avatar = this.info.avatar
   }
-
   @Styles
   btnBg(){
     .width(40).height(40).backgroundColor('rgba(48, 48, 48, 0.5)').border({ radius: 40 })
@@ -91,22 +86,7 @@ export default struct My {
   IndexX: number | string
   @State
   private personInfo: ResourceStr | undefined = undefined
-  maxImgNumber: number = 1 //最多可选1张图片
-  @State
-  imgList:ImageList[]=[] //提交接口
-  async selectPhoto() {
-    const photo = new picker.PhotoViewPicker() //图片选择对象
-    const result = await photo.select({
-      MIMEType: picker.PhotoViewMIMETypes.IMAGE_TYPE,
-      maxSelectNumber: this.maxImgNumber
-    })
-    //如果有图片
-    if(result.photoUris.length){
-      this.imgList = result.photoUris.map(url=>({
-        url
-      }as ImageList))
-    }
-  }
+
 
   build() {
     Column() {
@@ -165,6 +145,9 @@ export default struct My {
                 Row() {
                   //头像
                   Image(this.avatar)
+                    .onAppear(()=>{
+                      this.avatar=this.info.avatar
+                    })
                     .width(100).height(100)
                     .border({
                       width: 3,
@@ -215,7 +198,6 @@ export default struct My {
             Text(this.personInfo === undefined ? 'I‘m form UK❥(^_-)' : this.personInfo).fontSize(14)
               .fontColor(Color.Black).textAlign(TextAlign.Start)
           }.width('100%').padding(10)
-
           List({ space: 30 }) {
             ForEach(this.personFn, (item: BarClass) => {
               ListItem() {
