@@ -70,8 +70,11 @@ export default struct My {
     },
     {
       icon: $r('app.media.icon_moreFn'), title: '查看更多', click: () => {
-      this.showDialog = true
-      this.IndexX = '-65%'
+      animateTo({duration:200},()=>{
+        this.showDialog = true
+        this.bgColor='#80000000'
+        this.IndexX = '-65%'
+      })
     }
     }
   ]
