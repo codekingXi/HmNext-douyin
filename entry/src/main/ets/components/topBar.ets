@@ -31,6 +31,7 @@ struct TopBar {
   showDialog: boolean
   @Consume
   bgColor: string
+
   @Builder
   titleCommon(item: BarClass) {
     Column() {
@@ -68,15 +69,17 @@ struct TopBar {
       Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
-            if (item.id === 0) Shop()
-            else if (item.id === 1) VideoPage()
+            if (item.id === 0) {
+              Shop()
+            } else if (item.id === 1) {
+              VideoPage()
+            }
           }
           .tabBar()
         })
       }
       .height('105%')
-      .position({y:'-4.8%'})
-
+      .position({ y: '-4.8%' })
       .animationDuration(200)
       .barWidth('40%')
 
@@ -84,13 +87,19 @@ struct TopBar {
       Row({ space: 20 }) {
         //顶部nav的左方的按钮
         Row() {
-          Image(this.topTabList[this.currentIndex].id === 1 ?$r("app.media.icon_index_nav"):$r("app.media.icon_bar_sideBtn"))
+          Image(this.topTabList[this.currentIndex].id === 1 ? $r("app.media.icon_index_nav") :
+          $r("app.media.icon_bar_sideBtn"))
             .width(28).height(28)
             .onClick(() => {
-              this.showDialog = !this.showDialog
-              this.bgColor='#80000000'
-              //更改坐标轴
-              this.IndexX = '70%'
+              animateTo({
+                duration: 200
+              }, () => {
+                this.showDialog = !this.showDialog
+                this.bgColor = '#80000000'
+                //更改坐标轴
+                this.IndexX = '70%'
+              })
+
             })
         }.width(50).height(50).position({ x: '5%' })
 
@@ -102,20 +111,19 @@ struct TopBar {
           .color('#fffcfcfc')
           .lineCap(LineCapStyle.Round)
           .width(25)
-          .translate(this.topTabList[this.currentIndex].id===0?{x:35}:{x:100})
+          .translate(this.topTabList[this.currentIndex].id === 0 ? { x: 35 } : { x: 100 })
           .animation({
-            duration:300
+            duration: 300
           })
-          .position({x:115,y:40})
+          .position({ x: 115, y: 40 })
         //顶部nav的右方的按钮
         Row() {
-          Image(this.topTabList[this.currentIndex].id === 1 ?$r("app.media.icon_search"):$r("app.media.icon_meg_search"))
+          Image(this.topTabList[this.currentIndex].id === 1 ? $r("app.media.icon_search") :
+          $r("app.media.icon_meg_search"))
             .width(30).height(30)
             .onClick(() => {
-              animateTo({duration:0},()=>{
-                router.pushUrl({
-                  url:'pages/Search/SearchPage'
-                })
+              router.pushUrl({
+                url: 'pages/Search/SearchPage'
               })
             })
         }.width(50).height(50).position({ x: '90%' })

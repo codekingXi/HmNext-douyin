@@ -1,9 +1,8 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-import { UserSettingClass } from '../utils/setting';
-import { CURRENT_USER, TOKEN_KEY } from '../constants';
-import { UserInfo, UserInfoModel } from '../models';
+import { Tiktok } from '../utils/setting';
+import { CURRENT_USER} from '../constants';
 
 
 export default class EntryAbility extends UIAbility {
@@ -22,9 +21,7 @@ export default class EntryAbility extends UIAbility {
 
     const win = windowStage.getMainWindowSync()
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
-    const token = new UserSettingClass(this.context).getUserToken()
-    AppStorage.setOrCreate(TOKEN_KEY, token)
-    const info = new UserSettingClass(this.context).getCurrentUser()
+    const info = new Tiktok(this.context).getCurrentUser()
     AppStorage.setOrCreate(CURRENT_USER,info)
     windowStage.loadContent('pages/Index/Index')
 

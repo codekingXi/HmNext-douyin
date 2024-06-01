@@ -4,13 +4,26 @@ import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
 import customDialog from '../../components/customDialog'
 import Message from '../Message/Message'
-import { CURRENT_USER, TOKEN_KEY } from '../../constants'
-import { UserSettingClass } from '../../utils/setting'
-import Login from '../Login/Login'
+import { CURRENT_USER } from '../../constants'
+import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
+import { picker } from '@kit.CoreFileKit'
 
-const Store = new UserSettingClass(getContext()).getStore()
-
+export const Store = new Tiktok(getContext()).getStore()
+export class Fn{
+  //跳转页面 重定向
+  public async redirect(){
+    //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
+    if (!Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
+      promptAction.showToast({
+        message:'请先登录!'
+      })
+      await router.replaceUrl({
+        url: 'pages/Login/Login'
+      })
+    }
+  }
+}
 @Entry
 @Component
 struct Index {
@@ -18,16 +31,10 @@ struct Index {
   //
   // }
 
+  @Provide
+  info:UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-  //跳转页面 重定向
-  redirect(){
-    if (!Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
-      router.replaceUrl({
-        url: 'pages/Login/Login'
-      })
-    }
-  }
   //底部tab的数据
   @State
   btmTabList: BarClass[] = [
@@ -41,7 +48,7 @@ struct Index {
       name: "Friend",
       id: 2,
       click: () => {
-        this.redirect()
+        new Fn().redirect()
       }
     },
     {
@@ -49,7 +56,7 @@ struct Index {
       name: "Message",
       id: 3,
       click: () => {
-        this.redirect()
+        new Fn().redirect()
       }
     },
     {
@@ -57,7 +64,7 @@ struct Index {
       name: "My",
       id: 4,
       click: () => {
-        this.redirect()
+        new Fn().redirect()
       }
     }
   ]
@@ -212,7 +219,6 @@ struct Index {
           Text('￥' + item.rightContent).textAlign(TextAlign.Center)
             .fontSize(16)
             .fontColor('#ff515151')
-
         }
         .width(60)
         .height(30)
@@ -253,25 +259,27 @@ struct Index {
   //更多功能
   @Builder
   moreFn() {
-    Button() {
-      Row({ space: 10 }) {
-        Image($r("app.media.icon_moreFn")).width(24).height(24)
-        Text('更多功能')
-      }.width('100%').justifyContent(FlexAlign.Center)
-    }
-    .type(ButtonType.Normal)
-    .backgroundColor(Color.White)
-    .width('55%')
-    .height(50)
-    .border({
-      radius: 4,
-      width: .7,
-      color: '#ff1d1d1d'
-    })
-    .margin({ top: 5, left: 15, right: 15, bottom: 20 })
-    .onClick(() => {
-      promptAction.showToast({ message: '功能未完善' })
-    })
+    Row(){
+      Button() {
+        Row({ space: 10 }) {
+          Image($r("app.media.icon_moreFn")).width(24).height(24)
+          Text('更多功能')
+        }.width('100%').justifyContent(FlexAlign.Center)
+      }
+      .type(ButtonType.Normal)
+      .backgroundColor(Color.White)
+      .width('100%')
+      .height(50)
+      .border({
+        radius: 4,
+        width: .7,
+        color: '#ff1d1d1d'
+      })
+      .margin({ top: 5, left: 15, right: 15, bottom: 20 })
+      .onClick(() => {
+        promptAction.showToast({ message: '功能未完善' })
+      })
+    }.width('90%').justifyContent(FlexAlign.Center)
   }
 
   // 上传视频等用的弹窗
@@ -300,7 +308,83 @@ struct Index {
   // aboutToAppear(): void {
   //
   // }
+  @Builder
+  imgBtn(title:string,borBom:boolean,click:()=>void) {
 
+      Row(){
+        Text(title).fontSize(20)
+          .fontColor(Color.White)
+      }.width('100%')
+      .height(50)
+      .justifyContent(FlexAlign.Start)
+      .padding({left:10,right:10})
+      .backgroundColor('#ff3e3e3e')
+      .border({
+        width:{
+          bottom:borBom===true?.5:0
+        },
+        color:'#ff868686',
+        radius:10
+      })
+
+      .onClick(()=>{
+        click&&click()
+      })
+
+
+  }
+  /*
+   * 图片选择*/
+  maxImgNumber: number = 1 //最多可选1张图片
+
+  public async selectPhoto() {
+    const photo = new picker.PhotoViewPicker() //图片选择对象
+    const result = await photo.select({
+      //选择类型
+      MIMEType: picker.PhotoViewMIMETypes.IMAGE_TYPE,
+      //最大可选数量
+      maxSelectNumber: this.maxImgNumber
+    })
+    //如果有图片
+    if(result.photoUris.length){
+      this.info.avatar=result.photoUris.toString()
+      const token = this.info
+      await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
+    }
+  }
+  @Builder
+  imgAvatar() {
+    Column({space:40}){
+      Text('x').fontSize(54).fontColor(Color.White)
+        .fontWeight(100)
+        .onClick(()=>{
+          this.showDialog=false
+        })
+        .margin({top:"5%",left:'-45%'})
+      Image(this.info.avatar)
+        .draggable(true)
+        .height('50%')
+        .width('100%')
+      Column(){
+        this.imgBtn("创建抖音仔仔",true,()=>{
+          promptAction.showToast({message:'功能未完善'})
+        })
+        this.imgBtn("更换头像",true,()=>{
+          this.selectPhoto()
+        })
+        this.imgBtn("保存头像",true,()=>{
+          promptAction.showToast({message:'功能未完善'})
+        })
+        this.imgBtn("查看抖音码",false,()=>{
+          promptAction.showToast({message:'功能未完善'})
+        })
+      }.width('90%')
+      .backgroundColor('#ff3e3e3e')
+      .borderRadius(10)
+      .margin({top:"10%"})
+    }
+
+  }
   build() {
     Column() {
       //底部的nav
@@ -349,11 +433,21 @@ struct Index {
         // }.position({ x: '47%', y: '92.5%' })
         //默认不显示遮罩层
         if (this.showDialog) {
-          customDialog()
+          customDialog({
+            imgAvatar:()=>{
+              if(this.bgColor==='#000'){
+                this.imgAvatar()
+              }
+            }
+          })
             .onClick(() => {
-              this.bgColor = 'rgba(0,0,0,.5)'
-              this.showDialog = !this.showDialog
-              this.IndexX = '0%' //修改整个Index界面的x坐标
+              animateTo({duration:200},()=>{
+                //通过判断色值区别弹窗是哪个页面的再进行相应改变
+                if(this.bgColor!=='#000'){
+                  this.showDialog = !this.showDialog
+                  this.IndexX = '0%' //修改整个Index界面的x坐标
+                }
+              })
             })
         }
 
@@ -386,12 +480,6 @@ struct Index {
 
     //整个页面的坐标
     .translate({ x: this.IndexX })
-
-    .animation({
-      duration: 200,
-      iterations: 1,
-      playMode: PlayMode.Normal
-    })
   }
 }
 

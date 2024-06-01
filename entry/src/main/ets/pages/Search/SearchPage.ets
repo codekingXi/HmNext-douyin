@@ -1,6 +1,6 @@
 import { router } from '@kit.ArkUI'
 import { UserInfo, UserInfoModel } from '../../models/user'
-import { UserSettingClass } from '../../utils/setting'
+import { Tiktok } from '../../utils/setting'
 
 @Entry
 @Component
@@ -17,10 +17,14 @@ struct SearchPage {
   aboutToAppear(): void {
     this.getUserList()
   }
+  /*
+   * 获取用户列表*/
   getUserList() {
-    this.userList = new UserSettingClass(getContext()).getTikTokConnect()
+    this.userList = new Tiktok(getContext()).getTikTokConnect()
     this.updateFilterList()
   }
+  /*
+   *更新筛选列表*/
   updateFilterList(){
     if(this.searchName){
       this.filterList=this.userList.filter(item=>item.username.includes(this.searchName))

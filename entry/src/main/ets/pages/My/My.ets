@@ -1,24 +1,17 @@
 import { BarClass, UserInfoModel } from '../../models'
 import { promptAction, router } from '@kit.ArkUI'
-import { UserSettingClass } from '../../utils/setting'
+import { Tiktok } from '../../utils/setting'
 
-@Preview
 @Component
 export default struct My {
   @Consume
-  info: UserInfoModel
-  @State
-  name: string = ''
-  @State
-  tiktokNum: number = 0
-  @State
-  avatar: string = ''
+  info:UserInfoModel
   aboutToAppear(): void {
     //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
-    this.info  = new UserSettingClass(getContext()).getCurrentUser()
-    this.name = this.info.username
-    this.tiktokNum = this.info.tiktokNub
-    this.avatar = this.info.avatar
+    this.info = new Tiktok(getContext()).getCurrentUser()
+  }
+  onPageShow(): void {
+    this.info.avatar
   }
   @Styles
   btnBg(){
@@ -86,8 +79,6 @@ export default struct My {
   IndexX: number | string
   @State
   private personInfo: ResourceStr | undefined = undefined
-
-
   build() {
     Column() {
       //把上下两个模块包在一起
@@ -118,11 +109,14 @@ export default struct My {
 
               }.btnBg().justifyContent(FlexAlign.Center)
               .onClick(() => {
-                //显示遮罩
-                this.showDialog = !this.showDialog
-                this.bgColor = '#80000000'
-                //更改移动的坐标位置
-                this.IndexX = '-65%'
+                animateTo({duration:200},()=>{
+                  //显示遮罩
+                  this.showDialog = !this.showDialog
+                  this.bgColor = '#80000000'
+                  //更改移动的坐标位置
+                  this.IndexX = '-65%'
+                })
+
               })
             }
             .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 10 })
@@ -133,7 +127,7 @@ export default struct My {
               //背景视频
               Video({
                 src: $rawfile("media/myTopBgMedia/Bg-video.mp4")
-              })
+              }).layoutWeight(1).height('150%')
                 .muted(true)
                 .loop(true)
                 .autoPlay(true)
@@ -144,10 +138,7 @@ export default struct My {
               Row({ space: 20 }) {
                 Row() {
                   //头像
-                  Image(this.avatar)
-                    .onAppear(()=>{
-                      this.avatar=this.info.avatar
-                    })
+                  Image(this.info.avatar)
                     .width(100).height(100)
                     .border({
                       width: 3,
@@ -162,21 +153,21 @@ export default struct My {
                 }
 
                 Column({ space: 5 }) {
-                  Text(this.name).fontColor(Color.White)
-                  Text(`抖音号:${this.tiktokNum}`)
+                  Text(this.info.username).fontColor(Color.White)
+                  Text(`抖音号:${this.info.tiktokNub}`)
                     .fontColor('#ff807f7f')
                     .fontSize(16)
                 }.width('100%').alignItems(HorizontalAlign.Start)
 
               }.margin({ left: 20 })
             }
-            .width('100%').height('50%')
-            .linearGradient({
+            .width('100%').height('50%').linearGradient({
               direction: GradientDirection.Top, //渐变方向
-              colors: [['rgba(7, 7, 7, 0.7)', 0.4], ['rgba(78, 77, 77, 0)', 1.0]]
+              colors: [['rgba(7, 7, 7, 0.7)', 0.4], ['rgba(78, 77, 77, 0)', 1]]
             })
-          }.zIndex(2)
-        }.layoutWeight(3.5).width('100%')
+          }
+        }.layoutWeight(3.5).width('100%').margin({bottom:-10})
+
 
         //白色个人内容区
         Column() {
@@ -217,7 +208,7 @@ export default struct My {
           color: Color.White
         })
         .borderRadius({
-          topLeft: 10, topRight: 10
+          topLeft: 15, topRight: 15
         })
         .layoutWeight(6.5)
         .backgroundColor(Color.White)
@@ -226,14 +217,11 @@ export default struct My {
     }
     //修改整个页面的坐标
     .onClick(() => {
-      if (this.IndexX === '-65%') {
-        this.IndexX = '0%'
-      }
-    })
-    .animation({
-      duration: 200,
-      iterations: 1,
-      playMode: PlayMode.Normal
+      animateTo({duration:200},() => {
+        if (this.IndexX === '-65%') {
+          this.IndexX = '0%'
+        }
+      })
     })
   }
 }

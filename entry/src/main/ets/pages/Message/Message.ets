@@ -1,5 +1,5 @@
 import { UserInfo } from '../../models/user'
-import { UserSettingClass } from '../../utils/setting'
+import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
 
 @Entry
@@ -17,7 +17,7 @@ export default struct Message {
     this.getUserList()
   }
   getUserList() {
-    this.userList = new UserSettingClass(getContext()).getTikTokConnect()
+    this.userList = new Tiktok(getContext()).getTikTokConnect()
   }
   @Styles
   img(){
@@ -28,9 +28,11 @@ export default struct Message {
       Row(){
         Image($r("app.media.icon_bar_sideBtn")).img()
           .onClick(()=>{
-            this.showDialog=true
-            this.bgColor='#80000000'
-            this.IndexX = '70%'
+            animateTo({duration:200},()=>{
+              this.showDialog=true
+              this.bgColor='#80000000'
+              this.IndexX = '70%'
+            })
           })
         Image($r('app.media.icon_meg_search')).img()
           .onClick(()=>{
@@ -51,7 +53,6 @@ export default struct Message {
                   Text(item.content)
                 }.width('100%').alignItems(HorizontalAlign.Start)
               }
-
             }.width('100%')
           }.layoutWeight(1)
           .onClick(()=>{

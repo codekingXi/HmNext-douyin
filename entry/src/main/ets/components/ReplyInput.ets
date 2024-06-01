@@ -1,3 +1,4 @@
+import { Fn } from '../pages/Index/Index'
 
 @Preview
 @Component
@@ -19,6 +20,11 @@ struct ReplyInput {
           if(this.content){
             this.publishComment(this.content)
             this.content=''
+          }
+        })
+        .onClick(()=>{
+          if(this.iptContent==='善语结善缘,恶言伤人心'){
+            new Fn().redirect()
           }
         })
       Button('发送')

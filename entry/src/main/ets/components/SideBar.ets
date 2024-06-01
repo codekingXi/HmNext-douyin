@@ -8,6 +8,7 @@ import { promptAction } from '@kit.ArkUI'
 struct Sidebar {
   @State
   showDialog: boolean = false
+  //侧边栏图标和数据
   sideDataList: sideData[] = [
     {
       id: 1,
@@ -42,6 +43,7 @@ struct Sidebar {
       }
     },
   ]
+  //评论的数据
   @State commentList: commentDataModel[] = [
     new commentDataModel({
       id: 1,
@@ -156,6 +158,7 @@ struct Sidebar {
           this.addComment(content)
         },
         iptContent:'善语结善缘,恶言伤人心'
+
       })
     }
     .width('100%')

@@ -1,9 +1,9 @@
 import { UserInfo, UserInfoModel } from '../../models/index'
 import { promptAction, router } from '@kit.ArkUI'
-import { CURRENT_USER, TOKEN_KEY } from '../../constants'
-import { UserSettingClass } from '../../utils/setting'
+import { CURRENT_USER } from '../../constants'
+import { Tiktok } from '../../utils/setting'
 import { userData } from '../../api'
-import commonFunction from '../../public/Function/commonFunction'
+import commonFn from '../../common/Function/commonFn'
 
 
 @Extend(Text)
@@ -39,19 +39,18 @@ struct Login {
     username: '',
     password: '',
     tiktokNub: 0,
-    avatar:''
+    avatar:'',
+    user_id:''
   } as UserInfo)
   /*
    *params 该声明周期函数只会执行一次*/
    aboutToAppear(): void {
-     this.userInfo.tiktokNub = new commonFunction().creteRandom() //获取随机生成的抖音号
+     this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
      this.userInfo.avatar='https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
-
+     this.userInfo.user_id = commonFn.creteUserID().toString() //获取随机生产的id
   }
-
-
-
-
+  /*
+   * 登录功能*/
   login() {
 
     //因为没有真实数据，模拟登录
@@ -77,10 +76,7 @@ struct Login {
             user_id:this.userInfo.user_id,
             content:this.userInfo.content
           })) //写入全局状态
-
-          await new UserSettingClass(getContext()).setUserToken(token) //写入首选项
-          await new UserSettingClass(getContext()).setCurrentUser(token) //写入首选项
-
+          await new Tiktok(getContext()).setCurrentUser(token) //写入首选项
           this.loading = false
           router.replaceUrl({ url: 'pages/Index/Index' })
         } else {
@@ -148,7 +144,6 @@ struct Login {
     .backgroundColor('#ff29e980')
     .justifyContent(FlexAlign.Center)
     .alignItems(HorizontalAlign.Center)
-
   }
 }
 

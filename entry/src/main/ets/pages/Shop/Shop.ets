@@ -1,14 +1,35 @@
-import goods from '../../public/data/goods.json'
-import { promptAction } from '@kit.ArkUI'
+import goods from '../../common/data/goods.json'
+import { promptAction, router } from '@kit.ArkUI'
 
 @Entry
 @Component
 export default struct Shop {
+  @State
+  loading:boolean=false //加载的激活条件
+  //加载更多数据
+  loadMore(){
+    return new Promise<boolean>((resolve,reject) =>{
+      setTimeout(()=>{
+        goods.push(...goods.slice(0,9)) //es6的方法
+        resolve(true)
+      },1000)
+    })
+  }
+  @Builder
+  getFooter(){
+    Row({space:4}){
+      Text('数据加载')
+      LoadingProgress()
+        .width(24).height(24)
+    }.width('100%')
+    .height(60).justifyContent(FlexAlign.Center).margin({bottom:20})
+  }
   //商品结构
   @Builder
   waterFlowItem(index: number) {
     Column({ space: 10 }) {
       Image(`/public/images/goods/${goods[index].cover}`)
+        .objectFit(ImageFit.Cover)
         .height(index % 2 ? 180 : 200)
       Column() {
         Text(goods[index].name)
@@ -30,6 +51,12 @@ export default struct Shop {
   build() {
     Column() {
       Column() {
+        // Row(){
+        //  Text('<').fontSize(33).fontColor('#ff4e4e4e')
+        //    .onClick(()=>{
+        //      router.back()
+        //    })
+        // }.width('100%').justifyContent(FlexAlign.Start).padding({left:20,bottom:20})
         Row() {
           Search({ placeholder: '15pro max美版全新' })
             .width('90%')
@@ -40,7 +67,7 @@ export default struct Shop {
           radius: 10
         })
         //渲染商品列表数据
-        WaterFlow() {
+        WaterFlow({footer:this.getFooter()}) {
           ForEach(goods, (item: string, index: number) => {
             FlowItem() {
               this.waterFlowItem(index)
@@ -52,6 +79,19 @@ export default struct Shop {
 
           })
         }
+        //到底部时触发
+        .onReachEnd(async ()=>{
+          //阀门控制
+          if(!this.loading){
+            try {
+              this.loading=true //开启加载
+              await this.loadMore() //加载数据
+              this.loading=false
+            }catch(e){
+              promptAction.showToast({message:JSON.stringify(e)})
+            }
+          }
+        })
         .backgroundColor('#ffe2e2e2')
         .columnsTemplate('1fr 1fr')
         .rowsGap(10)
@@ -64,6 +104,6 @@ export default struct Shop {
       .margin({ top: 100 })
 
     }.width('100%')
-    .height('100%').backgroundColor('rgba(255, 255, 255, 0.85)')
+    .height('100%').backgroundColor('#ffe2e2e2')
   }
 }

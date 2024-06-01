@@ -1,4 +1,5 @@
 import { commentDataModel } from '../models'
+import { Fn } from '../pages/Index/Index'
 
 @Preview
 @Component
@@ -40,6 +41,7 @@ struct Comment {
               .width(20)
               .height(20)
               .onClick(()=>{
+                new Fn().redirect()
                 this.changeLike()
               })
             Text(this.item.likeNum.toString())

@@ -1,6 +1,6 @@
 import { CURRENT_USER } from '../../constants'
 import { router } from '@kit.ArkUI'
-import { UserSettingClass } from '../../utils/setting'
+import { Tiktok } from '../../utils/setting'
 @Entry
 @Component
 struct Setting {
@@ -9,7 +9,7 @@ struct Setting {
   /** 退出登录 */
   async logout():Promise<void> {
     AppStorage.set(CURRENT_USER,"") //清空全局状态
-    await new UserSettingClass(getContext()).setCurrentUser("") //清空首选项
+    await new Tiktok(getContext()).setCurrentUser("") //清空首选项
     router.replaceUrl({
       url: 'pages/Login/Login'
     })
