@@ -1,5 +1,5 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { SideBarCom, TopBar } from '../../components'
+import { SideBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
 import customDialog from '../../components/customDialog'
@@ -10,13 +10,14 @@ import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
 
 export const Store = new Tiktok(getContext()).getStore()
-export class Fn{
+
+export class Fn {
   //跳转页面 重定向
-  public async redirect(){
+  public async redirect() {
     //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
     if (!Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
       promptAction.showToast({
-        message:'请先登录!'
+        message: '请先登录!'
       })
       await router.replaceUrl({
         url: 'pages/Login/Login'
@@ -24,6 +25,7 @@ export class Fn{
     }
   }
 }
+
 @Entry
 @Component
 struct Index {
@@ -32,7 +34,7 @@ struct Index {
   // }
 
   @Provide
-  info:UserInfoModel = new Tiktok(getContext()).getCurrentUser()
+  info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
   //底部tab的数据
@@ -259,7 +261,7 @@ struct Index {
   //更多功能
   @Builder
   moreFn() {
-    Row(){
+    Row() {
       Button() {
         Row({ space: 10 }) {
           Image($r("app.media.icon_moreFn")).width(24).height(24)
@@ -275,7 +277,12 @@ struct Index {
         width: .7,
         color: '#ff1d1d1d'
       })
-      .margin({ top: 5, left: 15, right: 15, bottom: 20 })
+      .margin({
+        top: 5,
+        left: 15,
+        right: 15,
+        bottom: 20
+      })
       .onClick(() => {
         promptAction.showToast({ message: '功能未完善' })
       })
@@ -308,31 +315,7 @@ struct Index {
   // aboutToAppear(): void {
   //
   // }
-  @Builder
-  imgBtn(title:string,borBom:boolean,click:()=>void) {
 
-      Row(){
-        Text(title).fontSize(20)
-          .fontColor(Color.White)
-      }.width('100%')
-      .height(50)
-      .justifyContent(FlexAlign.Start)
-      .padding({left:10,right:10})
-      .backgroundColor('#ff3e3e3e')
-      .border({
-        width:{
-          bottom:borBom===true?.5:0
-        },
-        color:'#ff868686',
-        radius:10
-      })
-
-      .onClick(()=>{
-        click&&click()
-      })
-
-
-  }
   /*
    * 图片选择*/
   maxImgNumber: number = 1 //最多可选1张图片
@@ -346,45 +329,48 @@ struct Index {
       maxSelectNumber: this.maxImgNumber
     })
     //如果有图片
-    if(result.photoUris.length){
-      this.info.avatar=result.photoUris.toString()
+    if (result.photoUris.length) {
+      this.info.avatar = result.photoUris.toString()
       const token = this.info
       await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
     }
   }
+
   @Builder
   imgAvatar() {
-    Column({space:40}){
-      Text('x').fontSize(54).fontColor(Color.White)
+    Column({ space: 40 }) {
+      Text('x')
+        .fontSize(54)
+        .fontColor(Color.White)
         .fontWeight(100)
-        .onClick(()=>{
-          this.showDialog=false
+        .onClick(() => {
+          this.showDialog = false
         })
-        .margin({top:"5%",left:'-45%'})
+        .margin({ top: "5%", left: '-45%' })
       Image(this.info.avatar)
         .draggable(true)
         .height('50%')
         .width('100%')
-      Column(){
-        this.imgBtn("创建抖音仔仔",true,()=>{
-          promptAction.showToast({message:'功能未完善'})
-        })
-        this.imgBtn("更换头像",true,()=>{
+      Column() {
+        TitleBtn({title:"创建抖音仔仔", borBom:true, click:() => {
+          promptAction.showToast({ message: '功能未完善' })
+        }})
+        TitleBtn({title:"更换头像", borBom:true, click:() => {
           this.selectPhoto()
-        })
-        this.imgBtn("保存头像",true,()=>{
-          promptAction.showToast({message:'功能未完善'})
-        })
-        this.imgBtn("查看抖音码",false,()=>{
-          promptAction.showToast({message:'功能未完善'})
-        })
+        }})
+        TitleBtn({title:"保存头像", borBom:true, click:() => {
+          promptAction.showToast({ message: '功能未完善' })
+        }})
+        TitleBtn({title:"查看抖音码", borBom:true, click:() => {
+          promptAction.showToast({ message: '功能未完善' })
+        }})
       }.width('90%')
-      .backgroundColor('#ff3e3e3e')
       .borderRadius(10)
-      .margin({top:"10%"})
+      .margin({ top: "5%" })
     }
 
   }
+
   build() {
     Column() {
       //底部的nav
@@ -394,14 +380,11 @@ struct Index {
             TabContent() {
               if (item.id === 1) {
                 TopBar()
-              }
-              else if (item.id === 2 ) {
+              } else if (item.id === 2) {
                 Text('Friend')
-              }
-              else if (item.id === 3 ) {
+              } else if (item.id === 3) {
                 Message()
-              }
-              else if (item.id === 4 ) {
+              } else if (item.id === 4) {
                 My()
               }
             }.tabBar(item.title)
@@ -434,16 +417,16 @@ struct Index {
         //默认不显示遮罩层
         if (this.showDialog) {
           customDialog({
-            imgAvatar:()=>{
-              if(this.bgColor==='#000'){
+            imgAvatar: () => {
+              if (this.bgColor === '#000') {
                 this.imgAvatar()
               }
             }
           })
             .onClick(() => {
-              animateTo({duration:200},()=>{
+              animateTo({ duration: 200 }, () => {
                 //通过判断色值区别弹窗是哪个页面的再进行相应改变
-                if(this.bgColor!=='#000'){
+                if (this.bgColor !== '#000') {
                   this.showDialog = !this.showDialog
                   this.IndexX = '0%' //修改整个Index界面的x坐标
                 }

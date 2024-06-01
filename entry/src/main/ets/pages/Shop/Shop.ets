@@ -28,7 +28,7 @@ export default struct Shop {
   @Builder
   waterFlowItem(index: number) {
     Column({ space: 10 }) {
-      Image(`/public/images/goods/${goods[index].cover}`)
+      Image(`/common/images/goods/${goods[index].cover}`)
         .objectFit(ImageFit.Cover)
         .height(index % 2 ? 180 : 200)
       Column() {
