@@ -1,3 +1,5 @@
+/**
+ * 我的界面头像弹窗复用ui内容*/
 @Component
 export struct TitleBtn {
   title: string=''
@@ -6,9 +8,9 @@ export struct TitleBtn {
   build() {
     Row() {
       Text(this.title).fontSize(20)
+        .width('100%')
         .fontColor(Color.White)
     }
-    .width('90%')
     .height(50)
     .justifyContent(FlexAlign.Start)
     .padding({ left: 10, right: 10 })
@@ -16,10 +18,14 @@ export struct TitleBtn {
       width: {
         bottom: this.borBom === true ? .5 : 0
       },
+      radius:10,
       color: '#ff868686'
     })
+    .margin(10)
+    .animation({duration:200})
     .stateStyles({
       normal:{
+
         .backgroundColor('#ff3e3e3e')
       },
       pressed:{

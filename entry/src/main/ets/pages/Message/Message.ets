@@ -1,6 +1,7 @@
 import { UserInfo } from '../../models/user'
 import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
+import { MessageInfoModel } from '../../models/message'
 
 @Entry
 @Component
@@ -26,6 +27,7 @@ export default struct Message {
   build() {
     Column(){
       Row(){
+        //顶部导航按钮
         Image($r("app.media.icon_bar_sideBtn")).img()
           .onClick(()=>{
             animateTo({duration:200},()=>{
@@ -34,37 +36,39 @@ export default struct Message {
               this.IndexX = '70%'
             })
           })
+        // 顶部搜索按钮
         Image($r('app.media.icon_meg_search')).img()
           .onClick(()=>{
             router.pushUrl({
-              url:'pages/Search/SearchPage'
+              url:'pages/Search/SearchPage',
+              params:{
+                name:'搜索'
+              }
             })
           })
       }.width('100%').padding({left:15,top:'15%',right:15})
       .justifyContent(FlexAlign.SpaceBetween)
       List({space:15}){
-        ForEach(this.userList,(item:UserInfo)=>{
-          ListItem(){
-            Row({space:10}){
-              Image(item.avatar).width(70).height(70).border({radius:35})
-              Row(){
-                Column(){
+        ForEach(this.userList,(item:UserInfo)=> {
+          ListItem() {
+            Row({ space: 10 }) {
+              Image(item.avatar).width(70).height(70).border({ radius: 35 })
+              Row() {
+                Column() {
                   Text(item.username).fontWeight(600).fontSize(24)
                   Text(item.content)
                 }.width('100%').alignItems(HorizontalAlign.Start)
               }
             }.width('100%')
           }.layoutWeight(1)
-          .onClick(()=>{
+          .onClick(() => {
             router.pushUrl({
-              url:'pages/ChatDetail/ChatDetail',
-              params:item
+              url: 'pages/ChatDetail/ChatDetail',
+              params: item
             })
           })
         })
-
       }.scrollBar(BarState.Off).margin({top:20,left:15,right:15})
     }.width('100%').height('100%').backgroundColor('#ffffffff')
-
   }
 }

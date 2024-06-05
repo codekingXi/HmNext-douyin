@@ -13,14 +13,21 @@ export const Store = new Tiktok(getContext()).getStore()
 
 export class Fn {
   //跳转页面 重定向
-  public async redirect() {
+  public redirect() {
     //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
-    if (!Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
-      promptAction.showToast({
-        message: '请先登录!'
-      })
-      await router.replaceUrl({
-        url: 'pages/Login/Login'
+    if (!Store.getSync(CURRENT_USER,CurrentUser)) {
+       AlertDialog.show({
+        title: '登录状态监测',
+        message: '请先登录!',
+        alignment:DialogAlignment.Center,
+        confirm: {
+          value: '确定',
+          action: () => {
+            router.pushUrl({
+              url: 'pages/Login/Login'
+            })
+          }
+        }
       })
     }
   }
@@ -32,7 +39,6 @@ struct Index {
   // aboutToAppear(): void {
   //
   // }
-
   @Provide
   info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @State
@@ -52,11 +58,21 @@ struct Index {
       click: () => {
         new Fn().redirect()
       }
-    },
+    }, {
+    icon: $r('app.media.ic_uploading'),
+    name: "上传",
+    id: 3,
+    click: () => {
+      new Fn().redirect()
+      if(Store.getSync(CURRENT_USER,CurrentUser)){
+        this.showUploadDialog = true
+      }
+    }
+  },
     {
       title: '信息',
       name: "Message",
-      id: 3,
+      id: 4,
       click: () => {
         new Fn().redirect()
       }
@@ -64,7 +80,7 @@ struct Index {
     {
       title: '我',
       name: "My",
-      id: 4,
+      id: 5,
       click: () => {
         new Fn().redirect()
       }
@@ -77,6 +93,8 @@ struct Index {
   currentIndex: number = 0
   @Provide
   showDialog: boolean = false
+  @State
+  showUploadDialog: boolean = false
   @Provide
   bgColor: string = '' //修改渐变背景色只能通过#00000000的方式
   @State
@@ -246,15 +264,24 @@ struct Index {
   @Builder
   bottomBar(item: BarClass) {
     Column() {
-      Text(item.title)
-        .fontSize(24)
-        .fontColor(this.btmTabList[this.currentIndex].id === item.id ? this.titleColor[0] : this.titleColor[1])
+      if (item.id === 3) {
+        Image(item.icon)
+          .width(50).aspectRatio(1)
+      } else {
+        Text(item.title)
+          .fontSize(24)
+          .fontColor(this.btmTabList[this.currentIndex].id === item.id ? this.titleColor[0] : this.titleColor[1])
+      }
     }
-    .onClick(() => {
+    .onClick(async () => {
       //通过获取索引值实现点击切换tab
-      const index = this.btmTabList.findIndex(obj => obj.name === item.name)
       item.click && item.click()
-      this.tabController.changeIndex(index)
+      if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
+        if (item.id !== 3) {
+          const index = this.btmTabList.findIndex(obj => obj.name === item.name)
+          this.tabController.changeIndex(index)
+        }
+      }
     })
   }
 
@@ -290,27 +317,28 @@ struct Index {
   }
 
   // 上传视频等用的弹窗
-  // @Builder
-  // contentDialog() {
-  //   Column() {
-  //     Row() {
-  //       Text('x')
-  //         .fontSize(44)
-  //         .fontColor(Color.White)
-  //         .onClick(() => {
-  //           this.showDialog = !this.showDialog
-  //         })
-  //     }.width('100%')
-  //     .margin({
-  //       top: 30,
-  //       left: 20
-  //     })
-  //     .justifyContent(FlexAlign.Start)
-  //   }.width('100%')
-  //   .height('110%')
-  //   .backgroundColor(Color.Black)
-  //   .zIndex(999)
-  // }
+  @Builder
+  contentDialog() {
+    Column() {
+      Row() {
+        Text('x')
+          .fontSize(44)
+          .fontColor(Color.White)
+          .onClick(() => {
+            this.showUploadDialog = false
+          })
+      }.width('100%')
+      .margin({
+        top: 30,
+        left: 20
+      })
+      .justifyContent(FlexAlign.Start)
+    }.width('100%')
+    .height('110%')
+    .backgroundColor(Color.Black)
+    .zIndex(999)
+  }
+
   //开启顶部的沉浸式
   // aboutToAppear(): void {
   //
@@ -352,21 +380,29 @@ struct Index {
         .height('50%')
         .width('100%')
       Column() {
-        TitleBtn({title:"创建抖音仔仔", borBom:true, click:() => {
-          promptAction.showToast({ message: '功能未完善' })
-        }})
-        TitleBtn({title:"更换头像", borBom:true, click:() => {
-          this.selectPhoto()
-        }})
-        TitleBtn({title:"保存头像", borBom:true, click:() => {
-          promptAction.showToast({ message: '功能未完善' })
-        }})
-        TitleBtn({title:"查看抖音码", borBom:true, click:() => {
-          promptAction.showToast({ message: '功能未完善' })
-        }})
+        TitleBtn({
+          title: "创建抖音仔仔", borBom: true, click: () => {
+            promptAction.showToast({ message: '功能未完善' })
+          }
+        })
+        TitleBtn({
+          title: "更换头像", borBom: true, click: () => {
+            this.selectPhoto()
+          }
+        })
+        TitleBtn({
+          title: "保存头像", borBom: true, click: () => {
+            promptAction.showToast({ message: '功能未完善' })
+          }
+        })
+        TitleBtn({
+          title: "查看抖音码", borBom: false, click: () => {
+            promptAction.showToast({ message: '功能未完善' })
+          }
+        })
       }.width('90%')
       .borderRadius(10)
-      .margin({ top: "5%" })
+      .margin({ top: "-5%" })
     }
 
   }
@@ -382,9 +418,9 @@ struct Index {
                 TopBar()
               } else if (item.id === 2) {
                 Text('Friend')
-              } else if (item.id === 3) {
-                Message()
               } else if (item.id === 4) {
+                Message()
+              } else if (item.id === 5) {
                 My()
               }
             }.tabBar(item.title)
@@ -436,9 +472,9 @@ struct Index {
 
       }
 
-      // .bindContentCover($$this.showDialog, this.contentDialog, {
-      //   modalTransition: ModalTransition.DEFAULT
-      // })
+      .bindContentCover($$this.showUploadDialog, this.contentDialog, {
+        modalTransition: ModalTransition.DEFAULT
+      })
 
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏

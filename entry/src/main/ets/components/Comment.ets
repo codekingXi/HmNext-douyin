@@ -1,7 +1,10 @@
+import { CURRENT_USER } from '../constants'
 import { commentDataModel } from '../models'
-import { Fn } from '../pages/Index/Index'
+import { CurrentUser } from '../models/user'
+import { Fn, Store } from '../pages/Index/Index'
 
-@Preview
+/**
+ * 评论组件*/
 @Component
 struct Comment {
   @ObjectLink
@@ -42,7 +45,9 @@ struct Comment {
               .height(20)
               .onClick(()=>{
                 new Fn().redirect()
-                this.changeLike()
+                if(Store.getSync(CURRENT_USER,JSON.stringify(CurrentUser))){
+                  this.changeLike()
+                }
               })
             Text(this.item.likeNum.toString())
               .fontColor(this.item.likeFlag?Color.Red:'#ff868585')

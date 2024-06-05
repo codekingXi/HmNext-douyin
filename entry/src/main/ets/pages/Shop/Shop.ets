@@ -10,7 +10,7 @@ export default struct Shop {
   loadMore(){
     return new Promise<boolean>((resolve,reject) =>{
       setTimeout(()=>{
-        goods.push(...goods.slice(0,9)) //es6的方法
+        goods.push(...goods) //es6的方法
         resolve(true)
       },1000)
     })
@@ -31,6 +31,7 @@ export default struct Shop {
       Image(`/common/images/goods/${goods[index].cover}`)
         .objectFit(ImageFit.Cover)
         .height(index % 2 ? 180 : 200)
+        .draggable(false)
       Column() {
         Text(goods[index].name)
         Row({ space: 10 }) {

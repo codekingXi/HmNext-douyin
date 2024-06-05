@@ -1,7 +1,7 @@
 import { BarClass } from '../models'
 import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
-import { promptAction, router } from '@kit.ArkUI'
+import { router, window } from '@kit.ArkUI'
 
 
 @Preview
@@ -31,6 +31,8 @@ struct TopBar {
   showDialog: boolean
   @Consume
   bgColor: string
+  @Provide
+  titleWidth: number = 0
 
   @Builder
   titleCommon(item: BarClass) {
@@ -45,24 +47,28 @@ struct TopBar {
         .animation({
           duration: 50
         })
-
+        .onAreaChange((oldArea, newArea) => {
+          this.titleWidth = newArea.width as number
+        })
     }
     .onClick(() => {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj => obj.name === item.name)
       this.tabController.changeIndex(index) //切换索引值
+
     })
   }
 
-  // @State
-  // areaHei:number = 0
-  // async aboutToAppear(): Promise<void> {
-  //   //窗口类方法必须用promise包裹
-  //   const win = await window.getLastWindow(getContext())
-  //   //获取顶部避让矩形区域的高度
-  //   this.areaHei = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
-  //     .topRect.height)
-  // }
+  @State
+  areaHei: number = 0
+
+  async aboutToAppear(): Promise<void> {
+    //窗口类方法必须用promise包裹
+    const win = await window.getLastWindow(getContext())
+    //获取顶部避让矩形区域的高度
+    this.areaHei = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
+      .topRect.height)
+  }
 
   build() {
     Stack() {
@@ -83,6 +89,7 @@ struct TopBar {
       .animationDuration(200)
       .barWidth('40%')
 
+      //consTomBuiDer.builder(this.msg,24)
       //自定义样式覆盖原来的tabs
       Row({ space: 20 }) {
         //顶部nav的左方的按钮
@@ -111,7 +118,8 @@ struct TopBar {
           .color('#fffcfcfc')
           .lineCap(LineCapStyle.Round)
           .width(25)
-          .translate(this.topTabList[this.currentIndex].id === 0 ? { x: 35 } : { x: 100 })
+          .translate(this.topTabList[this.currentIndex].id === 0 ? { x: (this.titleWidth - 10) } :
+            { x: this.titleWidth * 2 + 10 })
           .animation({
             duration: 300
           })
@@ -123,18 +131,20 @@ struct TopBar {
             .width(30).height(30)
             .onClick(() => {
               router.pushUrl({
-                url: 'pages/Search/SearchPage'
+                url: 'pages/Search/SearchPage',
+                params: {
+                  name: "搜你想看的"
+                }
               })
             })
         }.width(50).height(50).position({ x: '90%' })
 
       }.width('100%')
       .height(50).justifyContent(FlexAlign.Center)
-      .position({ y: '7.22%' })
+      .position({ y: this.areaHei + 10 })
     }
     .position({ y: '-2.5%' })
   }
 }
-
 
 export { TopBar }

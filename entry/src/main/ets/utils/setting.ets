@@ -2,6 +2,7 @@ import { USER_SETTING, TIKTOK_CONNECT, CURRENT_USER, UserRecord_KEY } from '../c
 import { preferences } from '@kit.ArkData'
 import { CurrentUser, defaultUserInfo, UserInfo, UserInfoModel } from '../models/user'
 import { MessageInfoModel } from '../models/message'
+
 /**
  * 首选项仓库
  * */
@@ -37,7 +38,7 @@ export class Tiktok {
   getCurrentUser() {
     const Store = this.getStore()
     //如果首选项的用户数据是空字符串返回相关数据
-    if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
+    if (Store.getSync(CURRENT_USER,CurrentUser)) {
       return JSON.parse(Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser)) as string) as UserInfoModel
     } else {
       //首次进入程序首选项没有任何数据返回一个空对象 防止出现无法进入程序等报错
@@ -79,5 +80,29 @@ export class Tiktok {
     // 写入list
     store.putSync(`${UserRecord_KEY}_${userId}`,JSON.stringify(list))
     await store.flush()
+  }
+  /**
+   * 获取所有人的最后的一条聊天记录的集合*/
+  getAllLastRecord(){
+    const store = this.getStore()
+    const arr:MessageInfoModel[] = []
+    const result = store.getAllSync() as object
+    Object.keys(result).forEach(key=>{
+      if(key.includes(UserRecord_KEY)){
+        //key对应的value
+        if(result[key]){
+         const list = JSON.parse(result[key]) as MessageInfoModel[] //所有的聊天记录
+          if(list.length){
+            arr.push(list[list.length-1])
+
+          }
+        }
+      }
+    })
+    //按照时间排序
+    arr.sort((a:MessageInfoModel,b:MessageInfoModel) => {
+      return b.sendTime-a.sendTime
+    })  //会对原数组排序
+    return arr
   }
 }

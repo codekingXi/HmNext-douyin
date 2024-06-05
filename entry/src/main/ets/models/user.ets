@@ -37,7 +37,7 @@ export const defaultUserInfo: UserInfo[] = [
     tiktokNub: commonFn.creteRandom(),
     avatar: 'https://img2.baidu.com/it/u=2778471297,524433918&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
     user_id: '1',
-    content: ''
+    content:''
   },
   {
     username: 'boss',
