@@ -1,7 +1,7 @@
 @Component
 export default struct customDialog {
   @Consume
-  bgColor: string
+  bgColor: ResourceColor
   @BuilderParam
   imgAvatar:()=>void  //头像
   build() {

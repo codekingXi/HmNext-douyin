@@ -3,6 +3,7 @@ import { commentDataModel } from '../models/commentData'
 import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
 import { promptAction } from '@kit.ArkUI'
+import commonFn from '../common/Function/commonFn'
 
 @Component
 struct Sidebar {
@@ -15,7 +16,7 @@ struct Sidebar {
       imgUrl: $r('app.media.love'),
       loveNum: 2010,
       click:()=>{
-        promptAction.showToast({message: "功能未完善"})
+        commonFn.tipDialog()
       }
     },
     {
@@ -31,7 +32,7 @@ struct Sidebar {
       imgUrl: $r('app.media.collect'),
       loveNum: 344,
       click:()=>{
-        promptAction.showToast({message: "功能未完善"})
+        commonFn.tipDialog()
       }
     },
     {
@@ -39,7 +40,7 @@ struct Sidebar {
       imgUrl: $r('app.media.transmit'),
       loveNum: 568,
       click:()=>{
-        promptAction.showToast({message: "功能未完善"})
+        commonFn.tipDialog()
       }
     },
   ]
@@ -152,6 +153,7 @@ struct Sidebar {
           }
         })
       }.layoutWeight(1)
+      .scrollBar(BarState.Off)
       //评论组件
       ReplyInput({
         publishComment:(content:string)=>{

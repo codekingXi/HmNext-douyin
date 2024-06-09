@@ -4,6 +4,7 @@ import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { userData } from '../../api'
 import commonFn from '../../common/Function/commonFn'
+import { LOADING_INDEX } from '../../router/Index'
 
 
 @Extend(Text)
@@ -43,7 +44,7 @@ struct Login {
     user_id:''
   } as UserInfo)
   /*
-   *params 该声明周期函数只会执行一次*/
+   * 该声明周期函数只会执行一次*/
    aboutToAppear(): void {
      this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
      this.userInfo.avatar='https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
@@ -78,7 +79,7 @@ struct Login {
           })) //写入全局状态
           await new Tiktok(getContext()).setCurrentUser(token) //写入首选项
           this.loading = false
-          router.replaceUrl({ url: 'pages/Index/Index' })
+          router.replaceUrl({ url: LOADING_INDEX })
         } else {
           promptAction.showToast({ message: "账号或密码错误!" })
           this.loading = false
@@ -88,6 +89,9 @@ struct Login {
     }
 
 
+  }
+  onBackPress(): boolean | void {
+    commonFn.tipOutPage()
   }
   build() {
     Column({ space: 30 }) {

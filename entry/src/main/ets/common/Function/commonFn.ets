@@ -1,5 +1,7 @@
 /*
  * 公共方法类库*/
+import { promptAction, router } from '@kit.ArkUI'
+
 export default class commonFn {
   /*
    * create 11 random
@@ -13,4 +15,17 @@ export default class commonFn {
   public static creteUserID() {
     return Math.floor(Math.random() * (11 + 1)) + 100
   }
+  /**
+   * 功能未完成的文本提示弹窗*/
+  public static tipDialog(){
+    promptAction.showToast({message: "功能未完善"})
+  }
+  /**
+   * 离开页面提示*/
+  public static tipOutPage(){
+    router.showAlertBeforeBackPage({
+      message:'确定要退出吗'
+    })
+  }
+
 }

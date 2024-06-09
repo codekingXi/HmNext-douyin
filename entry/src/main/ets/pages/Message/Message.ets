@@ -1,7 +1,8 @@
 import { UserInfo } from '../../models/user'
 import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
-import { MessageInfoModel } from '../../models/message'
+import { LOADING_ChatDetail, LOADING_SEARCH } from '../../router/Index'
+import { COLOR_OpacityBlack } from '../../common/color/colors'
 
 @Entry
 @Component
@@ -32,7 +33,7 @@ export default struct Message {
           .onClick(()=>{
             animateTo({duration:200},()=>{
               this.showDialog=true
-              this.bgColor='#80000000'
+              this.bgColor=COLOR_OpacityBlack
               this.IndexX = '70%'
             })
           })
@@ -40,7 +41,7 @@ export default struct Message {
         Image($r('app.media.icon_meg_search')).img()
           .onClick(()=>{
             router.pushUrl({
-              url:'pages/Search/SearchPage',
+              url:LOADING_SEARCH,
               params:{
                 name:'搜索'
               }
@@ -57,13 +58,19 @@ export default struct Message {
                 Column() {
                   Text(item.username).fontWeight(600).fontSize(24)
                   Text(item.content)
+                    .fontColor('#ff646464')
+                    .fontSize(14)
+                    .maxLines(1)
+                    .textOverflow({
+                      overflow:TextOverflow.Ellipsis
+                    })
                 }.width('100%').alignItems(HorizontalAlign.Start)
               }
             }.width('100%')
           }.layoutWeight(1)
           .onClick(() => {
             router.pushUrl({
-              url: 'pages/ChatDetail/ChatDetail',
+              url: LOADING_ChatDetail,
               params: item
             })
           })

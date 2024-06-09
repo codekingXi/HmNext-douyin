@@ -1,6 +1,8 @@
 import { CURRENT_USER } from '../../constants'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
+import { LOADING_LOGIN } from '../../router/Index'
+
 @Entry
 @Component
 struct Setting {
@@ -10,8 +12,11 @@ struct Setting {
   async logout():Promise<void> {
     AppStorage.set(CURRENT_USER,"") //清空全局状态
     await new Tiktok(getContext()).setCurrentUser("") //清空首选项
+    //清空页面栈 否则触发返回事件会回到上个页面
+    router.clear()
+    //此时跳转登录再返回就直接到桌面
     router.replaceUrl({
-      url: 'pages/Login/Login'
+      url: LOADING_LOGIN
     })
   }
   build() {

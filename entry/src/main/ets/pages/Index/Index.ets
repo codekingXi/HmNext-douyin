@@ -8,6 +8,9 @@ import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
+import commonFn from '../../common/Function/commonFn'
+import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
+import { COLOR_BLACK, COLOR_GRAY, COLOR_WHITE } from '../../common/color/colors'
 
 export const Store = new Tiktok(getContext()).getStore()
 
@@ -15,16 +18,16 @@ export class Fn {
   //跳转页面 重定向
   public redirect() {
     //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
-    if (!Store.getSync(CURRENT_USER,CurrentUser)) {
-       AlertDialog.show({
+    if (!Store.getSync(CURRENT_USER, CurrentUser)) {
+      AlertDialog.show({
         title: '登录状态监测',
         message: '请先登录!',
-        alignment:DialogAlignment.Center,
+        alignment: DialogAlignment.Center,
         confirm: {
           value: '确定',
           action: () => {
             router.pushUrl({
-              url: 'pages/Login/Login'
+              url: LOADING_LOGIN
             })
           }
         }
@@ -39,6 +42,9 @@ struct Index {
   // aboutToAppear(): void {
   //
   // }
+  onBackPress(): boolean | void {
+    commonFn.tipOutPage()
+  }
   @Provide
   info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @State
@@ -64,7 +70,7 @@ struct Index {
     id: 3,
     click: () => {
       new Fn().redirect()
-      if(Store.getSync(CURRENT_USER,CurrentUser)){
+      if (Store.getSync(CURRENT_USER, CurrentUser)) {
         this.showUploadDialog = true
       }
     }
@@ -96,7 +102,7 @@ struct Index {
   @State
   showUploadDialog: boolean = false
   @Provide
-  bgColor: string = '' //修改渐变背景色只能通过#00000000的方式
+  bgColor: ResourceColor = '' //修改渐变背景色只能通过#00000000的方式
   @State
   sidePosition: boolean = false
   //因为有改变页面元素的事件所以不能和接口放在一个文件
@@ -107,7 +113,7 @@ struct Index {
       icon: $r('app.media.icon_shopCar'),
       title: "我的订单",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -116,7 +122,7 @@ struct Index {
       title: "我的钱包",
       rightContent: '8.88',
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       }
 
     },
@@ -124,7 +130,7 @@ struct Index {
       icon: $r('app.media.icon_QRcode'),
       title: "我的二维码",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
 
@@ -133,7 +139,7 @@ struct Index {
       icon: $r('app.media.icon_time'),
       title: "观看历史",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
 
@@ -142,7 +148,7 @@ struct Index {
       icon: $r('app.media.icon_waitplay'),
       title: "稍后再看",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
 
@@ -151,7 +157,7 @@ struct Index {
       icon: $r('app.media.icon_clouddownload'),
       title: "离线模式",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -159,14 +165,14 @@ struct Index {
       icon: $r('app.media.icon_idea'),
       title: "抖音创作着中心",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       }
     },
     {
       icon: $r('app.media.icon_applet'),
       title: "小程序",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -174,7 +180,7 @@ struct Index {
       icon: $r('app.media.icon_love'),
       title: "抖音公益",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -182,7 +188,7 @@ struct Index {
       icon: $r('app.media.icon_sapling'),
       title: "青少年模式",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -190,7 +196,7 @@ struct Index {
       icon: $r('app.media.icon_service'),
       title: "我的客服",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -199,7 +205,7 @@ struct Index {
       title: "设置",
       click: () => {
         router.pushUrl({
-          url: 'pages/Setting/Setting'
+          url: LOADING_SETTING
         })
       }
     },
@@ -207,7 +213,7 @@ struct Index {
       icon: $r('app.media.icon_personedetail'),
       title: "个人信息收集清单",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     },
@@ -215,14 +221,14 @@ struct Index {
       icon: $r('app.media.icon_share'),
       title: "第三方信息共享清单",
       click: () => {
-        promptAction.showToast({ message: "功能未完善" })
+        commonFn.tipDialog()
       },
       bottomBorder: true
     }
   ]
   //底部title字体的颜色
   @State
-  titleColor: ResourceColor[] = [Color.White, '#ff838383']
+  titleColor: ResourceColor[] = [COLOR_WHITE, COLOR_GRAY]
 
   //右侧侧边栏的结构
   @Builder
@@ -311,7 +317,7 @@ struct Index {
         bottom: 20
       })
       .onClick(() => {
-        promptAction.showToast({ message: '功能未完善' })
+        commonFn.tipDialog()
       })
     }.width('90%').justifyContent(FlexAlign.Center)
   }
@@ -339,11 +345,6 @@ struct Index {
     .zIndex(999)
   }
 
-  //开启顶部的沉浸式
-  // aboutToAppear(): void {
-  //
-  // }
-
   /*
    * 图片选择*/
   maxImgNumber: number = 1 //最多可选1张图片
@@ -363,7 +364,8 @@ struct Index {
       await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
     }
   }
-
+  /**
+   * 头像详情界面*/
   @Builder
   imgAvatar() {
     Column({ space: 40 }) {
@@ -374,7 +376,7 @@ struct Index {
         .onClick(() => {
           this.showDialog = false
         })
-        .margin({ top: "5%", left: '-45%' })
+        .margin({ top: "5%", left: '-85%' })
       Image(this.info.avatar)
         .draggable(true)
         .height('50%')
@@ -382,7 +384,7 @@ struct Index {
       Column() {
         TitleBtn({
           title: "创建抖音仔仔", borBom: true, click: () => {
-            promptAction.showToast({ message: '功能未完善' })
+            commonFn.tipDialog()
           }
         })
         TitleBtn({
@@ -392,12 +394,12 @@ struct Index {
         })
         TitleBtn({
           title: "保存头像", borBom: true, click: () => {
-            promptAction.showToast({ message: '功能未完善' })
+            commonFn.tipDialog()
           }
         })
         TitleBtn({
           title: "查看抖音码", borBom: false, click: () => {
-            promptAction.showToast({ message: '功能未完善' })
+            commonFn.tipDialog()
           }
         })
       }.width('90%')
@@ -423,7 +425,7 @@ struct Index {
               } else if (item.id === 5) {
                 My()
               }
-            }.tabBar(item.title)
+            }.tabBar()
 
           })
         }
@@ -454,7 +456,7 @@ struct Index {
         if (this.showDialog) {
           customDialog({
             imgAvatar: () => {
-              if (this.bgColor === '#000') {
+              if (this.bgColor === COLOR_BLACK) {
                 this.imgAvatar()
               }
             }
@@ -462,16 +464,14 @@ struct Index {
             .onClick(() => {
               animateTo({ duration: 200 }, () => {
                 //通过判断色值区别弹窗是哪个页面的再进行相应改变
-                if (this.bgColor !== '#000') {
+                if (this.bgColor !== COLOR_BLACK) {
                   this.showDialog = !this.showDialog
                   this.IndexX = '0%' //修改整个Index界面的x坐标
                 }
               })
             })
         }
-
       }
-
       .bindContentCover($$this.showUploadDialog, this.contentDialog, {
         modalTransition: ModalTransition.DEFAULT
       })

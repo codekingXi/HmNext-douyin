@@ -1,29 +1,33 @@
 import goods from '../../common/data/goods.json'
 import { promptAction, router } from '@kit.ArkUI'
+import commonFn from '../../common/Function/commonFn'
 
 @Entry
 @Component
 export default struct Shop {
   @State
-  loading:boolean=false //加载的激活条件
+  loading: boolean = false //加载的激活条件
+
   //加载更多数据
-  loadMore(){
-    return new Promise<boolean>((resolve,reject) =>{
-      setTimeout(()=>{
+  loadMore() {
+    return new Promise<boolean>((resolve, reject) => {
+      setTimeout(() => {
         goods.push(...goods) //es6的方法
         resolve(true)
-      },1000)
+      }, 1000)
     })
   }
+
   @Builder
-  getFooter(){
-    Row({space:4}){
+  getFooter() {
+    Row({ space: 4 }) {
       Text('数据加载')
       LoadingProgress()
         .width(24).height(24)
     }.width('100%')
-    .height(60).justifyContent(FlexAlign.Center).margin({bottom:20})
+    .height(60).justifyContent(FlexAlign.Center).margin({ bottom: 20 })
   }
+
   //商品结构
   @Builder
   waterFlowItem(index: number) {
@@ -67,8 +71,9 @@ export default struct Shop {
           width: 2,
           radius: 10
         })
+
         //渲染商品列表数据
-        WaterFlow({footer:this.getFooter()}) {
+        WaterFlow({ footer: this.getFooter() }) {
           ForEach(goods, (item: string, index: number) => {
             FlowItem() {
               this.waterFlowItem(index)
@@ -81,15 +86,15 @@ export default struct Shop {
           })
         }
         //到底部时触发
-        .onReachEnd(async ()=>{
+        .onReachEnd(async () => {
           //阀门控制
-          if(!this.loading){
+          if (!this.loading) {
             try {
-              this.loading=true //开启加载
+              this.loading = true //开启加载
               await this.loadMore() //加载数据
-              this.loading=false
-            }catch(e){
-              promptAction.showToast({message:JSON.stringify(e)})
+              this.loading = false
+            } catch (e) {
+              promptAction.showToast({ message: JSON.stringify(e) })
             }
           }
         })
@@ -98,8 +103,8 @@ export default struct Shop {
         .rowsGap(10)
         .columnsGap(10)
         .padding(10)
-        .onClick(()=>{
-          promptAction.showToast({message:'功能未完善'})
+        .onClick(() => {
+          commonFn.tipDialog()
         })
       }
       .margin({ top: 100 })
