@@ -1,4 +1,5 @@
-// Basic implementation of IDataSource to handle data listener
+// Basic implementation of IDataSource to handle data
+//import data from '../common/data/video.json'
 class BasicDataSource implements IDataSource {
   private listeners: DataChangeListener[] = [];
   private originDataArray: string[] = [];

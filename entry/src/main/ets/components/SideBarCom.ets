@@ -16,7 +16,10 @@ export struct SideBarCom {
   contentMore: () => void
   @State
   sidePositionX: string = ''
+  @Builder
+  content(){
 
+  }
   build() {
     List() {
       ForEach(this.itemData, (item: object) => {

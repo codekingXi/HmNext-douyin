@@ -3,7 +3,8 @@ import { promptAction, router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import commonFn from '../../common/Function/commonFn'
 import { LOADING_SHOP } from '../../router/Index'
-import { COLOR_BLACK, COLOR_GRAY, COLOR_OpacityBlack } from '../../common/color/colors'
+import { COLOR_BLACK, COLOR_GRAY, COLOR_OpacityBlack, COLOR_WHITE } from '../../common/color/colors'
+import { mediaInfo, personVdDta } from '../../models/mediaData'
 
 @Component
 export default struct My {
@@ -33,15 +34,17 @@ export default struct My {
   showDialog: boolean
   @Consume
   bgColor: ResourceColor
-  @State
-  infoTitle: BarClass[] = [
+  /**
+   * 我的界面顶部信息title*/
+  private infoTitle: BarClass[] = [
     { title: '1504', rightContent: '获赞' },
     { title: '46', rightContent: '朋友' },
     { title: '125', rightContent: '关注' },
     { title: '564', rightContent: '粉丝' }
   ]
-  @State
-  personFn: BarClass[] = [
+  /**
+   * 我的界面功能区*/
+  private personFn: BarClass[] = [
     {
       icon: $r('app.media.icon_shopCar'), title: '抖音商城', click: () => {
       router.pushUrl({
@@ -84,13 +87,79 @@ export default struct My {
     }
     }
   ]
+  /**
+   * 我的界面个人作品区*/
+  private personVd: BarClass[] = [
+    { title: '作品', id: 1 },
+    { title: '私密', id: 2 },
+    { title: '收藏', id: 3 },
+    { title: '喜欢', id: 4 }
+  ]
   @Consume
   IndexX: number | string
   @State
   private personInfo: ResourceStr | undefined = undefined
+  @State
+  currentIndex: number = 0
+  @State
+  btnTitleWidth: number = 0
+  tabController: TabsController = new TabsController()
+
+  @Builder
+  personBtn(item: BarClass) {
+    Column() {
+      Text(item.title)
+        .animation({ duration: 200 })
+        .onAreaChange((oldArea, newArea) => {
+          this.btnTitleWidth = newArea.width as number
+        })
+        .fontSize(16)
+        .fontColor(this.personVd[this.currentIndex].id === item.id ? COLOR_BLACK : '#ff666666')
+        .fontWeight(this.personVd[this.currentIndex].id === item.id ? 500 : 400)
+    }
+    .onClick(() => {
+      const index = this.personVd.findIndex(obj => obj.title === item.title)
+      this.tabController.changeIndex(index)
+    })
+  }
+
+  /**
+   * 获得x坐标*/
+  getX() {
+    if (this.personVd[this.currentIndex].id === 1) {
+      return this.btnTitleWidth + 5
+    } else if (this.personVd[this.currentIndex].id === 2) {
+      return this.btnTitleWidth * 4 + 5
+    } else if (this.personVd[this.currentIndex].id === 3) {
+      return this.btnTitleWidth * 7 + 5
+    } else if (this.personVd[this.currentIndex].id === 4) {
+      return this.btnTitleWidth * 10 + 5
+    }
+    return
+  }
+
+  @Builder
+  vdData() {
+    Grid() {
+      ForEach(personVdDta, (item: mediaInfo) => {
+        GridItem() {
+          Video({
+            src: item.src
+          })
+            .controls(false)
+        }
+        .width(120)
+        .height(150).border({
+          color: COLOR_WHITE,
+          width: .5
+        })
+      })
+    }
+    .columnsTemplate('1fr 1fr 1fr')
+  }
 
   build() {
-    Column() {
+    Scroll() {
       //把上下两个模块包在一起
       Column() {
         //顶部背景区
@@ -136,7 +205,7 @@ export default struct My {
             Row() {
               //背景视频
               Video({
-                src: $rawfile("media/myTopBgMedia/Bg-video.mp4")
+                src: 'https://v3-weba.douyinvod.com/a3fa38fa61cdaf2e4e1d00a083cdf28d/666aab8a/video/tos/cn/tos-cn-ve-15c001-alinc2/o0AOw0IgNBAfPhySdKePIHNUIFzoABNEyNCzUC/?a=6383&ch=5&cr=3&dr=0&lr=all&cd=0%7C0%7C0%7C3&cv=1&br=1082&bt=1082&cs=0&ds=3&ft=3PhjVQujppftrGLJ.CF.C_bAja-CInVFXUtc6Bo.Dbu1wGpHDDIxoo2fLK18cusZ.&mime_type=video_mp4&qs=0&rc=NjU8aTM3OTRpaWk2NTxmaEBpaml1ODs6ZnQ3cjMzNGkzM0BgMTA2YzRjNjMxYC8tNTM2YSM0MS5ecjQwMnNgLS1kLWFzcw%3D%3D&btag=c0000e00008000&cquery=100a_101s_100B_100x_100z&dy_q=1718259556&feature_id=59cb2766d89ae6284516c6a254e9fb61&l=20240613141914B96B9F3795FA900969EC'
               })
                 .layoutWeight(1)
                 .height('150%')
@@ -202,6 +271,7 @@ export default struct My {
               .fontColor(Color.Black).textAlign(TextAlign.Start)
           }.width('100%').padding(10)
 
+          //功能区
           List({ space: 30 }) {
             ForEach(this.personFn, (item: BarClass) => {
               ListItem() {
@@ -214,8 +284,48 @@ export default struct My {
               }
             })
           }.listDirection(Axis.Horizontal).padding(20)
+          .scrollBar(BarState.Off)
+          .height(100)
+
+          Stack() {
+            Tabs({ controller: this.tabController, barPosition: BarPosition.Start, index: $$this.currentIndex }) {
+              ForEach(this.personVd, (item: BarClass) => {
+                TabContent() {
+                  if (item.id === 1) {
+                    this.vdData()
+                  } else if (item.id === 2) {
+
+                  } else if (item.id === 3) {
+
+                  } else if (item.id === 4) {
+
+                  }
+                }
+                .tabBar()
+              })
+            }
+
+            Row() {
+              ForEach(this.personVd, (item: BarClass) => {
+                this.personBtn(item)
+              })
+            }.width('100%')
+            .height(50)
+            .position({ x: 0, y: 0 })
+            .justifyContent(FlexAlign.SpaceAround)
+
+            Divider()
+              .strokeWidth(2)
+              .width(this.btnTitleWidth * 2)
+              .color(COLOR_BLACK)
+              .translate({ x: this.getX() })
+              .animation({ duration: 200 })
+              .position({ x: '-5%', y: 50 })
+
+          }
 
         }
+        .layoutWeight(6.5)
         .width('100%')
         .border({
           color: Color.White
@@ -223,11 +333,10 @@ export default struct My {
         .borderRadius({
           topLeft: 15, topRight: 15
         })
-        .layoutWeight(6.5)
         .backgroundColor(Color.White)
       }
-
-    }
+    }.height('150%')
+    .scrollBar(BarState.Off)
     //修改整个页面的坐标
     .onClick(() => {
       animateTo({ duration: 200 }, () => {

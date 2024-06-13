@@ -1,37 +1,21 @@
 import { Sidebar } from '../../components'
 import { mediaInfo, mediaInfoModel } from '../../models'
-import { MyDataSource } from '../../viewmodel/MyDataSource'
+import { mediaList } from '../../models/mediaData'
 
 @Entry
 @Component
 struct VideoPage {
-  mediaList: mediaInfo[] = [
-    {
-      title: '草原',
-      src: $rawfile('media/video.mp4'),
-      id: 1,
-    },
-    {
-      title: '复古',
-      src: $rawfile('media/video2.mp4'),
-      id: 2,
-    },
-    {
-      title: '城市',
-      src: $rawfile('media/video3.mp4'),
-      id: 3,
-    }
-  ]
+
   @Provide
   activeIndex: number = 0
-  private data:MyDataSource=new MyDataSource()
-  aboutToAppear(): void {
 
-  }
+  // aboutToAppear(): void {
+  //
+  // }
   build() {
     Swiper() {
-      ForEach(this.mediaList, (item: mediaInfoModel, index: number) => {
-        playVideo({ item,index })
+      ForEach(mediaList, (item: mediaInfoModel, index: number) => {
+        playVideo({ item, index })
       })
     }
     .index($$this.activeIndex)
@@ -52,20 +36,22 @@ struct playVideo {
   @Consume
   @Watch('updateActiveIndex')
   activeIndex: number
-
   controller: VideoController = new VideoController()
   @State
-  playIng:boolean = false
+  playIng: boolean = false
+
   //播放
-  playVd(){
+  playVd() {
     this.controller.start()
-    this.playIng=true
+    this.playIng = true
   }
+
   //暂停
-  pauseVd(){
+  pauseVd() {
     this.controller.pause()
-    this.playIng=false
+    this.playIng = false
   }
+
   //更新切换索引的状态
   updateActiveIndex() {
     if (this.activeIndex === this.index) {
@@ -77,13 +63,13 @@ struct playVideo {
 
   @Consume
   titleWidth: number
+
   build() {
     Stack() {
       Video({
         src: this.item.src,
         controller: this.controller
-      })
-        // 手势
+      })// 手势
         // .gesture(
         //   PanGesture({
         //     direction:PanDirection.Horizontal,
@@ -96,13 +82,13 @@ struct playVideo {
         //     })
         // )
         .objectFit(ImageFit.Cover)
-        .onClick(()=>{
-          if(this.playIng) {
+        .onClick(() => {
+          if (this.playIng) {
             this.controller.pause()
-          }else{
+          } else {
             this.controller.start()
           }
-          this.playIng=!this.playIng
+          this.playIng = !this.playIng
         })
         .onAppear(() => {
           this.updateActiveIndex()
@@ -112,17 +98,19 @@ struct playVideo {
         .controls(false)//隐藏控制条
         .width('100%')
         .height('100%')
-      Column(){
-        if(this.playIng===false){
+      Column() {
+        if (this.playIng === false) {
           Image($r("app.media.Content_play"))
             .width(68)
             .height(68)
             .opacity(.7)
         }
       }.justifyContent(FlexAlign.Center)
+
       Sidebar().zIndex(2)
         .position({ x: '85%', y: '50%' })
     }
   }
 }
+
 export { VideoPage }
