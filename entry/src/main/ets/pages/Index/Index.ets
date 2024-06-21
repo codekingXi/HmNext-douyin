@@ -10,7 +10,7 @@ import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
 import commonFn from '../../common/Function/commonFn'
 import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
-import { COLOR_BLACK, COLOR_GRAY, COLOR_WHITE } from '../../common/color/colors'
+import { COLOR_BLACK, COLOR_GRAY, COLOR_GrayNAV, COLOR_WHITE } from '../../common/color/colors'
 
 export const Store = new Tiktok(getContext()).getStore()
 /**
@@ -442,7 +442,7 @@ struct Index {
         .width('100%')
         .height(75)
         .position({ y: '91.1%' })
-        .backgroundColor(Color.Black)
+        .backgroundColor(COLOR_GrayNAV)
         .justifyContent(FlexAlign.SpaceAround)
 
         // Row() {
