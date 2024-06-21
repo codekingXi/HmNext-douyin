@@ -1,3 +1,5 @@
+/**
+ * 评论接口*/
 export interface commentData{
   avatar: ResourceStr //头像
   id:number //评论的id

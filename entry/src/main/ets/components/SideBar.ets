@@ -4,7 +4,8 @@ import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
 import { promptAction } from '@kit.ArkUI'
 import commonFn from '../common/Function/commonFn'
-
+/**
+ * 视频功能侧边栏*/
 @Component
 struct Sidebar {
   @State

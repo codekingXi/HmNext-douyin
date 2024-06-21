@@ -94,7 +94,8 @@ struct SearchPage {
             }.layoutWeight(1)
             .onClick(() => {
               router.pushUrl({
-                url: LOADING_ChatDetail
+                url: LOADING_ChatDetail,
+                params:item
               })
             })
           })

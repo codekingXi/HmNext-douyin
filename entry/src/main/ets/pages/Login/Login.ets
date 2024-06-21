@@ -12,7 +12,8 @@ function textStyle() {
   .fontColor(Color.Red).fontSize(16)
   .position({ x: 10, y: 65 })
 }
-
+/**
+ * 登录页*/
 @Entry
 @Component
 struct Login {

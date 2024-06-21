@@ -1,3 +1,5 @@
+/**
+ * 卡片项*/
 @Component
 export struct CardItem {
   icon: string | ResourceStr = ""

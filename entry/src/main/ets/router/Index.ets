@@ -19,3 +19,6 @@ export const LOADING_SETTING =  "pages/Setting/Setting"
 /**
  * 加载商品页*/
 export const LOADING_SHOP =  "pages/Shop/Shop"
+/**
+ * 加载视频详情页*/
+export const LOADING_VdDETAIL =  "pages/My/VdDetail"

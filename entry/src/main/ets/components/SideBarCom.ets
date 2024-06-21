@@ -6,6 +6,7 @@
 export struct SideBarCom {
   @State
   sideWidth: number | string = ""
+
   @State
   itemData: object[] = []
   @BuilderParam

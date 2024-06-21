@@ -6,7 +6,8 @@ import { UserInfo, UserInfoModel } from '../../models'
 import { MessageInfo, MessageInfoModel } from '../../models/message'
 import { getRequestMessage } from '../../utils/request'
 import { Tiktok } from '../../utils/setting'
-
+/**
+ * 聊天详情页*/
 @Entry
 @Component
 struct ChatDetail {
@@ -19,12 +20,14 @@ struct ChatDetail {
   aboutToAppear(): void {
     this.getTalkUser()
   }
+
   /**
    * 获取所有聊天记录*/
-  getAllRecord(){
+  getAllRecord() {
     this.messList = new Tiktok(getContext()).getChatMessage(this.talkUser.user_id)
     this.scroller.scrollEdge(Edge.Bottom)
   }
+
   async getTalkUser() {
     this.talkUser = router.getParams() as UserInfoModel
     this.getAllRecord()
@@ -47,7 +50,7 @@ struct ChatDetail {
       connectUser: this.talkUser, //联系人发的消息
     } as MessageInfo)
     this.messList.push(mess) //追加消息
-    new Tiktok(getContext()).addOwnChatMessage(this.talkUser.user_id,mess)
+    new Tiktok(getContext()).addOwnChatMessage(this.talkUser.user_id, mess)
     //发送消息到服务器 得到响应内容
     this.getResponseMessage(content)
     this.scroller.scrollEdge(Edge.Bottom)
@@ -55,7 +58,7 @@ struct ChatDetail {
 
   //获取响应的消息
   async getResponseMessage(content: string) {
-    this.textInputIng=true
+    this.textInputIng = true
     const result = await getRequestMessage(content)
     //新建一个消息
     /**
@@ -66,7 +69,7 @@ struct ChatDetail {
       connectUser: this.talkUser, //联系人发的消息
     } as MessageInfo)
     this.messList.push(mess)
-    new Tiktok(getContext()).addOwnChatMessage(this.talkUser.user_id,mess)
+    new Tiktok(getContext()).addOwnChatMessage(this.talkUser.user_id, mess)
     this.textInputIng = false
     this.scroller.scrollEdge(Edge.Bottom)
   }
@@ -87,7 +90,7 @@ struct ChatDetail {
             .zIndex(2)
           //顶部的头像和聊天对象用户名信息
           Row({ space: 10 }) {
-            Image(this.talkUser.avatar).width(40).height(40).borderRadius(20)
+            Image(this.talkUser.avatar===undefined?'':this.talkUser.avatar).width(40).height(40).borderRadius(20)
             Text(this.textInputIng ? '对方正在输入' : this.talkUser.username)
               .fontWeight(400)
               .fontSize(20)

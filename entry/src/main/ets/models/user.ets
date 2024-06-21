@@ -1,6 +1,7 @@
 import { CURRENT_USER } from '../constants'
 import commonFn from '../common/Function/commonFn'
-
+/**
+ * 用户信息接口*/
 export interface UserInfo {
   username: string //用户名
   password: string //用户密码

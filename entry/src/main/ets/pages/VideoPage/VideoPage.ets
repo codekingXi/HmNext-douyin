@@ -1,7 +1,7 @@
 import { Sidebar } from '../../components'
 import { mediaInfo, mediaInfoModel } from '../../models'
 import { mediaList } from '../../models/mediaData'
-
+/**视频页*/
 @Entry
 @Component
 struct VideoPage {

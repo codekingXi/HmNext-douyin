@@ -1,16 +1,18 @@
 import { CURRENT_USER } from '../constants'
 import { UserInfo, UserInfoModel } from '../models'
 import { MessageInfo, MessageInfoModel } from '../models/message'
-
+/**
+ * 消息组件*/
 @Component
 export default struct Message {
+  /**
+   * 当前用户*/
   @StorageProp(CURRENT_USER)
   currentUser: UserInfoModel = new UserInfoModel({} as UserInfo) //聊天用户
   @Require
   @Prop
   currentMessage:MessageInfoModel = new MessageInfoModel({} as MessageInfo) //当前消息
   /**
-   * @params
    * isOwnMessage是判断当前的登录用户id是否等于消息发送者的用户id设置元素的出现位置*/
   @State
   isOwnMessage:boolean = this.currentUser.user_id === this.currentMessage?.sendUser?.user_id //判断谁发的消息

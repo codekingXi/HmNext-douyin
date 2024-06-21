@@ -13,10 +13,11 @@ import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
 import { COLOR_BLACK, COLOR_GRAY, COLOR_WHITE } from '../../common/color/colors'
 
 export const Store = new Tiktok(getContext()).getStore()
-
+/**
+ * 功能*/
 export class Fn {
   //跳转页面 重定向
-  public redirect() {
+  static redirect() {
     //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
     if (!Store.getSync(CURRENT_USER, CurrentUser)) {
       AlertDialog.show({
@@ -62,14 +63,14 @@ struct Index {
       name: "Friend",
       id: 2,
       click: () => {
-        new Fn().redirect()
+        Fn.redirect()
       }
     }, {
     icon: $r('app.media.ic_uploading'),
     name: "上传",
     id: 3,
     click: () => {
-      new Fn().redirect()
+      Fn.redirect()
       if (Store.getSync(CURRENT_USER, CurrentUser)) {
         this.showUploadDialog = true
       }
@@ -80,7 +81,7 @@ struct Index {
       name: "Message",
       id: 4,
       click: () => {
-        new Fn().redirect()
+        Fn.redirect()
       }
     },
     {
@@ -88,7 +89,7 @@ struct Index {
       name: "My",
       id: 5,
       click: () => {
-        new Fn().redirect()
+        Fn.redirect()
       }
     }
   ]

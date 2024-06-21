@@ -1,6 +1,7 @@
 import { UserInfo, UserInfoModel } from '.'
 import { util } from '@kit.ArkTS'
-
+/**
+ * 消息类型枚举*/
 export enum  MessageTypeEnum {
   TEXT, // 文本
   IMAGE, // 图片
@@ -9,6 +10,8 @@ export enum  MessageTypeEnum {
   LOCATION, // 定位
   LINK // 链接
 }
+/**
+ * 消息信息接口*/
 export interface MessageInfo {
   id: string // 标识
   sendUser: UserInfo //这条消息的发送者

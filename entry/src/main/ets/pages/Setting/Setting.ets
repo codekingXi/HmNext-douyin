@@ -2,7 +2,8 @@ import { CURRENT_USER } from '../../constants'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import { LOADING_LOGIN } from '../../router/Index'
-
+/**
+ * 设置页*/
 @Entry
 @Component
 struct Setting {

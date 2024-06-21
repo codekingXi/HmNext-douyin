@@ -1,5 +1,7 @@
 // tabs
-
+/**
+ * tab栏的接口
+ * 这个接口有多个渲染组件的地方会用到不能乱改*/
 export interface BarClass {
   id?:number
   icon?: ResourceStr

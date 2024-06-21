@@ -1,3 +1,5 @@
+/**
+ * 卡片*/
 @Component
 export struct Card {
   bottomBorder:boolean = true

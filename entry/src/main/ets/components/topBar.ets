@@ -2,12 +2,14 @@ import { BarClass } from '../models'
 import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router, window } from '@kit.ArkUI'
-import { COLOR_GRAY } from '../common/color/colors'
 
-
+/**
+ * 顶部栏*/
 @Preview
 @Component
-struct TopBar {
+export struct TopBar {
+  /**
+   * 顶部栏信息*/
   @State
   topTabList: BarClass[] = [
     {
@@ -48,7 +50,7 @@ struct TopBar {
         .animation({
           duration: 50
         })
-        .onAreaChange((oldArea, newArea) => {
+        .onAreaChange((newArea) => {
           this.titleWidth = newArea.width as number
         })
     }
@@ -56,7 +58,6 @@ struct TopBar {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj => obj.name === item.name)
       this.tabController.changeIndex(index) //切换索引值
-
     })
   }
 
@@ -146,4 +147,4 @@ struct TopBar {
   }
 }
 
-export { TopBar }
+

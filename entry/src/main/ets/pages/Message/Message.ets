@@ -3,7 +3,8 @@ import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
 import { LOADING_ChatDetail, LOADING_SEARCH } from '../../router/Index'
 import { COLOR_OpacityBlack } from '../../common/color/colors'
-
+/**
+ * 消息页面*/
 @Entry
 @Component
 export default struct Message {

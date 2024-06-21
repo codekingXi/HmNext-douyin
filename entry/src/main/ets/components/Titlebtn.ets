@@ -25,7 +25,6 @@ export struct TitleBtn {
     .animation({duration:200})
     .stateStyles({
       normal:{
-
         .backgroundColor('#ff3e3e3e')
       },
       pressed:{

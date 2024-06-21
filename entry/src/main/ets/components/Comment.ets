@@ -6,7 +6,7 @@ import { Fn, Store } from '../pages/Index/Index'
 /**
  * 评论组件*/
 @Component
-struct Comment {
+export struct Comment {
   @ObjectLink
   item: commentDataModel
   //点赞方法
@@ -22,34 +22,34 @@ struct Comment {
   build() {
 
     Row({ space: 10 }) {
-      Image(this.item.avatar)
+      Image(this.item.avatar) //头像
         .width(40)
         .borderRadius(50)
       Column() {
-        Text(this.item.author)
+        Text(this.item.author)  //作者
           .fontColor('#ff737373')
           .fontSize(18)
-        Text(this.item.content)
+        Text(this.item.content) //内容
           .fontColor('#ff1c1c1c')
           .fontSize(22)
         Row({ space: 10 }) {
           Row(){
-            Text(`${this.item.time}-${this.item.area}`)
+            Text(`${this.item.time}-${this.item.area}`) //事件地区
               .fontColor('#ff8d8b8b')
               .fontSize(18)
           }
           Row(){
-            Image($r('app.media.ic_public_love'))
+            Image($r('app.media.ic_public_love')) //爱心
               .fillColor(this.item.likeFlag?Color.Red: '#ff868585')
               .width(20)
               .height(20)
               .onClick(()=>{
-                new Fn().redirect()
+                Fn.redirect()
                 if(Store.getSync(CURRENT_USER,JSON.stringify(CurrentUser))){
                   this.changeLike()
                 }
               })
-            Text(this.item.likeNum.toString())
+            Text(this.item.likeNum.toString())  //点赞数
               .fontColor(this.item.likeFlag?Color.Red:'#ff868585')
               .fontSize(16)
           }
@@ -69,4 +69,4 @@ struct Comment {
   }
 }
 
-export { Comment }
+
