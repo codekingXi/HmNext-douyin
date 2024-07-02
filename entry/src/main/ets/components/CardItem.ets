@@ -1,5 +1,7 @@
 /**
  * 卡片项*/
+import { COLOR_SiDerPay } from '../common/color'
+
 @Component
 export struct CardItem {
   icon: string | ResourceStr = ""
@@ -10,7 +12,9 @@ export struct CardItem {
     Row() {
       Row({ space: 10 }) {
         Image(this.icon)
+          .width(20)
         Text(this.leftTitle)
+          .fontSize(16)
       }
 
       if (this.rightContent) {
@@ -18,7 +22,12 @@ export struct CardItem {
           Text('￥' + this.rightContent).textAlign(TextAlign.Center)
             .fontColor('#ff515151')
 
-        }.backgroundColor('#ff9f9f9f').borderRadius(40)
+        }
+        .width(60)
+        .height(30)
+        .borderRadius(40)
+        .justifyContent(FlexAlign.Center)
+        .backgroundColor(COLOR_SiDerPay)
       }
     }.width('100%').height(60).justifyContent(FlexAlign.SpaceBetween)
   }
