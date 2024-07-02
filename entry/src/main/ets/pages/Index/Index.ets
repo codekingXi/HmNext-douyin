@@ -1,8 +1,7 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { CardItem, SideBarCom, TitleBtn, TopBar } from '../../components'
+import { CardItem, customDialog, SideBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
-import customDialog from '../../components/customDialog'
 import Message from '../Message/Message'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
@@ -70,7 +69,7 @@ struct Index {
     },
     {
       icon: $r('app.media.ic_uploading'),
-      name: "上传",
+      name: "Upload",
       id: 3,
       click: () => {
         Fn.redirect()
@@ -238,9 +237,9 @@ struct Index {
   @Builder
   contentItem(item: BarClass) {
     CardItem({
-      icon:item.icon,
-      leftTitle:item.title,
-      rightContent:item.rightContent
+      icon: item.icon,
+      leftTitle: item.title,
+      rightContent: item.rightContent
     })
       .onClick(() => {
         item.click && item.click()
@@ -403,13 +402,13 @@ struct Index {
         Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
           ForEach(this.btmTabList, (item: BarClass) => {
             TabContent() {
-              if (item.id === 1) {
+              if (item.name === 'Home') {
                 TopBar()
-              } else if (item.id === 2) {
+              } else if (item.name === 'Friend') {
                 Text('Friend')
-              } else if (item.id === 4) {
+              } else if (item.name === 'Message') {
                 Message()
-              } else if (item.id === 5) {
+              } else if (item.name === 'My') {
                 My()
               }
             }.tabBar()
@@ -481,7 +480,6 @@ struct Index {
         }
       })
     }
-
     //整个页面的坐标
     .translate({ x: this.IndexX })
   }

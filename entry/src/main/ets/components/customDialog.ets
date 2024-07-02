@@ -1,5 +1,5 @@
 @Component
-export default struct customDialog {
+export struct customDialog {
   @Consume
   bgColor: ResourceColor
   @BuilderParam
