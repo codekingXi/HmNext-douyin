@@ -1,5 +1,5 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { SideBarCom, TitleBtn, TopBar } from '../../components'
+import { CardItem, SideBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
 import customDialog from '../../components/customDialog'
@@ -13,6 +13,7 @@ import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
 import { COLOR_BLACK, COLOR_GRAY, COLOR_GrayNAV, COLOR_WHITE } from '../../common/color/colors'
 
 export const Store = new Tiktok(getContext()).getStore()
+
 /**
  * 功能*/
 export class Fn {
@@ -46,6 +47,7 @@ struct Index {
   onBackPress(): boolean | void {
     commonFn.tipOutPage()
   }
+
   @Provide
   info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @State
@@ -235,37 +237,19 @@ struct Index {
   //右侧侧边栏的结构
   @Builder
   contentItem(item: BarClass) {
-
-    Row() {
-      Row({ space: 10 }) {
-        Image(item.icon).width(20).height(20)
-        Text(item.title).fontSize(16)
-      }
-
-      if (item.rightContent) {
-        Row() {
-          Text('￥' + item.rightContent).textAlign(TextAlign.Center)
-            .fontSize(16)
-            .fontColor('#ff515151')
+    CardItem({
+      icon:item.icon,
+      leftTitle:item.title,
+      rightContent:item.rightContent
+    })
+      .onClick(() => {
+        item.click && item.click()
+      })
+      .border({
+        width: {
+          bottom: item.bottomBorder === true ? 0 : 0.5
         }
-        .width(60)
-        .height(30)
-        .justifyContent(FlexAlign.Center)
-        .backgroundColor('rgba(227, 227, 227, 0.50)')
-        .borderRadius(40)
-      }
-    }
-    .width('100%')
-    .height(60)
-    .justifyContent(FlexAlign.SpaceBetween)
-    .onClick(() => {
-      item.click && item.click()
-    })
-    .border({
-      width: {
-        bottom: item.bottomBorder === true ? 0 : 0.5
-      }
-    })
+      })
   }
 
   //底部tab的的结构
@@ -321,7 +305,7 @@ struct Index {
       .onClick(() => {
         commonFn.tipDialog()
       })
-    } .justifyContent(FlexAlign.Center)
+    }.justifyContent(FlexAlign.Center)
   }
 
   // 上传视频等用的弹窗
@@ -366,6 +350,7 @@ struct Index {
       await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
     }
   }
+
   /**
    * 头像详情界面*/
   @Builder
