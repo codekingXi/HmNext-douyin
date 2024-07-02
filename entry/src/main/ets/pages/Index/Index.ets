@@ -16,7 +16,7 @@ export const Store = new Tiktok(getContext()).getStore()
 /**
  * 功能*/
 export class Fn {
-  //跳转页面 重定向
+  /**路由重定向*/
   static redirect() {
     //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
     if (!Store.getSync(CURRENT_USER, CurrentUser)) {
@@ -65,17 +65,18 @@ struct Index {
       click: () => {
         Fn.redirect()
       }
-    }, {
-    icon: $r('app.media.ic_uploading'),
-    name: "上传",
-    id: 3,
-    click: () => {
-      Fn.redirect()
-      if (Store.getSync(CURRENT_USER, CurrentUser)) {
-        this.showUploadDialog = true
+    },
+    {
+      icon: $r('app.media.ic_uploading'),
+      name: "上传",
+      id: 3,
+      click: () => {
+        Fn.redirect()
+        if (Store.getSync(CURRENT_USER, CurrentUser)) {
+          this.showUploadDialog = true
+        }
       }
-    }
-  },
+    },
     {
       title: '信息',
       name: "Message",
@@ -320,7 +321,7 @@ struct Index {
       .onClick(() => {
         commonFn.tipDialog()
       })
-    }.width('90%').justifyContent(FlexAlign.Center)
+    } .justifyContent(FlexAlign.Center)
   }
 
   // 上传视频等用的弹窗
@@ -480,12 +481,10 @@ struct Index {
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
       SideBarCom({
-        sideWidth: '70%',
         sidePositionX: '-70%'
       })
       //右侧边栏
       SideBarCom({
-        sideWidth: '65%',
         sidePositionX: "100%",
         //必须传的值 关键数据！！！
         itemData: this.itemData,
