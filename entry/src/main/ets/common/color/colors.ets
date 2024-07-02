@@ -8,3 +8,6 @@ export const COLOR_OpacityBlack ='#80000000'
 /**
  * 底部栏背景色*/
 export const COLOR_GrayNAV ='#ff393939'
+/**
+ * 侧边栏钱包背景色*/
+export const COLOR_SiDerPay ='rgba(227, 227, 227, 0.50)'
