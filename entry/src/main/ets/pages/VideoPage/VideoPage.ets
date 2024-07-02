@@ -1,6 +1,7 @@
 import { Sidebar } from '../../components'
 import { mediaInfo, mediaInfoModel } from '../../models'
 import { mediaList } from '../../models/mediaData'
+
 /**视频页*/
 @Entry
 @Component
@@ -9,9 +10,7 @@ struct VideoPage {
   @Provide
   activeIndex: number = 0
 
-  // aboutToAppear(): void {
-  //
-  // }
+
   build() {
     Swiper() {
       ForEach(mediaList, (item: mediaInfoModel, index: number) => {
@@ -99,7 +98,7 @@ struct playVideo {
         .width('100%')
         .height('100%')
       Column() {
-        if (this.playIng === false) {
+        if (!this.playIng) {
           Image($r("app.media.Content_play"))
             .width(68)
             .height(68)
