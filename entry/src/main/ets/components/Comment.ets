@@ -4,7 +4,7 @@ import { CurrentUser } from '../models/user'
 import { Fn, Store } from '../pages/Index/Index'
 
 /**
- * 评论组件*/
+ * 评论区内容组件*/
 @Component
 export struct Comment {
   @ObjectLink
