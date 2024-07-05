@@ -1,22 +1,24 @@
 import { Sidebar } from '../../components'
 import { mediaInfo, mediaInfoModel } from '../../models'
-import { mediaList } from '../../models/mediaData'
+import { VdDataSource } from '../../models/VdDataSource'
 
 /**视频页*/
 @Entry
 @Component
 struct VideoPage {
-
   @Provide
   activeIndex: number = 0
-
+  /**
+   * 懒加载视频数据列表*/
+  VdDataSourceList = new VdDataSource()
 
   build() {
     Swiper() {
-      ForEach(mediaList, (item: mediaInfoModel, index: number) => {
+      LazyForEach(this.VdDataSourceList, (item: mediaInfo, index: number) => {
         playVideo({ item, index })
       })
     }
+    .cachedCount(3)
     .index($$this.activeIndex)
     //关闭滚动条
     .indicator(false)
@@ -31,7 +33,9 @@ struct VideoPage {
 @Component
 struct playVideo {
   item: mediaInfo = new mediaInfoModel({} as mediaInfo)
-  index: number = -1
+  /**
+   * 接收传入的视频索引*/
+  index: number = -1 //默认值只能是-1
   @Consume
   @Watch('updateActiveIndex')
   activeIndex: number
