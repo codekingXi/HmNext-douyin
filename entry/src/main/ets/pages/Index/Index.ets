@@ -426,6 +426,7 @@ struct Index {
           }
           //常用小程序
           if (item.id === 2) {
+            //没有数据就渲染提示
             if (!!this.commonlyUsedAppletsItemData.length) {
               this.commonlyUsedApplets()
             } else {
