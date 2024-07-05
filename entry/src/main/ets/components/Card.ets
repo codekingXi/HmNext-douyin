@@ -1,25 +1,53 @@
 /**
  * 卡片*/
+import { COLOR_GRAY } from '../common/color'
+
 @Component
 export struct Card {
-  bottomBorder:boolean = true
+  bottomBorder: boolean = false
+  /**
+   * 卡片内容项*/
   @BuilderParam
-  CardFn:()=>void
-  build() {
-    Column(){
-      Column(){
-        if(this.CardFn){
-          this.CardFn() //渲染传的内容
-        }
-      }
-      .width('100%')
+  CardItem: () => void
+  /**
+   * 卡片顶部右侧提示*/
+  @BuilderParam
+  rightTip: () => void = this.rightTipContent
 
-    }.padding({left:15,right:15})
+  @Builder
+  rightTipContent() {
+    Text('>').fontColor(COLOR_GRAY)
+      .fontSize(20)
+  }
+  /**
+   * 卡片标签*/
+  leftTitle: string = ""
+
+  build() {
+    Column({ space: 10 }) {
+      Row() {
+        Text(this.leftTitle)
+          .fontSize(20)
+        if (this.rightTip) {
+          this.rightTip()
+        }
+      }.width('100%').justifyContent(FlexAlign.SpaceBetween)
+
+      Column() {
+        if (this.CardItem) {
+          this.CardItem() //渲染传的内容
+        }
+
+      }
+    }
+    .margin({ top: 10 })
+    .padding(10)
     .backgroundColor(Color.White)
-    .width('100%').border({
-      color:'#ff888787',
-      width:{
-        bottom:this.bottomBorder?1:0
+    .border({
+      color: '#ff888787',
+      radius: 15,
+      width: {
+        bottom: this.bottomBorder ? 1 : 0
       }
     })
   }
