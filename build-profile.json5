@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\张杨熙\\.ohos\\config\\default_Dyin_pUdJMGLCohPyJakdrCDbbcWhIVBDdGq7y5OkQJGmiJU=.cer",
-          "storePassword": "0000001B97BA5F9142C7DF3F08019C15E0207AF88B99CC7FED54DF319BD9A623CB61D4DE4263FC5B16039A",
+          "storePassword": "0000001BBF8F46A008F4C6CFA8877DBA3860606229C92F6511F2A68FB3ED07171AC771E6D8DA9AFF950D44",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BE3ABE5D851143081831146131C957AAD8391BA199F5B08C0607D00817D8FC31D3C9480B72F7481",
+          "keyPassword": "0000001B1F89729632E8327B15BF148AF11D351BAA5DACA3B6134E0A8866915996707C42F9319BAC3F9571",
           "profile": "C:\\Users\\张杨熙\\.ohos\\config\\default_Dyin_pUdJMGLCohPyJakdrCDbbcWhIVBDdGq7y5OkQJGmiJU=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\张杨熙\\.ohos\\config\\default_Dyin_pUdJMGLCohPyJakdrCDbbcWhIVBDdGq7y5OkQJGmiJU=.p12"
@@ -19,8 +19,8 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "4.1.0(11)",
-        "runtimeOS": "HarmonyOS",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS"
       }
     ],
     "buildModeSet": [
