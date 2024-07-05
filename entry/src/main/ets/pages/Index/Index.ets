@@ -1,5 +1,5 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { CardItem, customDialog, SideBarCom, TitleBtn, TopBar } from '../../components'
+import { Card, CardItem, customDialog, iconBtn, SideBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
 import Message from '../Message/Message'
@@ -229,9 +229,280 @@ struct Index {
       bottomBorder: true
     }
   ]
+  @State
+  CardData: BarClass[] = [
+    {
+      title: '通知消息',
+      id: 1,
+    },
+    {
+      title: '常用小程序',
+      id: 2
+    },
+    {
+      title: '常用功能',
+      id: 3
+    },
+    {
+      title: '生活动态',
+      id: 4
+    }
+  ]
+  /**
+   * 常用小程序数据源*/
+  @State
+  commonlyUsedAppletsItemData: BarClass[] = [
+  //   {
+  //     icon: $r('app.media.icon_wallet'),
+  //     title: '我的钱包',
+  //     click: () => {
+  //       commonFn.tipDialog()
+  //     }
+  //   },
+  //   {
+  //     icon: $r('app.media.icon_leftsider_coupons'),
+  //     title: '优惠卷',
+  //     click: () => {
+  //       commonFn.tipDialog()
+  //     }
+  //   },
+  //   {
+  //     icon: $r('app.media.icon_applet'),
+  //     title: '小程序',
+  //     click: () => {
+  //       commonFn.tipDialog()
+  //     }
+  //   },
+  //   {
+  //     icon: $r('app.media.icon_time'),
+  //     title: '观看历史',
+  //     click: () => {
+  //       commonFn.tipDialog()
+  //     }
+  //   }, {
+  //   icon: $r('app.media.icon_leftSider_contentLove'),
+  //   title: '内容偏好',
+  //   click: () => {
+  //     commonFn.tipDialog()
+  //   }
+  // }, {
+  //   icon: $r('app.media.icon_clouddownload'),
+  //   title: '离线模式',
+  //   click: () => {
+  //     commonFn.tipDialog()
+  //   }
+  // }, {
+  //   icon: $r('app.media.icon_waitplay'),
+  //   title: '稍后再看',
+  //   click: () => {
+  //     commonFn.tipDialog()
+  //   }
+  // },
+  ]
+  /**
+   * 常用功能数据源*/
+  @State
+  commonFnItemData: BarClass[] = [
+    {
+      icon: $r('app.media.icon_wallet'),
+      title: '我的钱包',
+      click: () => {
+        commonFn.tipDialog()
+      }
+    }, {
+    icon: $r('app.media.icon_leftsider_coupons'),
+    title: '优惠卷',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_applet'),
+    title: '小程序',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_time'),
+    title: '观看历史',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_leftSider_contentLove'),
+    title: '内容偏好',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_clouddownload'),
+    title: '离线模式',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_waitplay'),
+    title: '稍后再看',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  },
+  ]
+  /**
+   * 生活动态数据源*/
+  @State
+  lifeDynamicsItemData: BarClass[] = [
+    {
+      icon: $r('app.media.icon_siderLeft_live'),
+      title: '直播广场',
+      click: () => {
+        commonFn.tipDialog()
+      }
+    }, {
+    icon: $r('app.media.icon_siderLeft_shopCarperson'),
+    title: '附近团购',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_siderLeft_activityCenter'),
+    title: '活动中心',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_siderLeft_playGame'),
+    title: '玩游戏',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_siderLeft_music'),
+    title: '听抖音',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_siderLeft_screeningRoom'),
+    title: '放映厅',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  }, {
+    icon: $r('app.media.icon_siderLeft_singing'),
+    title: 'K歌',
+    click: () => {
+      commonFn.tipDialog()
+    }
+  },
+  ]
   //底部title字体的颜色
   @State
   titleColor: ResourceColor[] = [COLOR_WHITE, COLOR_GRAY]
+  @BuilderParam
+  FnTip: (TipContent: string) => void = this.FnTipContent
+  @State
+  TipContent: string = ''
+
+  @Builder
+  FnTipContent(content: string) {
+    Row() {
+      Text(content)
+        .fontColor(Color.Red)
+        .fontSize(20)
+    }
+  }
+
+  @Builder
+  CardBox(item: BarClass) {
+    Column() {
+      Card({
+        leftTitle: item.title,
+        CardItem: () => {
+          //通知消息
+          if (item.id === 1) {
+            if (this.FnTip) {
+              this.FnTip('没有消息')
+            }
+          }
+          //常用小程序
+          if (item.id === 2) {
+            if (!!this.commonlyUsedAppletsItemData.length) {
+              this.commonlyUsedApplets()
+            } else {
+              this.FnTip('啥也没有,快去尝鲜吧')
+            }
+
+          }
+          //常用功能
+          if (item.id === 3) {
+            this.CommonFn()
+          }
+          //生活动态
+          if (item.id === 4) {
+            this.lifeDynamics()
+          }
+        }
+      })
+    }.margin({ left: 15 })
+
+  }
+
+  /**
+   * 常用小程序*/
+  @Builder
+  commonlyUsedApplets() {
+    Grid() {
+      ForEach(this.commonlyUsedAppletsItemData, (item: BarClass) => {
+        GridItem() {
+          iconBtn({
+            icon: item.icon,
+            title: item.title
+          })
+            .onClick(() => {
+              item.click && item.click()
+            })
+        }.margin({ top: 15, bottom: 10 })
+      })
+    }.columnsTemplate('1fr 1fr 1fr')
+  }
+
+  /**
+   * 常用功能*/
+  @Builder
+  CommonFn() {
+    Grid() {
+      ForEach(this.commonFnItemData, (item: BarClass) => {
+        GridItem() {
+          iconBtn({
+            icon: item.icon,
+            title: item.title
+          })
+            .onClick(() => {
+              item.click && item.click()
+            })
+        }.margin({ top: 15, bottom: 10 })
+      })
+    }.columnsTemplate('1fr 1fr 1fr')
+  }
+
+  /**
+   * 生活动态*/
+  @Builder
+  lifeDynamics() {
+    Grid() {
+      ForEach(this.lifeDynamicsItemData, (item: BarClass) => {
+        GridItem() {
+          iconBtn({
+            icon: item.icon,
+            title: item.title
+          })
+            .onClick(() => {
+              item.click && item.click()
+            })
+        }.margin({ top: 15, bottom: 10 })
+      })
+    }.columnsTemplate('1fr 1fr 1fr')
+  }
 
   //右侧侧边栏的结构
   @Builder
@@ -334,7 +605,7 @@ struct Index {
    * 图片选择*/
   maxImgNumber: number = 1 //最多可选1张图片
 
-  public async selectPhoto() {
+  async selectPhoto() {
     const photo = new picker.PhotoViewPicker() //图片选择对象
     const result = await photo.select({
       //选择类型
@@ -462,10 +733,19 @@ struct Index {
         modalTransition: ModalTransition.DEFAULT
       })
 
+
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
       SideBarCom({
-        sidePositionX: '-70%'
+        sidePositionX: '-70%',
+        itemData: this.CardData,
+        contentBox: (item: object) => {
+          this.CardBox(item as BarClass)
+        },
+        siderBgColor: '#ffefefef',
+        siderBottom: 0,
+        siderLeft: 0,
+        siderRight: 0
       })
       //右侧边栏
       SideBarCom({
