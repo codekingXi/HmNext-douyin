@@ -2,7 +2,7 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
-import { CURRENT_USER} from '../constants';
+import { CURRENT_USER } from '../constants';
 
 
 export default class EntryAbility extends UIAbility {
@@ -22,7 +22,7 @@ export default class EntryAbility extends UIAbility {
     const win = windowStage.getMainWindowSync()
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
     const info = new Tiktok(this.context).getCurrentUser()
-    AppStorage.setOrCreate(CURRENT_USER,info)
+    AppStorage.setOrCreate(CURRENT_USER, info)
     windowStage.loadContent('pages/Index/Index')
 
   }
