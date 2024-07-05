@@ -398,11 +398,16 @@ struct Index {
   //底部title字体的颜色
   @State
   titleColor: ResourceColor[] = [COLOR_WHITE, COLOR_GRAY]
+  /**
+   * 默认提示内容功能*/
   @BuilderParam
   FnTip: (TipContent: string) => void = this.FnTipContent
+  /**
+   * 提示内容*/
   @State
   TipContent: string = ''
-
+  /**
+   * 提示内容功能*/
   @Builder
   FnTipContent(content: string) {
     Row() {
@@ -411,7 +416,8 @@ struct Index {
         .fontSize(20)
     }
   }
-
+  /**
+   * 卡片盒子*/
   @Builder
   CardBox(item: BarClass) {
     Column() {

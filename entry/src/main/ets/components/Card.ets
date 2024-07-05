@@ -1,7 +1,7 @@
+
+import { COLOR_GRAY } from '../common/color'
 /**
  * 卡片*/
-import { COLOR_GRAY } from '../common/color'
-
 @Component
 export struct Card {
   bottomBorder: boolean = false
