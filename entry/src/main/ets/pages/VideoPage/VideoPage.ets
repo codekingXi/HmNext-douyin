@@ -1,6 +1,6 @@
 import { Sidebar } from '../../components'
-import { mediaInfo, mediaInfoModel } from '../../models'
-import { VdDataSource } from '../../models/VdDataSource'
+import { mediaInfo, mediaInfoModel, mediaList, DataSource as videoData } from '../../models'
+
 
 /**视频页*/
 @Entry
@@ -10,11 +10,11 @@ struct VideoPage {
   activeIndex: number = 0
   /**
    * 懒加载视频数据列表*/
-  VdDataSourceList = new VdDataSource()
+  videoList = new videoData<mediaInfo>(mediaList)
 
   build() {
     Swiper() {
-      LazyForEach(this.VdDataSourceList, (item: mediaInfo, index: number) => {
+      LazyForEach(this.videoList, (item: mediaInfo, index: number) => {
         playVideo({ item, index })
       })
     }
@@ -36,26 +36,35 @@ struct playVideo {
   /**
    * 接收传入的视频索引*/
   index: number = -1 //默认值只能是-1
+  /**
+   * 播放的索引*/
   @Consume
   @Watch('updateActiveIndex')
   activeIndex: number
+  /**
+   * 视频控制器*/
   controller: VideoController = new VideoController()
+  /**
+   * 视频播放状态*/
   @State
   playIng: boolean = false
 
-  //播放
+  /**
+   * 播放*/
   playVd() {
     this.controller.start()
     this.playIng = true
   }
 
-  //暂停
+  /**
+   * 暂停*/
   pauseVd() {
     this.controller.pause()
     this.playIng = false
   }
 
-  //更新切换索引的状态
+  /**
+   * 更新切换索引的状态*/
   updateActiveIndex() {
     if (this.activeIndex === this.index) {
       this.playVd()
@@ -84,14 +93,15 @@ struct playVideo {
         //       }
         //     })
         // )
-        .objectFit(ImageFit.Cover)
+        .autoPlay(true)
+        .objectFit(ImageFit.Contain)//推荐使用压缩的方式
         .onClick(() => {
           if (this.playIng) {
             this.controller.pause()
           } else {
             this.controller.start()
           }
-          this.playIng = !this.playIng
+          this.playIng = !this.playIng //修改状态 取反
         })
         .onAppear(() => {
           this.updateActiveIndex()
