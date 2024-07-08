@@ -1,5 +1,5 @@
 //统一导出
-export { mediaInfo, mediaInfoModel } from './mediaData'
+export { mediaInfo, mediaInfoModel, mediaList } from './mediaData'
 
 export { BarClass } from './barData'
 
@@ -9,4 +9,5 @@ export { commentData, commentDataModel } from './commentData'
 
 export { UserInfo, UserInfoModel } from './user'
 
-export { VdDataSource } from './VdDataSource'
+export { DataSource } from './DataSource'
+
