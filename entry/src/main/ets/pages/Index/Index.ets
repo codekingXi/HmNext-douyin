@@ -406,16 +406,23 @@ struct Index {
    * 提示内容*/
   @State
   TipContent: string = ''
+
   /**
    * 提示内容功能*/
   @Builder
   FnTipContent(content: string) {
     Row() {
       Text(content)
+        .width('100%')
         .fontColor(Color.Red)
+        .maxLines(1)
         .fontSize(20)
-    }
+        .textOverflow({ overflow: TextOverflow.MARQUEE })
+    }.padding({ left: 20, right: 20 })
+    .justifyContent(FlexAlign.Center)
+    .width('100%')
   }
+
   /**
    * 卡片盒子*/
   @Builder
