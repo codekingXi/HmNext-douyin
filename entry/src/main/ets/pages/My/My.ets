@@ -1,4 +1,4 @@
-import { BarClass, UserInfoModel } from '../../models'
+import { BarClass, DataSource, UserInfoModel } from '../../models'
 import { promptAction, router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import commonFn from '../../common/Function/commonFn'
@@ -184,7 +184,7 @@ export default struct My {
                 Row() {
                   //背景视频
                   Video({
-                    src: 'https://v3-web.douyinvod.com/59c2ec622fef4d0cd14bcfac3e252a8e/66756440/video/tos/cn/tos-cn-ve-15/oUfAnFQMrfjKABDNQmIB93gBwhIbNAMzEYBB4Z/?a=6383&br=1251&bt=1251&btag=c0000e00008000&cd=0%7C0%7C0%7C3&ch=5&cquery=101s_100B_100x_100z_100o&cr=3&cs=0&cv=1&dr=0&ds=4&dy_q=1718962201&feature_id=46a7bb47b4fd1280f3d3825bf2b29388&ft=LjhJEL998xsRu.0PO0P58lZW_3iXVBYtxVJEz7-ElbPD-Ipz&is_ssr=1&l=20240621173000DBFDB4C834640C08AB5D&lr=all&mime_type=video_mp4&qs=0&rc=OjdpNWc6ZGc5ZWk8aWVkPEBpM2Y1czs6ZjN5cjMzNGkzM0BfXmIwLzNgXzAxNV4xLTQtYSMyM25pcjRnZF9gLS1kLTBzcw%3D%3D'
+                    src: 'https://v1.kwaicdn.com/ksc2/NcKwArc6Icb5FtM__mLH7yIXcGMT8VdgqZwh0y8XdnhdMifsiOJoGDui50LTSWSVz0yfU8-eSGb6MLUXQ-XIzqZM3MajJYtZ_9sKEEA2wZkTFsJJ5531HGLO8ReAUWP3ilECPqdhWcxtTWrXpndBfkAH21UwwWPbM10CiLD5PIp2NcsfJeg7C1Afv9jYhcL5.mp4?pkey=AAW0sM4og4cgWE4srPPimT76JzbASCdEZQI0iJhZujR9aT7Ta1JuzhgQqkCNlzYJOXWik1Gm1NCl2NmjWylzhdU2EdQEZw_PCWek54CT_B5TXLJSeBxXwo-iYhxQAe3YNHU&tag=1-1720429371-unknown-0-lx5gpoy1w5-8a45ccb1560e6069&clientCacheKey=3xixmdt8qzd8gqs_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp'
                   })
                     .layoutWeight(1)
                     .height('150%')
@@ -336,9 +336,11 @@ export default struct My {
  * 个人视频区组件*/
 @Component
 struct personVdCmt {
+  private videoData = new DataSource<mediaInfo>(personVdDta)  //简化代码不写完整格式
+
   build() {
     Grid() {
-      ForEach(personVdDta, (item: mediaInfo) => {
+      LazyForEach(this.videoData, (item: mediaInfo) => {
         GridItem() {
           Video({
             src: item.src
