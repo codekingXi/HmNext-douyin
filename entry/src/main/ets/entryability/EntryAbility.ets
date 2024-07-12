@@ -3,6 +3,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
 import { CURRENT_USER } from '../constants';
+import { LOADING_INDEX } from '../router/Index';
 
 
 export default class EntryAbility extends UIAbility {
@@ -23,7 +24,7 @@ export default class EntryAbility extends UIAbility {
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
     const info = new Tiktok(this.context).getCurrentUser()
     AppStorage.setOrCreate(CURRENT_USER, info)
-    windowStage.loadContent('pages/Index/Index')
+    windowStage.loadContent(LOADING_INDEX)
 
   }
 
