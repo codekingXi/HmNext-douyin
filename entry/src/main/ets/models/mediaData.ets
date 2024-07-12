@@ -18,45 +18,45 @@ export class mediaInfoModel implements mediaInfo {
 
 /**
  * 主页视频数据
- * 快手的数据 抖音未知原因无法播放*/
+ * */
 export const mediaList: mediaInfo[] = [
   {
-    src: 'https://v2.kwaicdn.com/ksc2/xL756J4udxHGxNv3NdY3AbKa-ukuhz8L0XJ72KkdMQhgGDHcZwBCofk_f5OW4jhZYLWdoy5dJ_MO-1MVgKHQB6FP-TuflicuQGnsJK4aX3_c8C2rojkTSKNja63-1SSDGCFG4ra-2xJBTXCP3MFNKKsZGTTucQJigj-WgfChs2tyeJXZ7D5sI9a7jkmlqVKW.mp4?pkey=AAXR1qtjYTb2fhIA52w_Azmb65p6A-VSAcBDWORc0VjZFgihEm3EF6CO1VzL3azrIabpDiCY2D660siOI4WGsFcmlnQ9tI_QySeDv5JmddaBR9YlG-BgVa6VNiI81SlINQo&tag=1-1720425172-unknown-0-wk7mv1gzdo-44428d5300a58603&clientCacheKey=3xseuirqva6gpai_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=14944&tt=b&ss=vp',
+    src: 'https://v1.kwaicdn.com/ksc2/p8TIEMaNGxzLKyKSF4fm9T3t7IxxY6vaKYYuU9L7cIRMtQ4rU8WmxEPGbO4K8suvwlQ9m0d9n1hyTgAh9Xgk7MtcC6N6D5fMIXg2CDRaVdtqd4KDMJOFSwmtUZm7t1f7-nthX5Q523WNXSbsbdRDj9xX5UNRUMaMmgyYKecXBANyAL0aKPtdbN3jzTcqA1sN.mp4?pkey=AAXEhp3qi5Gik3dPnQTfk8GQgW2UUBqIPtYha-bOohMZC27DzC5U9At9oSZ2VHL8siVoAhPTOXFF7uXbsDODP_-rYXoj3xxiLkSmUNP5KIeMWh55vF4zx3_keIj1EITzKck&tag=1-1720775717-unknown-0-nhfdifh3ye-cab2207bb9688c78&clientCacheKey=3xycpnzfkd62bm9_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 1
   },
   {
-    src: 'https://v1.kwaicdn.com/ksc2/mBb9ijEd8Jk1LIQRiob7NCL4RK4mQCoqJ5TVELXo5n3ER4Z__TXEkdhnciySn9fqNqt9TcaGLTx-ZOaIUa7f4RPEx9IZYOiyY793ZXa2OUSwe3uipEg-qnuSXZ0Gc-HwHCdAgVPuFs3xkrUXYtOaCEYZnmXQB7AQILSfbdkYzI30IqZGexVd9StlkOBOciM5.mp4?pkey=AAWItbPetyLagIHDZ3kMmhHC0thDOsWagdS4YOHBbVybUtY6E8DVbnr-p-ZFFV4r1rUlQ5mZwP4IjxECFylpfQVqYh2XSNLqqxHnM5QjffPitVsmTlRDYQgJFFH9b7zurl4&tag=1-1720425306-unknown-0-tyzz9fkhj0-821da287d0f39f79&clientCacheKey=3xufufhfnphvtey_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=14944&tt=b&ss=vp',
+    src: 'https://v1.kwaicdn.com/ksc2/NBw9CsuJieQF7XYDNY6wqe6S8r414oJMNIU5ZfzyLwe9Q7PHoS30dGRvj15orD5jQK5YoblNr0a2Jx3vDRUl3kNT1oNK7llrJFP3YA10bVCYJ463NpugASQS3y4QpZH0ITkPYk_z0ZOD7YZTp9tOzZs4UA78JguWQrDCK1a77mgIV4x6ruZkWoOHM-BAitKG.mp4?pkey=AAWmdRJsj8Knz5B_qKpmnzVJh7TXt2dyrqficjncCh-5tR3uGOdyBNXX2HsjKDb9a3ytXYsZTGVizEtVEywpiky3Z3H42tZq_tvRL6VNpIE3BUyKeJHAiuTzdBN8OZ2390c&tag=1-1720775717-unknown-0-hrwh33ip7r-8044fc4a24fcee0c&clientCacheKey=3x6w7fcw3usvtpa_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 2
   },
   {
-    src: 'https://v1.kwaicdn.com/ksc2/U1grWQE5b2r5MApQYTJKrFApBqnWRjL8ZlCy-KSLmjMZvwAvgYuhaHbtQ2UTL3hZv-Nks9jzh-lXA3perTHyPnN_Os6e6sVDITTXvQrqB4r1XrQnXrutYlm2i2s1BLF54PnubWAHr_I4y23XL8L-tiYBGs9vp6dPqMdBLP7lDSS1dux_SUFXhY1MZL5mqY-S.mp4?pkey=AAXLvihwLLcw87po88cK3N_msnNUeBLv0q6j8qVlFCdlnhAlYcxBX8iEftU79fgqLkgsYS3FmNoYR6KtEIFJwAwD8XVnlVTBMLaEL5-8a-zM9B8zohjl8PtHtv7dnkD7sAk&tag=1-1720425371-unknown-0-8idyhjqcdm-3b6171ad03dbc1ec&clientCacheKey=3xfbnfmp8xqgxxk_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp',
+    src: 'https://v2.kwaicdn.com/ksc2/LzH4xDSkcYols_BHaYbWNAOPr_2xJpQjAOJagk-NXAKlNU6nc5QA6m3nE2rCqFrzP_60uOu33FjJFJahKiXjyATU1LBSxTDr9ZR1WdOneQ6LgtWfk3rHRgaqc06XVG4jKzhxw8vxAG6GhCFIxorV5H4NPoedMnDism2l2BaT-yRuW_cmqI6JYqszRgqCniho.mp4?pkey=AAV8twY5IJrtq_ewBC7T5gYle4ZDyksEP0GQIz5fzIdrCZQVoflyYzBuVzONAwmsJTwcdSowbQ-kXkgbIb6dcsKwTbkQy9FaZfJIuzeMHuNWpJ4zQUJ6DDMIWcppBSJNdrs&tag=1-1720775717-unknown-0-o2nk8wml9a-a7df7da861e973d1&clientCacheKey=3xbh2jnnf2jpvay_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 3
   },
   {
-    src: 'https://v1.kwaicdn.com/ksc2/yWFsQbGRkbrHCHDiu6Br-GynOtiST9UaBRRXeuk3KpfcWcmhFdIB-y1RBDCr1HwESfHFQu6-KviP_dr2ntR2aadYFT3NPQ_0oWEtv7PnQ9tEaoRHo97HP8KMuSqgFuWbE-pXYBXFU3fHcsT1L774c4MQaIp_apEGIoBmcKRaYeQEiDCJLUfzHbKSwOPzqQuD.mp4?pkey=AAW1PJjPqL0EhV_8eaYOt256ObfVPh3YsKSWDww9mf10ZpKxIvXmFynd-uc_vTuoH2FSL3wBVBGQcIJToTlN2IVSOfgRtAb2ks4pTT2M6kP_8jq6cmwPJF3bt2_ddaEqvb8&tag=1-1720425435-unknown-0-9lqyr01jzn-4cd2af7e2891b332&clientCacheKey=3xs7bxd77cbvyzs_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp',
+    src: 'https://v1.kwaicdn.com/ksc2/9qPd5lKVRRjcOCMErS_jpnaKRYhTIklq87BabihxB8BoObCqNJYK__abZRl2HCzfRszsUBtCoCPQwAD3fbeYYzDE1BYQGgnL7zvH3PVWMWBGh5IdPTKeHBVMt-yPCgkrltmDkuRSMeX4Vi5gstw0e0c7VHka2MmEv2Ji-MWeY4nmDiwTCZUnNRzFkCHCNW2l.mp4?pkey=AAVl-vBQe1RTzaOXTAcQkNJWSsFz9EnAs0g8iZnMp-5Fm3UFa54z3AnYSnpBrhQDOIU5ExLSLlVeZLswPIgVqqt7i76HszDVJ7SUrqreQvg4N_H5ykea4Cwboiug2JwUyIU&tag=1-1720775717-unknown-0-hzmgrkpu2s-ab5a60efb3bc32ac&clientCacheKey=3xt883d54qq4etq_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 4
   },
   {
-    src: 'https://v1.kwaicdn.com/ksc2/2oXfAcyS8JEeopcSROmPV7x_NACb-QGYJiaBG8FL3tmPNPe-VmGxO-SiJgDw4YF3udqhFIc5ZVYONDUBQmgw159fgIhRfR8UiR2enJCRjKjlFGIuifum1uM55uQUMSOSoQlPTmFqCOtom8ZpNlkD1p219EkiZZ-q9MoWF-D18GZ98379cGbBassLd3EEekGG.mp4?pkey=AAX3KlhytfwpykX3_8MgYJWN8m81r9K0S42jD_5ypuoUHYD9L3EgjX_uVlpKdjaGJyTvNgX6tHzmxIzwdQtZpvl0aonmQllaZ_ExwImxDSXqKiV2gu_MLaLGwFmx0WurCxQ&tag=1-1720425435-unknown-0-kmzvzslhdo-08f9f9b963a14080&clientCacheKey=3xfv9svq525najk_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp',
+    src: 'https://v1.kwaicdn.com/ksc2/etnX1aS0IBCH6ruOPHDPkbf_zGf51pH1zFhwnJ0AiJ6Uik4848D8FQPPz-2v4lkR32YQrESsJ1rZAIRuV0sF7iEdUxCQ-UPmlEmQyQ4Q6LerzfGhJFyO_xhCTr29WjLnv5XMck_w6zuQywdT77h0bXNpF2zKKHhFAQ9P-ynRQ9v7ob7pk-8S4uGe3LtcrItA.mp4?pkey=AAWC8GIMGOZnuGRG-ixMwZltCJeSqTmO6of0b9iSLO3Zpnk1OLcy2j3m1XONuCQdmmPLZqULK-JY5VVCp5tF0voWhHTmfJRhd_TXiRM94CNKp5HS0zm6FzbqS34NJMfGbPo&tag=1-1720775717-unknown-0-zpz3azrsnl-e11b50de646a9e5c&clientCacheKey=3xrfez7u97u84yk_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 5
   },
   {
-    src: 'https://v2.kwaicdn.com/ksc2/bjEgzGfREOCznSM5uIKmvfqJaS2GXQ2514irDY5WaSDHomuxCKEPxXMarzbckXSvnkC2SnGA1kgK8_rCrPw9CCvKnAIQ4-jri5fuHljPcb0YuvjYR7dB2F4cH4V0f_AXSXw_A4-utsXP5SIfD3vTQUmu6ozJSfiqwm4gkj1NNd3QQRSRakSftXJJtS_WMvV0.mp4?pkey=AAXSgUNSkZgI4Bvda7QG_ixaYqKXNr-8KXjdGc3GPwrwCiUAuqO6oxGjglITpOzuwt3dSyYZ2MMuULC4DpE8B7h9y58wgeNXobUSqbrMlITdVYHk9sYNKYfHhGd8O__QNo4&tag=1-1720425493-unknown-0-rokpxi4vny-5bbaa1827a742f08&clientCacheKey=3xszgmdqqsjcs2q_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp',
+    src: 'https://v2.kwaicdn.com/ksc2/vX7GLVQ4FCTGuACDEKM9N_UAqrZ8XDgXZviQ6NAkODl6axnUTJ416aXW5q_KDPd4vNV4w3ywIlzXJ-kur1diz4Mz5wxKqHtkBCXp7P5erKeFfqiA100B75Rn5jlmLQI-X3V-CXxi_ghPDLCyvgm_0O726ySNMJHbIc8KUDYp4HIMU5bBoza3NOtWnTg46pcW.mp4?pkey=AAXN8POtVlWbDZVcR-LNfDVE2yOAaYjskIpExfMVoihUDONXfecTw-XvXDG4eG2-rDThwUY1cmEOZSzNH22hWsYHBoMg5ygJUhWB0aZd-5fV_dEXv4nckVsr9GlSEwW-IQ0&tag=1-1720775717-unknown-0-d2zrzhz7p6-1d62d3d9f6ea71ed&clientCacheKey=3xkpsqwa72rk83q_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 6
   },
   {
-    src: 'https://v2.kwaicdn.com/ksc2/w4eAKd5QHvu39XnJ_IeQUXwbiucDWbLl2q-RwwACPDQyb3r2ck-xaJt2yfNtE1rzIj-Evg0QAiQj0TqATPvl84KBtbmCAS_3Yt0uoLo4ZWsYjLqQw5cdgSuA_8C5rwSLDcD-V9Vo-TUvuIIf2lhdIfM23_CRiFaSVoGqa_ZZFbYPc8vRqURYNvB5rlMQmCTn.mp4?pkey=AAUzhswW54wxCd54QzTKFydGL74dWyjlDIsBIZPOUZ5yUdOsme6SYAdWMcLlvIwg8VxDigTGm0xn-MDde3VPwsEucXqRP9xXabmO6ZQI-3T86J2WNChX1eUfbb6vDmCKJ9c&tag=1-1720425952-unknown-0-d9ncdepi9f-9f37fa7d42515aa1&clientCacheKey=3xazxy8ms4fe45u_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=14944&tt=b&ss=vp',
+    src: 'https://v2.kwaicdn.com/ksc2/3RYHW4lhCtHxE0aG0iFxiQLhyJM5fItsLQRVR3C0DlQW26R76_wNnqwyypYhxAISJoLOEgVZ30a1WUshpshf6UXG0p8tOSCgykfzE2AgHYMwkKHBSXOTUopDwGA-mzbRBo8bf0eWD8F351nWnt0TwAHBJjEK1qx0yP0cYp0CE3Y__B3rkN00jGzMR-Y4NFyE.mp4?pkey=AAXIHp_H-IE763G7vJ1cn5vOA0SJps8Kb5pRjH6EUHtOnvn6CR8Z0OCWekgRHQAOICMszJnowvxnwp-gq_tVGnEK3SOBxgmrcB2NkrQ-Rr92YklQcxLPBhIUUbM6l0xtYEU&tag=1-1720775717-unknown-0-nfem6nkbma-280ad40ea9d29440&clientCacheKey=3xpui2cdq4syjfq_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 7
   },
   {
-    src: 'https://v2.kwaicdn.com/ksc2/8sV2e1yvt-XEVixU2S0a1_8YItw0kYBqrvE9xyMuuPmTSucu94tJOCMzDwKQP2dgS2mSukTsDfbYMsFRh1cHZ4QYcJn_--LDZFjztNHcTBxd6BWdUq9wKcrF4J1vx1nirwRmFp9BI4bYVb_g5j5HWvdBthOokcA_q5w6gNsm-JmdOWpx3FET9_9AeOD6lAzc.mp4?pkey=AAWu_TPd4JAO0Dw0YmJ_mAb_ESrunm_3AC2B3DwTxsqAVlSFiGBnCG_vSo3nmDykGRebsEEsKyCy5yur22w3C4fWmh-3tbf5g4Mbt7OLXFL7qeCfOrLIW9LwLoVlbYFGIiY&tag=1-1720425493-unknown-0-irdpvplkjh-fadd8b518c7a4f01&clientCacheKey=3xss95q4augu8fy_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp',
+    src: 'https://v2.kwaicdn.com/ksc2/9C8coMrANL161FbCJmg2OJsVUikm7KUshf9R7bp1H3eyMjt1s59jBMPMRgBQFkgg4gMOXwO-YUkX1EpvX_5_WS5NWpku6s8z4X5jI-BF0TUzgSOiZlE1QDzYw2-G4pwkDOWLE5GsfMFx9bCtM5vMC5KiBPZqkF15XKGC5ZJW0oFZEKz4wl6jyxq-QwkZOLcz.mp4?pkey=AAWeLJ0eX8SuCbcCDOKLn24Rnpte1TRZkrghgN5fUaXV2Q7iu92A0RYwafimDKVh6-demqXvwWyLZvHceLCKe8Bk2DYTQ8FyTvlQj39FetEY8w688Zle7yU4n7K8Ubg59UI&tag=1-1720775717-unknown-0-xtheddvair-a7c1acbcc13d14c0&clientCacheKey=3xkf5fhb8ja2tdm_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 8
   },
   {
-    src: 'https://v2.kwaicdn.com/ksc2/xin-SessTDvLi8LRaj2tYG4zNd17IRVaxHzexu_L5m4-Jj8LkoE5f5IWJsTdNjVz139oBwUzkDSq9Mfes4AhvZwvLbICmDxfTYIX_TKq2gl1EIFRpJvM3dXiKbSEmiI1nhsbw9XMlpBx4feOe1S_rEIXoNHc_4uhJNHQiTjYfnQ8ncuF8b1XMdLRnEcOaVCi.mp4?pkey=AAURRocLiyW6jFS5VF967GSGll2bEuNtpzTpAVMq7bNnO0a_pw5rRP_cgsvXQBvyEJKho8gI1kI-rcWWMujPc4csN61v1c54LFeSr1lx28oTWRnwUIvjs28umd2ewZFuKvI&tag=1-1720425547-unknown-0-jb491kt3ye-69a681b4e52a1f40&clientCacheKey=3xhcj94u66bauqk_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp',
+    src: 'https://v2.kwaicdn.com/ksc2/IXuXwBFrHfSUemwwii9CJpUgtfpoFMnpO0YE7W7xtfiGC5BSn6xdXH7ayX8LwfI2-nCbLXzT1_z2Ns6tILm9dM6nS8HxjlfvcNsR9EvrnNBAVJg4pVmJyZNLncBg3xt6IeVpPIifqII23FuZYCDNCbTNBebOcfDQ3cQO4k5LeFb80PAD6rrv-Wo7MZSWiLmU.mp4?pkey=AAX8H8vD1A-BzDlEutRJNs4YOuBafbrPsbj4N1WeJkicn2uoq3lhcL7occj9wS_se7ptNsdu8ouI2UXqDIXdgJ1HQ80RXWR-MqCKVIe5z8AoAzdZGp9_dT7GPGaP-vWhV-M&tag=1-1720775717-unknown-0-zatvakuovp-1117dd9337a8bcd3&clientCacheKey=3xbm742hyckqen6_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
     id: 9
   }, {
-  src: 'https://v2.kwaicdn.com/ksc2/xNpIqsMYpOztotgfriGVBo71pQnvKplJG_35TuB8L9qpaQSIK3sftqgSirNm6Qu6YaICG6OMXoGdWlHMxlKTl3qeipKa6acA-_JZbe8WX10w1bbB0TJFH5peftWb7iljPjofBM-tnxYiEU-rXy63a7XbX1jSOAapxH6zwdTzvsuo9nFLrF4P0pgRjkO_gBqy.mp4?pkey=AAWUPB9eK8C7dZnyFsABk_JIAO9NssEbCm0cfFkqpVZXg1tBKPwOX6-1toTNLQRWIaN0JmRd4d3_t_qZF4yVOHrUJEJsYPgKeoRI8Z1L4HQS0KMxrkOjDc6fRs2upPHGZV4&tag=1-1720425676-unknown-0-ybaywqsktg-b71c8b8ee239017d&clientCacheKey=3x9adb4wscgwqr6_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=14944&tt=b&ss=vp',
+  src: 'https://v2.kwaicdn.com/ksc2/JhdZF8m6u7Z8SdCaC2vxJxN4tLDdL-4O1nmd-j1MHKNf3DggaoDPbZjL9t72DC4AkttO0-t9xaPZKQODTpHQx3Zp0ergeIjM_yGk179P8lvR5FyuwrBPF6rvE9IYQCNsHRf6azeJpTpMut6UZt90KE6VE44fJZdATObZ-1PwC8ZiuXJGSerSP9GsQUQtiLsj.mp4?pkey=AAWG1xSSuecWAcXXCUqtwm914w0GC-uFwAvYGqHmG-YBIkM79rkfQTFDy-NAoixHAsILjEECQG_2i0rhoVZHZmm5u9u9cZXs2c7iYVHgrv6CAfzd-UqCRutIJGrrezEOvDo&tag=1-1720775717-unknown-0-5jqhwphyvz-1d175b977ada3322&clientCacheKey=3x96pkiv7hvjsnq_b.mp4&di=JAiEaV4wCa-FJTssL4SX-Q==&bp=14944&tt=b&ss=vp',
   id: 10
 },
 ]
