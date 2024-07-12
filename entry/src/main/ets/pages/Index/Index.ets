@@ -616,7 +616,7 @@ struct Index {
   }
 
   /*
-   * 图片选择*/
+   * 图片选择数量*/
   maxImgNumber: number = 1 //最多可选1张图片
 
   async selectPhoto() {
@@ -743,6 +743,7 @@ struct Index {
             })
         }
       }
+      //全屏模态弹窗
       .bindContentCover($$this.showUploadDialog, this.contentDialog, {
         modalTransition: ModalTransition.DEFAULT
       })
