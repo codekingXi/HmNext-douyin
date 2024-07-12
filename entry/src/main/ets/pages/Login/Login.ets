@@ -12,6 +12,7 @@ function textStyle() {
   .fontColor(Color.Red).fontSize(16)
   .position({ x: 10, y: 65 })
 }
+
 /**
  * 登录页*/
 @Entry
@@ -41,16 +42,18 @@ struct Login {
     username: '',
     password: '',
     tiktokNub: 0,
-    avatar:'',
-    user_id:''
+    avatar: '',
+    user_id: ''
   } as UserInfo)
+
   /*
    * 该声明周期函数只会执行一次*/
-   aboutToAppear(): void {
-     this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
-     this.userInfo.avatar='https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
-     this.userInfo.user_id = commonFn.creteUserID().toString() //获取随机生产的id
+  aboutToAppear(): void {
+    this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
+    this.userInfo.avatar = 'https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
+    this.userInfo.user_id = commonFn.creteUserID().toString() //获取随机生产的id
   }
+
   /*
    * 登录功能*/
   login() {
@@ -70,13 +73,13 @@ struct Login {
         const token = userData(this.userInfo)
         //用户信息校验
         if (this.userInfo.username && this.userInfo.password) {
-          AppStorage.set(CURRENT_USER,new UserInfoModel({
-            username:this.userInfo.username,
-            password:this.userInfo.password,
-            tiktokNub:this.userInfo.tiktokNub,
-            avatar:this.userInfo.avatar,
-            user_id:this.userInfo.user_id,
-            content:this.userInfo.content
+          AppStorage.set(CURRENT_USER, new UserInfoModel({
+            username: this.userInfo.username,
+            password: this.userInfo.password,
+            tiktokNub: this.userInfo.tiktokNub,
+            avatar: this.userInfo.avatar,
+            user_id: this.userInfo.user_id,
+            content: this.userInfo.content
           })) //写入全局状态
           await new Tiktok(getContext()).setCurrentUser(token) //写入首选项
           this.loading = false
@@ -91,9 +94,11 @@ struct Login {
 
 
   }
+
   onBackPress(): boolean | void {
     commonFn.tipOutPage()
   }
+
   build() {
     Column({ space: 30 }) {
       Text("账号登录").fontSize(34)
@@ -103,6 +108,9 @@ struct Login {
           TextInput({ placeholder: "请输入用户名", text: this.userInfo.username })
             .onChange(value => { //因为数据只能监视到第一层的变化,只能用onchange绑定
               this.userInfo.username = value
+              if (value.length < 6) {
+                this.showText = !this.showText
+              }
             })
             .maxLength(10)
             .type(InputType.USER_NAME).ipt()
@@ -117,6 +125,9 @@ struct Login {
           TextInput({ placeholder: "请输入密码", text: this.userInfo.password })
             .onChange(value => {
               this.userInfo.password = value
+              if (value.length < 6) {
+                this.showText = !this.showText
+              }
             })
             .ipt()
             .maxLength(15)
