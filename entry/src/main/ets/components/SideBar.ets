@@ -175,7 +175,7 @@ struct Sidebar {
       })
     }
 
-    //弹层
+    //半模态弹层
     .bindSheet($$this.showDialog, this.Dialog, {
       height: '65%',
       backgroundColor: '#ffefecec'
