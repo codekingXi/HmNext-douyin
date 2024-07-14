@@ -95,10 +95,6 @@ struct Login {
 
   }
 
-  onBackPress(): boolean | void {
-    commonFn.tipOutPage()
-  }
-
   build() {
     Column({ space: 30 }) {
       Text("账号登录").fontSize(34)
