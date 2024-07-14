@@ -20,12 +20,5 @@ export default class commonFn {
   static tipDialog(){
     promptAction.showToast({message: "功能未完善"})
   }
-  /**
-   * 离开页面提示*/
-  static tipOutPage(){
-    router.showAlertBeforeBackPage({
-      message:'确定要退出吗'
-    })
-  }
 
 }
