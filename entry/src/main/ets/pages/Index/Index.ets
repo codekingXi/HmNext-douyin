@@ -10,6 +10,7 @@ import { picker } from '@kit.CoreFileKit'
 import commonFn from '../../common/Function/commonFn'
 import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
 import { COLOR_BLACK, COLOR_GRAY, COLOR_GrayNAV, COLOR_WHITE } from '../../common/color/colors'
+import { common } from '@kit.AbilityKit'
 
 export const Store = new Tiktok(getContext()).getStore()
 
@@ -43,8 +44,25 @@ struct Index {
   // aboutToAppear(): void {
   //
   // }
+  /**
+   * 记录返回时间*/
+  backTime: number = 0
+
   onBackPress(): boolean | void {
-    commonFn.tipOutPage()
+    let now = Date.now() //获取时间戳
+    if (now - this.backTime < 1000) {
+      const ctx = getContext(this) as common.UIAbilityContext
+      ctx.terminateSelf() //终止程序
+    } else {
+      this.backTime = now
+      promptAction.showToast({
+        message: '再按一次退出',
+        alignment: Alignment.Top,
+        duration: 2000,
+        offset: { dx: 0, dy: 250 }
+      })
+    }
+    return true
   }
 
   @Provide
