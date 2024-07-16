@@ -636,7 +636,8 @@ struct Index {
   /*
    * 图片选择数量*/
   maxImgNumber: number = 1 //最多可选1张图片
-
+  /**
+   * 选择图片*/
   async selectPhoto() {
     const photo = new picker.PhotoViewPicker() //图片选择对象
     const result = await photo.select({
