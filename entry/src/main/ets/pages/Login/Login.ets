@@ -9,8 +9,11 @@ import { LOADING_INDEX } from '../../router/Index'
 
 @Extend(Text)
 function textStyle() {
-  .fontColor(Color.Red).fontSize(16)
-  .position({ x: 10, y: 65 })
+  .width('100%')
+  .textAlign(TextAlign.Center)
+  .fontColor(Color.Red)
+  .fontSize(20)
+
 }
 
 /**
@@ -34,10 +37,9 @@ struct Login {
   @State
   showText: boolean = false
   @State
-  userName: string = ''
+  loginErrorTip: string = ''
   @State
-  userPwd: string = ''
-  @State
+  @Watch('watchIpt')
   userInfo: UserInfoModel = new UserInfoModel({
     username: '',
     password: '',
@@ -46,8 +48,15 @@ struct Login {
     user_id: ''
   } as UserInfo)
 
-  /*
-   * 该声明周期函数只会执行一次*/
+  watchIpt() {
+    if (this.userInfo.username.length < 6 || this.userInfo.password.length < 6) {
+      this.showText = true
+    } else {
+      this.showText = false
+    }
+  }
+
+  //初始化时自动获取一些基本数据
   aboutToAppear(): void {
     this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
     this.userInfo.avatar = 'https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
@@ -62,8 +71,7 @@ struct Login {
     if (this.userInfo.username.length < 6 && this.userInfo.password.length < 6 ||
       this.userInfo.username.length < 6 || this.userInfo.password.length < 6) {
       this.showText = !this.showText
-      this.userName = '用户名长度不能小于6位'
-      this.userPwd = '密码长度不能小于6位'
+      this.loginErrorTip = '用户名或密码长度小于6位'
     } else {
       this.loading = true
 
@@ -87,50 +95,38 @@ struct Login {
         } else {
           promptAction.showToast({ message: "账号或密码错误!" })
           this.loading = false
-          return //执行完毕 跳出任务
+          return
         }
       }, 750)
     }
-
-
   }
 
   build() {
     Column({ space: 30 }) {
       Text("账号登录").fontSize(34)
         .fontColor(Color.Black)
-      Row() {
-        Column() {
-          TextInput({ placeholder: "请输入用户名", text: this.userInfo.username })
-            .onChange(value => { //因为数据只能监视到第一层的变化,只能用onchange绑定
-              this.userInfo.username = value
-              if (value.length < 6) {
-                this.showText = !this.showText
-              }
-            })
-            .maxLength(10)
-            .type(InputType.USER_NAME).ipt()
-          if (this.showText) {
-            Text(this.userName).textStyle()
-          }
-        }
+
+      Column() {
+        TextInput({ placeholder: "请输入用户名", text: this.userInfo.username })
+          .onChange(value => { //因为数据只能监视到第一层的变化,只能用onchange绑定
+            this.userInfo.username = value
+
+          })
+          .maxLength(10)
+          .type(InputType.USER_NAME).ipt()
       }
 
-      Row() {
-        Column() {
-          TextInput({ placeholder: "请输入密码", text: this.userInfo.password })
-            .onChange(value => {
-              this.userInfo.password = value
-              if (value.length < 6) {
-                this.showText = !this.showText
-              }
-            })
-            .ipt()
-            .maxLength(15)
-            .type(InputType.Password)
-          if (this.showText) {
-            Text(this.userPwd).textStyle()
-          }
+
+      Column({ space: 20 }) {
+        TextInput({ placeholder: "请输入密码", text: this.userInfo.password })
+          .onChange(value => {
+            this.userInfo.password = value
+          })
+          .ipt()
+          .maxLength(15)
+          .type(InputType.Password)
+        if (this.showText) {
+          Text(this.loginErrorTip).textStyle()
         }
       }
 
