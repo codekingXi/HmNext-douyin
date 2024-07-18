@@ -647,7 +647,7 @@ struct Index {
       //最大可选数量
       maxSelectNumber: this.maxImgNumber
     })
-    //如果有图片
+    //如果有图片 这里的业务只需要单个图片
     if (result.photoUris.length) {
       this.info.avatar = result.photoUris.toString()
       const token = this.info
@@ -719,12 +719,10 @@ struct Index {
               if (item.name === 'My') {
                 My()
               }
-            }.tabBar()
-
+            }
           })
         }
         .animationDuration(0)
-
         .scrollable(false)
 
         Row({ space: 20 }) {
@@ -738,14 +736,6 @@ struct Index {
         .backgroundColor(COLOR_GrayNAV)
         .justifyContent(FlexAlign.SpaceAround)
 
-        // Row() {
-        //   Image($r("app.media.ic_uploading"))
-        //     .width(48)
-        //     .height(48)
-        //     .onClick(() => {
-        //       this.showDialog = !this.showDialog
-        //     })
-        // }.position({ x: '47%', y: '92.5%' })
         //默认不显示遮罩层
         if (this.showDialog) {
           customDialog({
