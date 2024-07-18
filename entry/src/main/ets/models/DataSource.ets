@@ -4,7 +4,7 @@ import { BasicDataSource } from '../utils/BasicDatSource';
  * 数据源类*/
 export class DataSource<T> extends BasicDataSource {
   /**
-   * 视频数据*/
+   * 数据源*/
   private DataArray: T[] = [];
 
   constructor(el: T[]) {
