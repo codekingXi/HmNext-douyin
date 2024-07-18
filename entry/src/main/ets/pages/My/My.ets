@@ -5,7 +5,7 @@ import commonFn from '../../common/Function/commonFn'
 import { LOADING_SHOP, LOADING_VdDETAIL } from '../../router/Index'
 import { COLOR_BLACK, COLOR_GRAY, COLOR_OpacityBlack, COLOR_WHITE } from '../../common/color/colors'
 import { mediaInfo, personVdDta } from '../../models/mediaData'
-import { Skeleton } from '../../components'
+import { iconBtn, Skeleton } from '../../components'
 
 @Component
 export default struct My {
@@ -251,10 +251,8 @@ export default struct My {
               List({ space: 30 }) {
                 ForEach(this.personFn, (item: BarClass) => {
                   ListItem() {
-                    Column({ space: 10 }) {
-                      Image(item.icon).width(32).height(32)
-                      Text(item.title)
-                    }.onClick(() => {
+                    iconBtn({icon:item.icon,title:item.title})
+                    .onClick(() => {
                       item.click && item.click()
                     })
                   }
