@@ -2,7 +2,9 @@
  * 图标按钮组件*/
 @Component
 export struct iconBtn {
+  @Require
   icon:ResourceStr=''
+  @Require
   title:string=''
   build() {
     Column({ space: 10 }) {
