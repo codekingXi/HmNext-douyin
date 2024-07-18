@@ -636,6 +636,7 @@ struct Index {
   /*
    * 图片选择数量*/
   maxImgNumber: number = 1 //最多可选1张图片
+
   /**
    * 选择图片*/
   async selectPhoto() {
@@ -708,11 +709,14 @@ struct Index {
             TabContent() {
               if (item.name === 'Home') {
                 TopBar()
-              } else if (item.name === 'Friend') {
+              }
+              if (item.name === 'Friend') {
                 Text('Friend')
-              } else if (item.name === 'Message') {
+              }
+              if (item.name === 'Message') {
                 Message()
-              } else if (item.name === 'My') {
+              }
+              if (item.name === 'My') {
                 My()
               }
             }.tabBar()

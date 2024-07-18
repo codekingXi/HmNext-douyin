@@ -269,11 +269,11 @@ export default struct My {
                     TabContent() {
                       if (item.id === 1) {
                         personVdCmt()
-                      } else if (item.id === 2) {
+                      }if (item.id === 2) {
 
-                      } else if (item.id === 3) {
+                      } if (item.id === 3) {
 
-                      } else if (item.id === 4) {
+                      } if (item.id === 4) {
 
                       }
                     }
