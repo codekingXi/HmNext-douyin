@@ -695,7 +695,7 @@ struct Index {
         })
       }.width('90%')
       .borderRadius(10)
-      .margin({ top: "-5%" })
+
     }
 
   }
@@ -709,16 +709,16 @@ struct Index {
             TabContent() {
               if (item.name === 'Home') {
                 TopBar()
-              }
-              if (item.name === 'Friend') {
-                Text('Friend')
-              }
-              if (item.name === 'Message') {
-                Message()
-              }
-              if (item.name === 'My') {
-                My()
-              }
+              } else
+                if (item.name === 'Friend') {
+                  Text('Friend')
+                } else
+                if (item.name === 'Message') {
+                  Message()
+                } else
+                if (item.name === 'My') {
+                  My()
+                }
             }
           })
         }
