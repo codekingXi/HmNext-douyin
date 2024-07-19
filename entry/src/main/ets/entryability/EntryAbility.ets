@@ -22,8 +22,11 @@ export default class EntryAbility extends UIAbility {
 
     const win = windowStage.getMainWindowSync()
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
+    //获取用户信息
     const info = new Tiktok(this.context).getCurrentUser()
+    //创建存储
     AppStorage.setOrCreate(CURRENT_USER, info)
+    //加载内容
     windowStage.loadContent(LOADING_INDEX)
 
   }
