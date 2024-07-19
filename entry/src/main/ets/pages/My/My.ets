@@ -1,5 +1,5 @@
 import { BarClass, DataSource, UserInfoModel } from '../../models'
-import { promptAction, router } from '@kit.ArkUI'
+import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import commonFn from '../../common/Function/commonFn'
 import { LOADING_SHOP, LOADING_VdDETAIL } from '../../router/Index'
@@ -77,9 +77,7 @@ export default struct My {
     {
       icon: $r('app.media.icon_moreFn'), title: '查看更多', click: () => {
       animateTo({ duration: 200 }, () => {
-        this.showDialog = true
-        this.bgColor = COLOR_OpacityBlack
-        this.IndexX = '-65%'
+        this.openRightSiderBar()
       })
     }
     }
@@ -89,8 +87,9 @@ export default struct My {
   private personVd: BarClass[] = [
     { title: '作品', id: 1 },
     { title: '私密', id: 2 },
-    { title: '收藏', id: 3 },
-    { title: '喜欢', id: 4 }
+    { title: '推荐', id: 3 },
+    { title: '收藏', id: 4 },
+    { title: '喜欢', id: 5 }
   ]
   @Consume
   IndexX: number | string
@@ -98,7 +97,8 @@ export default struct My {
   private personInfo: ResourceStr | undefined = undefined
   @State
   currentIndex: number = 0
-  @State
+  /**
+   * 按钮标签宽度*/
   btnTitleWidth: number = 0
   tabController: TabsController = new TabsController()
 
@@ -106,13 +106,11 @@ export default struct My {
   personBtn(item: BarClass) {
     Column() {
       Text(item.title)
+        .width(this.screenWidth / this.personVd.length)
+        .textAlign(TextAlign.Center)
         .animation({ duration: 200 })
-        .onAreaChange((oldArea, newArea) => {
-          this.btnTitleWidth = newArea.width as number
-        })
-        .fontSize(16)
+        .fontSize(this.personVd[this.currentIndex].id === item.id ? 24 : 16)
         .fontColor(this.personVd[this.currentIndex].id === item.id ? COLOR_BLACK : '#ff666666')
-        .fontWeight(this.personVd[this.currentIndex].id === item.id ? 500 : 400)
     }
     .onClick(() => {
       const index = this.personVd.findIndex(obj => obj.title === item.title)
@@ -123,17 +121,28 @@ export default struct My {
   /**
    * 获得x坐标*/
   getX() {
-    if (this.personVd[this.currentIndex].id === 1) {
-      return this.btnTitleWidth + 5
-    } else if (this.personVd[this.currentIndex].id === 2) {
-      return this.btnTitleWidth * 4 + 5
-    } else if (this.personVd[this.currentIndex].id === 3) {
-      return this.btnTitleWidth * 7 + 5
-    } else if (this.personVd[this.currentIndex].id === 4) {
-      return this.btnTitleWidth * 10 + 5
-    }
-    return
+    /**
+     * 剩余宽度*/
+    const X = this.btnTitleWidth / 3 - 5
+    /**
+     * 索引*/
+    const id = this.personVd[this.currentIndex].id as number
+    //返回坐标长度
+    return id === 1 ? 20 : this.btnTitleWidth * (id - 1) + X
   }
+
+  /**
+   * 打开右侧边栏*/
+  openRightSiderBar() {
+    this.showDialog = true
+    this.bgColor = COLOR_OpacityBlack
+    this.IndexX = '-65%'
+  }
+
+  /**
+   * 屏幕宽度*/
+  @State
+  screenWidth: number = 0
 
   build() {
     if (this.info) {
@@ -168,11 +177,7 @@ export default struct My {
                   }.btnBg().justifyContent(FlexAlign.Center)
                   .onClick(() => {
                     animateTo({ duration: 200 }, () => {
-                      //显示遮罩
-                      this.showDialog = !this.showDialog
-                      this.bgColor = COLOR_OpacityBlack
-                      //更改移动的坐标位置
-                      this.IndexX = '-65%'
+                      this.openRightSiderBar()
                     })
 
                   })
@@ -251,10 +256,11 @@ export default struct My {
               List({ space: 30 }) {
                 ForEach(this.personFn, (item: BarClass) => {
                   ListItem() {
-                    iconBtn({icon:item.icon,title:item.title})
-                    .onClick(() => {
-                      item.click && item.click()
-                    })
+                    iconBtn({ icon: item.icon, title: item.title })
+                      .onClick(() => {
+                        item.click && item.click()
+
+                      })
                   }
                 })
               }.listDirection(Axis.Horizontal).padding(20)
@@ -267,11 +273,13 @@ export default struct My {
                     TabContent() {
                       if (item.id === 1) {
                         personVdCmt()
-                      }if (item.id === 2) {
+                      } else if (item.id === 2) {
 
-                      } if (item.id === 3) {
+                      } else if (item.id === 3) {
 
-                      } if (item.id === 4) {
+                      } else if (item.id === 4) {
+
+                      } else if (item.id === 5) {
 
                       }
                     }
@@ -279,6 +287,7 @@ export default struct My {
                   })
                 }
 
+                //自定义tab栏
                 Row() {
                   ForEach(this.personVd, (item: BarClass) => {
                     this.personBtn(item)
@@ -288,14 +297,14 @@ export default struct My {
                 .position({ x: 0, y: 0 })
                 .justifyContent(FlexAlign.SpaceAround)
 
+                //下划线
                 Divider()
                   .strokeWidth(2)
-                  .width(this.btnTitleWidth * 2)
+                  .width(this.screenWidth / this.personVd.length)
                   .color(COLOR_BLACK)
                   .translate({ x: this.getX() })
-                  .animation({ duration: 200 })
                   .position({ x: '-5%', y: 50 })
-
+                  .animation({ duration: 200 })
               }
 
             }
@@ -311,6 +320,10 @@ export default struct My {
           }.height('100%')
         }
       }.height('150%')
+      .onAreaChange((oldArea, newArea) => {
+        this.screenWidth = newArea.width as number
+        this.btnTitleWidth = this.screenWidth / this.personVd.length
+      })
       .scrollBar(BarState.Off)
       //修改整个页面的坐标
       .onClick(() => {
@@ -334,7 +347,7 @@ export default struct My {
  * 个人视频区组件*/
 @Component
 struct personVdCmt {
-  private videoData = new DataSource<mediaInfo>(personVdDta)  //简化代码不写完整格式
+  private videoData = new DataSource<mediaInfo>(personVdDta) //简化代码不写完整格式
 
   build() {
     Grid() {
