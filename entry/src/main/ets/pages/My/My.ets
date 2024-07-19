@@ -164,23 +164,26 @@ export default struct My {
                     commonFn.tipDialog()
                   })
 
+                  //搜索和功能按钮区
                   Row() {
-                    Image($r("app.media.icon_search")).width(28).height(28)
-                  }.btnBg().justifyContent(FlexAlign.Center)
-                  .onClick(() => {
-                    commonFn.tipDialog()
-                  })
-
-                  Row() {
-                    Image($r("app.media.icon_Tab")).imgBg()
-
-                  }.btnBg().justifyContent(FlexAlign.Center)
-                  .onClick(() => {
-                    animateTo({ duration: 200 }, () => {
-                      this.openRightSiderBar()
+                    Row() {
+                      Image($r("app.media.icon_search")).width(28).height(28)
+                    }.btnBg().justifyContent(FlexAlign.Center)
+                    .onClick(() => {
+                      commonFn.tipDialog()
                     })
 
-                  })
+                    Row() {
+                      Image($r("app.media.icon_Tab")).imgBg()
+
+                    }.btnBg().justifyContent(FlexAlign.Center)
+                    .onClick(() => {
+                      animateTo({ duration: 200 }, () => {
+                        this.openRightSiderBar()
+                      })
+                    })
+                  }
+
                 }
                 .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 10 })
               }.width('100%').height('50%').zIndex(3).position({ y: 0 })
