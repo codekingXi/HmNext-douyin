@@ -3,55 +3,61 @@ import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
 import { LOADING_ChatDetail, LOADING_SEARCH } from '../../router/Index'
 import { COLOR_OpacityBlack } from '../../common/color/colors'
+import { HeadBar } from '../../components'
+
 /**
  * 消息页面*/
 @Entry
 @Component
-export default struct Message {
+export struct Message {
   @State
-  userList:UserInfo[] = [] //渲染默认用户列表
+  userList: UserInfo[] = [] //渲染默认用户列表
   @Consume
   bgColor: string
   @Consume
   showDialog: boolean
   @Consume
   IndexX: number | string
+
   aboutToAppear(): void {
     this.getUserList()
   }
+
   getUserList() {
     this.userList = new Tiktok(getContext()).getTikTokConnect()
   }
+
   @Styles
   img(){
     .width(28).height(28)
   }
+
+  /**
+   * 搜索联系人*/
+  searchConcat() {
+    router.pushUrl({
+      url: LOADING_SEARCH,
+      params: {
+        name: '搜索'
+      }
+    })
+  }
+
   build() {
-    Column(){
-      Row(){
-        //顶部导航按钮
-        Image($r("app.media.icon_bar_sideBtn")).img()
-          .onClick(()=>{
-            animateTo({duration:200},()=>{
-              this.showDialog=true
-              this.bgColor=COLOR_OpacityBlack
-              this.IndexX = '70%'
-            })
-          })
-        // 顶部搜索按钮
-        Image($r('app.media.icon_meg_search')).img()
-          .onClick(()=>{
-            router.pushUrl({
-              url:LOADING_SEARCH,
-              params:{
-                name:'搜索'
-              }
-            })
-          })
-      }.width('100%').padding({left:15,top:'15%',right:15})
-      .justifyContent(FlexAlign.SpaceBetween)
-      List({space:15}){
-        ForEach(this.userList,(item:UserInfo)=> {
+    Column() {
+      HeadBar({
+        LeftIcon: $r('app.media.icon_Leftbar_black'),
+        RightIcon: $r("app.media.icon_search_black"),
+        LeftIconClick: () => {
+
+        },
+        RightIconClick: () => {
+          this.searchConcat()
+        }
+      })
+
+      List({ space: 15 }) {
+        ForEach(this.userList, (item: UserInfo) => {
           ListItem() {
             Row({ space: 10 }) {
               Image(item.avatar).width(70).height(70).border({ radius: 35 })
@@ -63,7 +69,7 @@ export default struct Message {
                     .fontSize(14)
                     .maxLines(1)
                     .textOverflow({
-                      overflow:TextOverflow.Ellipsis
+                      overflow: TextOverflow.Ellipsis
                     })
                 }.width('100%').alignItems(HorizontalAlign.Start)
               }
@@ -76,7 +82,8 @@ export default struct Message {
             })
           })
         })
-      }.scrollBar(BarState.Off).margin({top:20,left:15,right:15})
-    }.width('100%').height('100%').backgroundColor('#ffffffff')
+      }.scrollBar(BarState.Off).margin({ top: 10, left: 15, right: 15 })
+    }.width('100%').height('100%')
+    .margin({ top: AppStorage.get('AREA_HEIGHT') as number })
   }
 }
