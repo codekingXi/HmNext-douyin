@@ -2,7 +2,6 @@ import { BarClass, UserInfo, UserInfoModel } from '../../models'
 import { Card, CardItem, customDialog, iconBtn, SideBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
-import Message from '../Message/Message'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
@@ -11,6 +10,7 @@ import commonFn from '../../common/Function/commonFn'
 import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
 import { COLOR_BLACK, COLOR_GRAY, COLOR_GrayNAV, COLOR_WHITE } from '../../common/color/colors'
 import { common } from '@kit.AbilityKit'
+import { Message } from '../Message/Message'
 
 export const Store = new Tiktok(getContext()).getStore()
 
@@ -41,9 +41,6 @@ export class Fn {
 @Entry
 @Component
 struct Index {
-  // aboutToAppear(): void {
-  //
-  // }
   /**
    * 记录返回时间*/
   backTime: number = 0
@@ -118,10 +115,16 @@ struct Index {
   IndexX: number | string = '' //整个index页面的x坐标
   @State
   currentIndex: number = 0
+  /**
+   * 是否显示弹窗 */
   @Provide
   showDialog: boolean = false
+  /**
+   * 是否显示上传弹窗*/
   @State
   showUploadDialog: boolean = false
+  /**
+   * 弹窗的背景色*/
   @Provide
   bgColor: ResourceColor = '' //修改渐变背景色只能通过#00000000的方式
   @State
@@ -709,16 +712,13 @@ struct Index {
             TabContent() {
               if (item.name === 'Home') {
                 TopBar()
-              } else
-                if (item.name === 'Friend') {
-                  Text('Friend')
-                } else
-                if (item.name === 'Message') {
-                  Message()
-                } else
-                if (item.name === 'My') {
-                  My()
-                }
+              } else if (item.name === 'Friend') {
+                Text('Friend')
+              } else if (item.name === 'Message') {
+                Message()
+              } else if (item.name === 'My') {
+                My()
+              }
             }
           })
         }
