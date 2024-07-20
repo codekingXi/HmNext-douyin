@@ -2,7 +2,6 @@ import { UserInfo } from '../../models/user'
 import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
 import { LOADING_ChatDetail, LOADING_SEARCH } from '../../router/Index'
-import { COLOR_OpacityBlack } from '../../common/color/colors'
 import { HeadBar } from '../../components'
 
 /**
@@ -43,13 +42,24 @@ export struct Message {
     })
   }
 
+  /**
+   * 打开左侧边栏*/
+  openLeftSiderBar() {
+    animateTo({ duration: 200 }, () => {
+      this.showDialog = !this.showDialog
+      this.bgColor = '#80000000'
+      //更改坐标轴
+      this.IndexX = '70%'
+    })
+  }
+
   build() {
     Column() {
       HeadBar({
         LeftIcon: $r('app.media.icon_Leftbar_black'),
         RightIcon: $r("app.media.icon_search_black"),
         LeftIconClick: () => {
-
+          this.openLeftSiderBar()
         },
         RightIconClick: () => {
           this.searchConcat()
