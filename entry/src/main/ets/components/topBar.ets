@@ -1,26 +1,61 @@
 import { BarClass } from '../models'
 import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
-import { router, window } from '@kit.ArkUI'
+import { router } from '@kit.ArkUI'
+import { HeadBar } from '.'
 
 /**
  * 顶部栏*/
-@Preview
 @Component
 export struct TopBar {
+  async aboutToAppear(): Promise<void> {
+    //重新赋值宽度
+    AppStorage.set('BTN_TITLE_WIDTH', AppStorage.get('SCREEN_WIDTH') as number / this.topTabList.length)
+  }
+
   /**
    * 顶部栏信息*/
   @State
   topTabList: BarClass[] = [
     {
       id: 0,
-      title: "商场",
-      name: "shop"
+      title: "经验",
+      name: "EXPERIMENT"
     },
     {
       id: 1,
+      title: "热点",
+      name: "HOTPOT"
+    },
+    {
+      id: 2,
+      title: "直播",
+      name: "LIVE"
+    },
+    {
+      id: 3,
+      title: "精选",
+      name: 'SELECTED'
+    },
+    {
+      id: 4,
+      title: "团购",
+      name: "LOTOFBUY"
+    },
+    {
+      id: 5,
+      title: "上海",
+      name: "AREA"
+    },
+    {
+      id: 6,
+      title: "商场",
+      name: "SHOP"
+    },
+    {
+      id: 7,
       title: "推荐",
-      name: "forYou"
+      name: "FORYOU"
     }
   ]
   @State
@@ -34,24 +69,19 @@ export struct TopBar {
   showDialog: boolean
   @Consume
   bgColor: string
-  @Provide
-  titleWidth: number = 0
 
   @Builder
   titleCommon(item: BarClass) {
-    Column() {
+    Column({ space: 8 }) {
       Text(item.title)
-        .fontColor(this.topTabList[this.currentIndex].id === 1 ? this.titleColor[0] : this.titleColor[1])
-        .fontSize(22)
+        .width(AppStorage.get('BTN_TITLE_WIDTH') as number + 5)
+        .textAlign(TextAlign.Center)
+        .fontColor(this.topTabList[this.currentIndex].id === this.topTabList.length - 1 ? this.titleColor[0] :
+        this.titleColor[1])
+        .fontSize(this.topTabList[this.currentIndex].id === item.id ? 24 : 20)
         .fontWeight(600)
-        .margin({
-          bottom: 5
-        })
         .animation({
-          duration: 50
-        })
-        .onAreaChange((newArea) => {
-          this.titleWidth = newArea.width as number
+          duration: 200
         })
     }
     .onClick(() => {
@@ -61,90 +91,116 @@ export struct TopBar {
     })
   }
 
-  @State
-  areaHei: number = 0
-
-  async aboutToAppear(): Promise<void> {
-    //窗口类方法必须用promise包裹
-    const win = await window.getLastWindow(getContext())
-    //获取顶部避让矩形区域的高度
-    this.areaHei = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
-      .topRect.height)
+  /**
+   * 打开左侧边栏*/
+  openLeftSiderBar() {
+    animateTo({ duration: 200 }, () => {
+      this.showDialog = !this.showDialog
+      this.bgColor = '#80000000'
+      //更改坐标轴
+      this.IndexX = '70%'
+    })
   }
-  build() {
-      Stack() {
-        Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
-          ForEach(this.topTabList, (item: BarClass) => {
-            TabContent() {
-              if (item.id === 0) {
-                Shop()
-              } else if (item.id === 1) {
-                VideoPage()
-              }
-            }
-            .tabBar()
-          })
+
+  /**
+   * 进入搜索页*/
+  clickSearch() {
+    router.pushUrl({
+      url: 'pages/Search/SearchPage',
+      params: {
+        name: "搜你想看的"
+      }
+    })
+  }
+
+  /**
+   * 顶部栏主要内容总宽度*/
+  BarMainContentWidth: number = AppStorage.get('SCREEN_WIDTH') as number - 100
+
+  /**
+   * 顶部栏主要内容*/
+  @Builder
+  barMainContent() {
+    List({ space: 10, initialIndex: this.topTabList.length - 1 }) {
+      ForEach(this.topTabList, (item: BarClass) => {
+        ListItem() {
+          this.titleCommon(item)
         }
-        .height('105%')
-        .position({ y: '-4.8%' })
-        .animationDuration(200)
-        .barWidth('40%')
+      })
+    }
+    .scrollBar(BarState.Off)
+    .listDirection(Axis.Horizontal)
+    .width(this.BarMainContentWidth)
+    .height(50)
+    .padding({ top: 15, left: 5, right: 5 })
+  }
 
-        //consTomBuiDer.builder(this.msg,24)
-        //自定义样式覆盖原来的tabs
-        Row({ space: 20 }) {
-          //顶部nav的左方的按钮
-          Row() {
-            Image(this.topTabList[this.currentIndex].id === 1 ? $r("app.media.icon_index_nav") :
-            $r("app.media.icon_bar_sideBtn"))
-              .width(28).height(28)
-              .onClick(() => {
-                animateTo({
-                  duration: 200
-                }, () => {
-                  this.showDialog = !this.showDialog
-                  this.bgColor = '#80000000'
-                  //更改坐标轴
-                  this.IndexX = '70%'
-                })
+  @Styles
+  Colum(){
+    .width('100%')
+    .height('100%').backgroundColor(Color.Gray)
+  }
 
-              })
-          }.width(50).height(50).position({ x: '5%' })
+  build() {
+    Stack() {
+      Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
+        ForEach(this.topTabList, (item: BarClass) => {
+          TabContent() {
+            if (item.name === 'EXPERIMENT') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
 
-          ForEach(this.topTabList, (item: BarClass) => {
-            this.titleCommon(item)
-          })
-          Divider()
-            .strokeWidth(4)
-            .color('#fffcfcfc')
-            .lineCap(LineCapStyle.Round)
-            .width(25)
-            .translate(this.topTabList[this.currentIndex].id === 0 ? { x: (this.titleWidth - 10) } :
-              { x: this.titleWidth * 2 + 10 })
-            .animation({
-              duration: 300
-            })
-            .position({ x: 115, y: 40 })
-          //顶部nav的右方的按钮
-          Row() {
-            Image(this.topTabList[this.currentIndex].id === 1 ? $r("app.media.icon_search") :
-            $r("app.media.icon_meg_search"))
-              .width(30).height(30)
-              .onClick(() => {
-                router.pushUrl({
-                  url: 'pages/Search/SearchPage',
-                  params: {
-                    name: "搜你想看的"
-                  }
-                })
-              })
-          }.width(50).height(50).position({ x: '90%' })
+            } else if (item.name === 'HOTPOT') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
 
-        }.width('100%')
-        .height(50).justifyContent(FlexAlign.Center)
-        .position({ y: this.areaHei + 10 })
-      }.position({ y: '-2.5%' })
+            } else if (item.name === 'LIVE') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
+            } else if (item.name === 'SELECTED') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
+            } else if (item.name === 'LOTOFBUY') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
+            } else if (item.name === 'AREA') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
+            } else if (item.name === 'SHOP') {
+              Shop()
+            } else if (item.name === 'FORYOU') {
+              VideoPage()
+            }
+          }
+          .tabBar()
+        })
+      }
+      .animationMode(AnimationMode.ACTION_FIRST)
+      .height('105%')
+      .position({ y: '-4.8%' })
+      .animationDuration(200)
+
+      //自定义样式覆盖原来的tabs
+      HeadBar({
+        LeftIcon: $r('app.media.icon_LeftBar_white'),
+        RightIcon: $r('app.media.icon_search'),
+        LeftIconClick: () => {
+          this.openLeftSiderBar()
+        },
+        RightIconClick: () => {
+          this.clickSearch()
+        },
+        BarMainContent: () => {
+          this.barMainContent()
+        }
+      })
+        .position({ y: AppStorage.get('AREA_HEIGHT') as number + 10 })
+    }.position({ y: '-2.5%' })
   }
 }
-
-
