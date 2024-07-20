@@ -1,6 +1,7 @@
 import goods from '../../common/data/goods.json'
-import { promptAction, router } from '@kit.ArkUI'
+import { promptAction } from '@kit.ArkUI'
 import commonFn from '../../common/Function/commonFn'
+
 /**
  * 商品页*/
 @Entry
@@ -57,22 +58,12 @@ export default struct Shop {
   build() {
     Column() {
       Column() {
-        // Row(){
-        //  Text('<').fontSize(33).fontColor('#ff4e4e4e')
-        //    .onClick(()=>{
-        //      router.back()
-        //    })
-        // }.width('100%').justifyContent(FlexAlign.Start).padding({left:20,bottom:20})
-        Row() {
-          Search({ placeholder: '15pro max美版全新' })
-            .width('90%').height(40).border({
-            color: Color.Red,
-            width: 2,
-            radius: 10
-          })
-        }
-
-
+        Search({ placeholder: '15pro max美版全新' })
+          .width('90%').height(40).border({
+          color: Color.Red,
+          width: 2,
+          radius: 10
+        }).margin({ top: -20 })
         //渲染商品列表数据
         WaterFlow({ footer: this.getFooter() }) {
           ForEach(goods, (item: string, index: number) => {
