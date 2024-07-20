@@ -15,6 +15,8 @@ export default struct My {
   aboutToAppear(): void {
     //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
     this.info = new Tiktok(getContext()).getCurrentUser()
+    //重新赋值宽度
+    AppStorage.set('BTN_TITLE_WIDTH', AppStorage.get('SCREEN_WIDTH') as number / this.personVd.length)
   }
 
   @Styles
@@ -99,6 +101,7 @@ export default struct My {
   currentIndex: number = 0
   /**
    * 按钮标签宽度*/
+  @State
   btnTitleWidth: number = 0
   tabController: TabsController = new TabsController()
 
@@ -106,7 +109,7 @@ export default struct My {
   personBtn(item: BarClass) {
     Column() {
       Text(item.title)
-        .width(this.screenWidth / this.personVd.length)
+        .width(AppStorage.get('BTN_TITLE_WIDTH'))
         .textAlign(TextAlign.Center)
         .animation({ duration: 200 })
         .fontSize(this.personVd[this.currentIndex].id === item.id ? 24 : 16)
@@ -123,12 +126,12 @@ export default struct My {
   getX() {
     /**
      * 剩余宽度*/
-    const X = this.btnTitleWidth / 3 - 5
+    const X = AppStorage.get('BTN_TITLE_WIDTH') as number / 3 - 5
     /**
      * 索引*/
     const id = this.personVd[this.currentIndex].id as number
     //返回坐标长度
-    return id === 1 ? 20 : this.btnTitleWidth * (id - 1) + X
+    return id === 1 ? 20 : AppStorage.get('BTN_TITLE_WIDTH') as number * (id - 1) + X
   }
 
   /**
@@ -138,11 +141,6 @@ export default struct My {
     this.bgColor = COLOR_OpacityBlack
     this.IndexX = '-65%'
   }
-
-  /**
-   * 屏幕宽度*/
-  @State
-  screenWidth: number = 0
 
   build() {
     if (this.info) {
@@ -233,7 +231,6 @@ export default struct My {
               }
             }.layoutWeight(2).width('100%').margin({ bottom: -10 })
 
-
             //白色个人内容区
             Column() {
               //顶部个人信息
@@ -303,7 +300,7 @@ export default struct My {
                 //下划线
                 Divider()
                   .strokeWidth(2)
-                  .width(this.screenWidth / this.personVd.length)
+                  .width(AppStorage.get('BTN_TITLE_WIDTH'))
                   .color(COLOR_BLACK)
                   .translate({ x: this.getX() })
                   .position({ x: '-5%', y: 50 })
@@ -323,10 +320,6 @@ export default struct My {
           }.height('100%')
         }
       }.height('150%')
-      .onAreaChange((oldArea, newArea) => {
-        this.screenWidth = newArea.width as number
-        this.btnTitleWidth = this.screenWidth / this.personVd.length
-      })
       .scrollBar(BarState.Off)
       //修改整个页面的坐标
       .onClick(() => {
