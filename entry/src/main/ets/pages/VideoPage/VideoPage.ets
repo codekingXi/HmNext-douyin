@@ -73,9 +73,6 @@ struct playVideo {
     }
   }
 
-  @Consume
-  titleWidth: number
-
   build() {
     Stack() {
       Video({
