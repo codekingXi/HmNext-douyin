@@ -5,7 +5,7 @@
 import { COLOR_WHITE } from '../common/color'
 
 @Component
-export struct SideBarCom {
+export struct SiderBarCom {
   @State
   itemData: object[] = []
   /**

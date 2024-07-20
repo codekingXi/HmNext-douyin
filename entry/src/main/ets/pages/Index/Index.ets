@@ -1,5 +1,5 @@
 import { BarClass, UserInfo, UserInfoModel } from '../../models'
-import { Card, CardItem, customDialog, iconBtn, SideBarCom, TitleBtn, TopBar } from '../../components'
+import { Card, CardItem, customDialog, iconBtn, SiderBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
 import { CURRENT_USER } from '../../constants'
@@ -764,7 +764,7 @@ struct Index {
 
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
-      SideBarCom({
+      SiderBarCom({
         sidePositionX: '-70%',
         itemData: this.CardData,
         contentBox: (item: object) => {
@@ -776,7 +776,7 @@ struct Index {
         siderRight: 0
       })
       //右侧边栏
-      SideBarCom({
+      SiderBarCom({
         sidePositionX: "100%",
         //必须传的值 关键数据！！！
         itemData: this.itemData,
