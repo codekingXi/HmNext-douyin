@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\张杨熙\\.ohos\\config\\default_Dyin_pUdJMGLCohPyJakdrCDbbcWhIVBDdGq7y5OkQJGmiJU=.cer",
-          "storePassword": "0000001BBF8F46A008F4C6CFA8877DBA3860606229C92F6511F2A68FB3ED07171AC771E6D8DA9AFF950D44",
+          "certpath": "C:\\Users\\张杨熙\\.ohos\\config\\default_dyin2_W2zs1qQfHqrmIOdIaXspbc45h_q-C_pJddaBfWrSbt8=.cer",
+          "storePassword": "0000001B7B2FCB87285981AEA7DA49E94A30F2D8D7591D7A935C9CE82C91BF775C784943FB7C86CD1FE9F1",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B1F89729632E8327B15BF148AF11D351BAA5DACA3B6134E0A8866915996707C42F9319BAC3F9571",
-          "profile": "C:\\Users\\张杨熙\\.ohos\\config\\default_Dyin_pUdJMGLCohPyJakdrCDbbcWhIVBDdGq7y5OkQJGmiJU=.p7b",
+          "keyPassword": "0000001B76F9AABA224D4D2C2AF27B00F2E02A7BE9C103B8472DE0020165B0DD3674DFFF563896E5E69E08",
+          "profile": "C:\\Users\\张杨熙\\.ohos\\config\\default_dyin2_W2zs1qQfHqrmIOdIaXspbc45h_q-C_pJddaBfWrSbt8=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\张杨熙\\.ohos\\config\\default_Dyin_pUdJMGLCohPyJakdrCDbbcWhIVBDdGq7y5OkQJGmiJU=.p12"
+          "storeFile": "C:\\Users\\张杨熙\\.ohos\\config\\default_dyin2_W2zs1qQfHqrmIOdIaXspbc45h_q-C_pJddaBfWrSbt8=.p12"
         }
       }
     ],
