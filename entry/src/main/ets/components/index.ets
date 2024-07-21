@@ -11,7 +11,7 @@ export { Card } from './Card'
 
 export { CardItem } from './CardItem'
 
-export { SiderBarCom } from './SiderBarCom'
+export { SideBarCom } from './SideBarCom'
 
 export { TitleBtn } from './Titlebtn'
 

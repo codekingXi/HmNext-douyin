@@ -5,7 +5,7 @@
 import { COLOR_WHITE } from '../common/color'
 
 @Component
-export struct SiderBarCom {
+export struct SideBarCom {
   @State
   itemData: object[] = []
   /**
@@ -24,10 +24,11 @@ export struct SiderBarCom {
    * 侧边栏位置*/
   @State
   sidePositionX: string = ''
-  siderBgColor: ResourceColor = COLOR_WHITE
-  siderBottom:number=90
-  siderLeft:number=20
-  siderRight:number=20
+  sideBgColor: ResourceColor = COLOR_WHITE
+  sideBottom: number = 90
+  sideLeft: number = 20
+  sideRight: number = 20
+
   build() {
     Column() {
       List() {
@@ -43,7 +44,7 @@ export struct SiderBarCom {
         })
       }
       .scrollBar(BarState.Off)
-      .margin({ top: 50, bottom: this.siderBottom })
+      .margin({ top: 50, bottom: this.sideBottom })
       .padding({ right: 20 })
 
       //更多功能的按钮
@@ -55,10 +56,10 @@ export struct SiderBarCom {
       .margin({ top: -80 })
       .padding({ right: 40 })
     }
-    .backgroundColor(this.siderBgColor)
+    .backgroundColor(this.sideBgColor)
     .width('70%')
     .height('100%')
-    .padding({left: this.siderLeft, right:this.siderRight})
+    .padding({ left: this.sideLeft, right: this.sideRight })
     //侧边栏的默认绝对定位
     .position({ x: this.sidePositionX })
   }

@@ -102,7 +102,7 @@ export struct TopBar {
 
   /**
    * 打开左侧边栏*/
-  openLeftSiderBar() {
+  openLeftSideBar() {
     animateTo({ duration: 200 }, () => {
       this.showDialog = !this.showDialog
       this.bgColor = '#80000000'
@@ -203,7 +203,7 @@ export struct TopBar {
         LeftIcon: $r('app.media.icon_LeftBar_white'),
         RightIcon: $r('app.media.icon_search'),
         LeftIconClick: () => {
-          this.openLeftSiderBar()
+          this.openLeftSideBar()
         },
         RightIconClick: () => {
           this.clickSearch()
