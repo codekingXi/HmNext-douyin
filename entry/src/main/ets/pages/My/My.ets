@@ -272,7 +272,7 @@ export default struct My {
                   ForEach(this.personVd, (item: BarClass) => {
                     TabContent() {
                       if (item.id === 1) {
-                        personVdCmt()
+                        personAreaVdCmt()
                       } else if (item.id === 2) {
 
                       } else if (item.id === 3) {
@@ -342,7 +342,7 @@ export default struct My {
 /**
  * 个人视频区组件*/
 @Component
-struct personVdCmt {
+struct personAreaVdCmt {
   private videoData = new DataSource<mediaInfo>(personVdDta) //简化代码不写完整格式
 
   build() {
