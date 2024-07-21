@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\张杨熙\\.ohos\\config\\default_dyin2_W2zs1qQfHqrmIOdIaXspbc45h_q-C_pJddaBfWrSbt8=.cer",
-          "storePassword": "0000001B7B2FCB87285981AEA7DA49E94A30F2D8D7591D7A935C9CE82C91BF775C784943FB7C86CD1FE9F1",
+          "storePassword": "0000001B1683B43D2D8F98964E285D615FEEEA53DCFFAD8D2AABA14D9C212F5290C7B045DDB11D114B4954",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B76F9AABA224D4D2C2AF27B00F2E02A7BE9C103B8472DE0020165B0DD3674DFFF563896E5E69E08",
+          "keyPassword": "0000001B662731C7EEEDEC3145A60D4B7B3D26B5428D9E680301B16058891DB0EE8CCA0CC9290299E58EA5",
           "profile": "C:\\Users\\张杨熙\\.ohos\\config\\default_dyin2_W2zs1qQfHqrmIOdIaXspbc45h_q-C_pJddaBfWrSbt8=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\张杨熙\\.ohos\\config\\default_dyin2_W2zs1qQfHqrmIOdIaXspbc45h_q-C_pJddaBfWrSbt8=.p12"
