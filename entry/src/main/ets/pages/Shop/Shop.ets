@@ -63,7 +63,7 @@ export default struct Shop {
           color: Color.Red,
           width: 2,
           radius: 10
-        }).margin({ top: -20 })
+        }).margin({ top: -10 })
         //渲染商品列表数据
         WaterFlow({ footer: this.getFooter() }) {
           ForEach(goods, (item: string, index: number) => {
