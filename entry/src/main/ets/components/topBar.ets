@@ -40,7 +40,7 @@ export struct TopBar {
     {
       id: 4,
       title: "团购",
-      name: "LOTOFBUY"
+      name: "LOT OF BUY"
     },
     {
       id: 5,
@@ -49,20 +49,27 @@ export struct TopBar {
     },
     {
       id: 6,
+      title: "关注",
+      name: "CONCERN"
+    },
+    {
+      id: 7,
       title: "商场",
       name: "SHOP"
     },
     {
-      id: 7,
+      id: 8,
       title: "推荐",
-      name: "FORYOU"
+      name: "FOR YOU"
     }
   ]
   @State
   titleColor: ResourceColor[] = [Color.White, Color.Black]
   tabController: TabsController = new TabsController()
+  /**
+   * 导航索引*/
   @State
-  currentIndex: number = this.topTabList.length - 1
+  currentIndex: number = this.topTabList.length - 1 //必须设置为数组最后一位元素否
   @Consume
   IndexX: number | string
   @Consume
@@ -72,18 +79,20 @@ export struct TopBar {
 
   @Builder
   titleCommon(item: BarClass) {
-    Column({ space: 8 }) {
+    Column({ space: 5 }) {
       Text(item.title)
-        .width(AppStorage.get('BTN_TITLE_WIDTH') as number + 5)
         .textAlign(TextAlign.Center)
-        .fontColor(this.topTabList[this.currentIndex].id === this.topTabList.length - 1 ? this.titleColor[0] :
-        this.titleColor[1])
-        .fontSize(this.topTabList[this.currentIndex].id === item.id ? 24 : 20)
+        .fontColor(this.topTabList[this.currentIndex].id === item.id ? '#ff00ceff' : '#ff5f5f5f')
         .fontWeight(600)
-        .animation({
-          duration: 200
-        })
+        .fontSize(20)
+      Divider()
+        .strokeWidth(3)
+        .lineCap(LineCapStyle.Round)
+        .width(this.topTabList[this.currentIndex].id === item.id ? 30 : 0)
+        .color(this.topTabList[this.currentIndex].id === this.topTabList[this.topTabList.length-2].id ? Color.Black :
+        Color.White)
     }
+
     .onClick(() => {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj => obj.name === item.name)
@@ -121,7 +130,7 @@ export struct TopBar {
    * 顶部栏主要内容*/
   @Builder
   barMainContent() {
-    List({ space: 10, initialIndex: this.topTabList.length - 1 }) {
+    List({ space: 15, initialIndex: this.currentIndex }) {
       ForEach(this.topTabList, (item: BarClass) => {
         ListItem() {
           this.titleCommon(item)
@@ -164,7 +173,7 @@ export struct TopBar {
               Column() {
                 Text('敬请期待')
               }.Colum().justifyContent(FlexAlign.Center)
-            } else if (item.name === 'LOTOFBUY') {
+            } else if (item.name === 'LOT OF BUY') {
               Column() {
                 Text('敬请期待')
               }.Colum().justifyContent(FlexAlign.Center)
@@ -172,21 +181,24 @@ export struct TopBar {
               Column() {
                 Text('敬请期待')
               }.Colum().justifyContent(FlexAlign.Center)
+            } else if (item.name === 'CONCERN') {
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'SHOP') {
               Shop()
-            } else if (item.name === 'FORYOU') {
+            } else if (item.name === 'FOR YOU') {
               VideoPage()
             }
           }
           .tabBar()
         })
       }
-      .animationMode(AnimationMode.ACTION_FIRST)
-      .height('105%')
-      .position({ y: '-4.8%' })
+      .height('106%')
+      .position({ y: -(AppStorage.get('AREA_HEIGHT') as number) })
       .animationDuration(200)
 
-      //自定义样式覆盖原来的tabs
+      //自定义组件覆盖原来的tabs
       HeadBar({
         LeftIcon: $r('app.media.icon_LeftBar_white'),
         RightIcon: $r('app.media.icon_search'),
