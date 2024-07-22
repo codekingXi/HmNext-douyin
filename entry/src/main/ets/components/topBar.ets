@@ -152,7 +152,7 @@ export struct TopBar {
 
   build() {
     Stack() {
-      Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) { //绑定当前索引
+      Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) {
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === 'EXPERIMENT') {
