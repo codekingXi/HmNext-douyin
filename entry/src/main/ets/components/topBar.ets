@@ -76,7 +76,6 @@ export struct TopBar {
   showDialog: boolean
   @Consume
   bgColor: string
-
   @Builder
   titleCommon(item: BarClass) {
     Column({ space: 5 }) {
@@ -89,7 +88,7 @@ export struct TopBar {
         .strokeWidth(3)
         .lineCap(LineCapStyle.Round)
         .width(this.topTabList[this.currentIndex].id === item.id ? 30 : 0)
-        .color(this.topTabList[this.currentIndex].id === this.topTabList[this.topTabList.length-2].id ? Color.Black :
+        .color(this.topTabList[this.currentIndex].name === 'SHOP' ? Color.Black :
         Color.White)
     }
 
@@ -137,6 +136,7 @@ export struct TopBar {
         }
       })
     }
+    .edgeEffect(EdgeEffect.None)
     .scrollBar(BarState.Off)
     .listDirection(Axis.Horizontal)
     .width(this.BarMainContentWidth)
