@@ -22,3 +22,5 @@ export { Skeleton } from './Skeleton'
 export { iconBtn } from './iconBtn'
 
 export { HeadBar } from './HeadBar'
+
+export { scrollbar } from './scrollbar'
