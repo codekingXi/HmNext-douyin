@@ -10,7 +10,7 @@ import { HeadBar } from '.'
 export struct TopBar {
   async aboutToAppear(): Promise<void> {
     //重新赋值宽度
-    AppStorage.set('BTN_TITLE_WIDTH', AppStorage.get('SCREEN_WIDTH') as number / this.topTabList.length)
+    AppStorage.set('Btn_title_width', AppStorage.get('Screen_width') as number / this.topTabList.length)
   }
 
   /**
@@ -124,7 +124,7 @@ export struct TopBar {
 
   /**
    * 顶部栏主要内容总宽度*/
-  BarMainContentWidth: number = AppStorage.get('SCREEN_WIDTH') as number - 100
+  BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
 
   /**
    * 顶部栏主要内容*/
@@ -196,7 +196,7 @@ export struct TopBar {
         })
       }
       .height('106%')
-      .position({ y: -(AppStorage.get('AREA_HEIGHT') as number) })
+      .position({ y: -(AppStorage.get('Area_height') as number) })
       .animationDuration(200)
 
       //自定义组件覆盖原来的tabs
@@ -213,7 +213,7 @@ export struct TopBar {
           this.barMainContent()
         }
       })
-        .position({ y: AppStorage.get('AREA_HEIGHT') as number + 10 })
+        .position({ y: AppStorage.get('Area_height') as number + 10 })
     }.position({ y: '-2.5%' })
   }
 }

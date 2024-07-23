@@ -16,7 +16,7 @@ export default struct My {
     //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
     this.info = new Tiktok(getContext()).getCurrentUser()
     //重新赋值宽度
-    AppStorage.set('BTN_TITLE_WIDTH', AppStorage.get('SCREEN_WIDTH') as number / this.personVd.length)
+    AppStorage.set('Btn_title_width', AppStorage.get('Screen_width') as number / this.personVd.length)
   }
 
   @Styles
@@ -79,7 +79,7 @@ export default struct My {
     {
       icon: $r('app.media.icon_moreFn'), title: '查看更多', click: () => {
       animateTo({ duration: 200 }, () => {
-        this.openRightSiderBar()
+        this.openRightSideBar()
       })
     }
     }
@@ -109,10 +109,10 @@ export default struct My {
   personBtn(item: BarClass) {
     Column() {
       Text(item.title)
-        .width(AppStorage.get('BTN_TITLE_WIDTH'))
+        .width(AppStorage.get('Btn_title_width'))
         .textAlign(TextAlign.Center)
         .animation({ duration: 200 })
-        .fontSize(this.personVd[this.currentIndex].id === item.id ? 24 : 16)
+        .fontSize(this.personVd[this.currentIndex].id === item.id ? 22 : 16)
         .fontColor(this.personVd[this.currentIndex].id === item.id ? COLOR_BLACK : '#ff666666')
     }
     .onClick(() => {
@@ -126,17 +126,17 @@ export default struct My {
   getX() {
     /**
      * 剩余宽度*/
-    const X = AppStorage.get('BTN_TITLE_WIDTH') as number / 3 - 5
+    const X = AppStorage.get('Btn_title_width') as number / 3 - 5
     /**
      * 索引*/
     const id = this.personVd[this.currentIndex].id as number
     //返回坐标长度
-    return id === 1 ? 20 : AppStorage.get('BTN_TITLE_WIDTH') as number * (id - 1) + X
+    return id === 1 ? 20 : AppStorage.get('Btn_title_width') as number * (id - 1) + X
   }
 
   /**
    * 打开右侧边栏*/
-  openRightSiderBar() {
+  openRightSideBar() {
     this.showDialog = true
     this.bgColor = COLOR_OpacityBlack
     this.IndexX = '-65%'
@@ -179,7 +179,7 @@ export default struct My {
                     }.btnBg().justifyContent(FlexAlign.Center)
                     .onClick(() => {
                       animateTo({ duration: 200 }, () => {
-                        this.openRightSiderBar()
+                        this.openRightSideBar()
                       })
                     })
                   }
@@ -308,7 +308,7 @@ export default struct My {
                 //下划线
                 Divider()
                   .strokeWidth(2)
-                  .width(AppStorage.get('BTN_TITLE_WIDTH'))
+                  .width(AppStorage.get('Btn_title_width'))
                   .color(COLOR_BLACK)
                   .translate({ x: this.getX() })
                   .position({ x: '-5%', y: 50 })
