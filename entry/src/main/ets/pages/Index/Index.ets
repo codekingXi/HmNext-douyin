@@ -48,6 +48,7 @@ struct Index {
   onBackPress(): boolean | void {
     let now = Date.now() //获取时间戳
     if (now - this.backTime < 1000) {
+      //获取声明公共UI能力上下文方法
       const ctx = getContext(this) as common.UIAbilityContext
       ctx.terminateSelf() //终止程序
     } else {
@@ -59,7 +60,7 @@ struct Index {
         offset: { dx: 0, dy: 250 }
       })
     }
-    return true
+    return true //使用自定义功能而非router
   }
 
   @Provide
