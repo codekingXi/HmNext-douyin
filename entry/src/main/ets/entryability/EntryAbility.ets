@@ -1,9 +1,9 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { display, window } from '@kit.ArkUI';
+import { display, KeyboardAvoidMode, window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
 import { CURRENT_USER } from '../constants';
-import { LOADING_INDEX } from '../router/Index';
+import { LOADING_INDEX } from '../router';
 
 
 export default class EntryAbility extends UIAbility {
@@ -31,16 +31,18 @@ export default class EntryAbility extends UIAbility {
     //标签按钮宽度
     let btnTitleWidth: number = 0
 
-    AppStorage.setOrCreate("SCREEN_WIDTH", screenWidth)
-    AppStorage.setOrCreate("BTN_TITLE_WIDTH", btnTitleWidth)
-    AppStorage.setOrCreate('AREA_HEIGHT', areaHeight)
+    AppStorage.setOrCreate("Screen_width", screenWidth)
+    AppStorage.setOrCreate("Btn_title_width", btnTitleWidth)
+    AppStorage.setOrCreate('Area_height', areaHeight)
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
     //获取用户信息
     const info = new Tiktok(this.context).getCurrentUser()
     //创建存储用户信息的空间
     AppStorage.setOrCreate(CURRENT_USER, info)
     //加载内容
-    windowStage.loadContent(LOADING_INDEX)
+    await windowStage.loadContent(LOADING_INDEX)
+    //设置键盘避让模式
+    windowStage.getMainWindowSync().getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE)
 
   }
 
