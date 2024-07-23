@@ -76,6 +76,7 @@ export struct TopBar {
   showDialog: boolean
   @Consume
   bgColor: string
+
   @Builder
   titleCommon(item: BarClass) {
     Column({ space: 5 }) {
@@ -94,7 +95,7 @@ export struct TopBar {
 
     .onClick(() => {
       //通过name找到索引
-      const index = this.topTabList.findIndex(obj => obj.name === item.name)
+      const index = this.topTabList.findIndex(obj => obj.id === item.id)
       this.tabController.changeIndex(index) //切换索引值
     })
   }
