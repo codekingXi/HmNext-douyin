@@ -5,7 +5,7 @@ import commonFn from '../../common/Function/commonFn'
 import { LOADING_SHOP, LOADING_VdDETAIL } from '../../router/Index'
 import { COLOR_BLACK, COLOR_GRAY, COLOR_OpacityBlack, COLOR_WHITE } from '../../common/color/colors'
 import { mediaInfo, personVdDta } from '../../models/mediaData'
-import { iconBtn, Skeleton } from '../../components'
+import { iconBtn, scrollbar, Skeleton } from '../../components'
 
 @Component
 export default struct My {
@@ -142,6 +142,8 @@ export default struct My {
     this.IndexX = '-65%'
   }
 
+  scroll: Scroller = new Scroller()
+
   build() {
     if (this.info) {
       Scroll() {
@@ -253,7 +255,7 @@ export default struct My {
               }.width('100%').padding(10)
 
               //功能区
-              List({ space: 30 }) {
+              List({ space: 30, scroller: this.scroll }) {
                 ForEach(this.personFn, (item: BarClass) => {
                   ListItem() {
                     iconBtn({ icon: item.icon, title: item.title })
@@ -263,9 +265,15 @@ export default struct My {
                       })
                   }
                 })
-              }.listDirection(Axis.Horizontal).padding(20)
+              }
+              .edgeEffect(EdgeEffect.None)
+              .listDirection(Axis.Horizontal)
+              .padding(20)
               .scrollBar(BarState.Off)
               .height(100)
+
+              //滑动条
+              scrollbar({ scroller: this.scroll })
 
               Stack() {
                 Tabs({ controller: this.tabController, barPosition: BarPosition.Start, index: $$this.currentIndex }) {
