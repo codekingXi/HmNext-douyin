@@ -63,13 +63,11 @@ export struct TopBar {
       name: "FOR YOU"
     }
   ]
-  @State
-  titleColor: ResourceColor[] = [Color.White, Color.Black]
   tabController: TabsController = new TabsController()
   /**
    * 导航索引*/
   @State
-  currentIndex: number = this.topTabList.length - 1 //必须设置为数组最后一位元素否
+  currentIndex: number = this.topTabList.length - 1 //必须设置为数组最后一位元素
   @Consume
   IndexX: number | string
   @Consume
