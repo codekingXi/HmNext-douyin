@@ -8,7 +8,7 @@ import { HeadBar } from '.'
  * 顶部栏*/
 @Component
 export struct TopBar {
-  async aboutToAppear(): Promise<void> {
+  aboutToAppear(): void {
     //重新赋值宽度
     AppStorage.set('Btn_title_width', AppStorage.get('Screen_width') as number / this.topTabList.length)
   }
