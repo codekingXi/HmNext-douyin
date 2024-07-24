@@ -2,9 +2,11 @@
  * 我的界面头像弹窗复用ui内容*/
 @Component
 export struct TitleBtn {
-  title: string=''
-  borBom: boolean=false
-  click: () => void = ()=>{}
+  title: string = ''
+  borBom: boolean = false
+  click: () => void = () => {
+  }
+
   build() {
     Row() {
       Text(this.title).fontSize(20)
@@ -18,21 +20,21 @@ export struct TitleBtn {
       width: {
         bottom: this.borBom === true ? .5 : 0
       },
-      radius:10,
+      radius: 10,
       color: '#ff868686'
     })
-    .margin(10)
-    .animation({duration:200})
+    .margin(5)
+    .animation({ duration: 200 })
     .stateStyles({
-      normal:{
+      normal: {
         .backgroundColor('#ff3e3e3e')
       },
-      pressed:{
+      pressed: {
         .backgroundColor('#ff53ee38')
       }
     })
     .onClick(() => {
-       this.click()
+      this.click()
     })
   }
 }
