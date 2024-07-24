@@ -3,17 +3,21 @@
 import { promptAction, router } from '@kit.ArkUI'
 
 export default class commonFn {
-  /*
-   * create 11 random
+  /**
+   * 生成11位数的抖音号
+   *@param n 最小值
+   *@param m 最大值
    * */
-  static creteRandom() {
-    //生成11位数的抖音号
-    return Math.floor(Math.random() * (99999999999 - 10000000000 + 1)) + 10000000000
+  static creteRandom(n:number=9999999999,m:number=10000000000):number {
+    return Math.floor(Math.random() * (m - n + 1)) + m
   }
 
-  //生成11到200之间的随机数
-  static creteUserID() {
-    return Math.floor(Math.random() * (11 + 1)) + 100
+  /**
+   * 生成固定范围类的随机数
+   * @param n 最小值
+   * @param m 最大值*/
+  static creteUserID(n:number,m:number):number {
+    return Math.floor(Math.random() * (n + 1)) + m
   }
   /**
    * 文本提示弹窗*/
