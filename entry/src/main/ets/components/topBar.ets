@@ -158,12 +158,8 @@ export struct TopBar {
               Column() {
                 Text('敬请期待')
               }.Colum().justifyContent(FlexAlign.Center)
-
             } else if (item.name === 'HOTPOT') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
-
+              VideoPage()
             } else if (item.name === 'LIVE') {
               Column() {
                 Text('敬请期待')
@@ -173,17 +169,11 @@ export struct TopBar {
                 Text('敬请期待')
               }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'LOT OF BUY') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Shop()
             } else if (item.name === 'AREA') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              VideoPage()
             } else if (item.name === 'CONCERN') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              VideoPage()
             } else if (item.name === 'SHOP') {
               Shop()
             } else if (item.name === 'FOR YOU') {
