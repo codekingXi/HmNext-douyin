@@ -60,7 +60,7 @@ struct Login {
   aboutToAppear(): void {
     this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
     this.userInfo.avatar = 'https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
-    this.userInfo.user_id = commonFn.creteUserID().toString() //获取随机生产的id
+    this.userInfo.user_id = commonFn.creteUserID(11,100).toString() //获取随机生产的id
   }
 
   /*
