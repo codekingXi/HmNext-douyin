@@ -44,7 +44,7 @@ export struct Message {
 
   /**
    * 打开左侧边栏*/
-  openLeftSiderBar() {
+  openLeftSideBar() {
     animateTo({ duration: 200 }, () => {
       this.showDialog = !this.showDialog
       this.bgColor = '#80000000'
@@ -59,7 +59,7 @@ export struct Message {
         LeftIcon: $r('app.media.icon_Leftbar_black'),
         RightIcon: $r("app.media.icon_search_black"),
         LeftIconClick: () => {
-          this.openLeftSiderBar()
+          this.openLeftSideBar()
         },
         RightIconClick: () => {
           this.searchConcat()
@@ -94,6 +94,6 @@ export struct Message {
         })
       }.scrollBar(BarState.Off).margin({ top: 10, left: 15, right: 15 })
     }.width('100%').height('100%')
-    .margin({ top: AppStorage.get('AREA_HEIGHT') as number })
+    .margin({ top: AppStorage.get('Area_height') as number })
   }
 }
