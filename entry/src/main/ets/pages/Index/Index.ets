@@ -445,6 +445,12 @@ struct Index {
     .width('100%')
   }
 
+  @Builder
+  rightTipContent() {
+    Text('>').fontColor(Color.Gray)
+      .fontSize(20)
+  }
+
   /**
    * 卡片盒子*/
   @Builder
@@ -452,6 +458,11 @@ struct Index {
     Column() {
       Card({
         leftTitle: item.title,
+        rightTip: () => {
+          if (item.id as number < this.CardData.length - 1) {
+            this.rightTipContent()
+          }
+        },
         CardItem: () => {
           //通知消息
           if (item.id === 1) {
@@ -701,7 +712,6 @@ struct Index {
       .borderRadius(10)
       .margin({ top: -20 })
     }
-
   }
 
   build() {

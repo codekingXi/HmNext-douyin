@@ -11,13 +11,9 @@ export struct Card {
   /**
    * 卡片顶部右侧提示*/
   @BuilderParam
-  rightTip: () => void = this.rightTipContent
+  rightTip: () => void
 
-  @Builder
-  rightTipContent() {
-    Text('>').fontColor(Color.Gray)
-      .fontSize(20)
-  }
+
   /**
    * 卡片标签*/
   leftTitle: string = ""

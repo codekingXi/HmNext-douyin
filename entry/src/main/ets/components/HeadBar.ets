@@ -1,4 +1,5 @@
-@Preview
+/**
+ * 顶部导航栏*/
 @Component
 export struct HeadBar {
   /**
