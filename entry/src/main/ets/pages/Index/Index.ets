@@ -8,9 +8,9 @@ import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
 import commonFn from '../../common/Function/commonFn'
 import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
-import { COLOR_BLACK, COLOR_GRAY, COLOR_GrayNAV, COLOR_WHITE } from '../../common/color/colors'
 import { common } from '@kit.AbilityKit'
 import { Message } from '../Message/Message'
+import { Constants } from '../../common/Constants'
 
 export const Store = new Tiktok(getContext()).getStore()
 
@@ -419,7 +419,7 @@ struct Index {
   ]
   //底部title字体的颜色
   @State
-  titleColor: ResourceColor[] = [COLOR_WHITE, COLOR_GRAY]
+  titleColor: ResourceColor[] = [Color.White, Color.Gray]
   /**
    * 默认提示内容功能*/
   @BuilderParam
@@ -734,14 +734,14 @@ struct Index {
         .width('100%')
         .height(75)
         .position({ y: '91.1%' })
-        .backgroundColor(COLOR_GrayNAV)
+        .backgroundColor(Constants.COLOR_GrayNAV)
         .justifyContent(FlexAlign.SpaceAround)
 
         //默认不显示遮罩层
         if (this.showDialog) {
           customDialog({
             imgAvatar: () => {
-              if (this.bgColor === COLOR_BLACK) {
+              if (this.bgColor === Color.Black) {
                 this.imgAvatar()
               }
             }
@@ -749,7 +749,7 @@ struct Index {
             .onClick(() => {
               animateTo({ duration: 200 }, () => {
                 //通过判断色值区别弹窗是哪个页面的再进行相应改变
-                if (this.bgColor !== COLOR_BLACK) {
+                if (this.bgColor !== Color.Black) {
                   this.showDialog = !this.showDialog
                   this.IndexX = '0%' //修改整个Index界面的x坐标
                 }

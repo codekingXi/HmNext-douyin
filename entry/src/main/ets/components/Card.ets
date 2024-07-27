@@ -1,5 +1,4 @@
 
-import { COLOR_GRAY } from '../common/color'
 /**
  * 卡片*/
 @Component
@@ -16,7 +15,7 @@ export struct Card {
 
   @Builder
   rightTipContent() {
-    Text('>').fontColor(COLOR_GRAY)
+    Text('>').fontColor(Color.Gray)
       .fontSize(20)
   }
   /**

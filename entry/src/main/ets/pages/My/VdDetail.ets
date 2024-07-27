@@ -2,8 +2,8 @@
  * 因技术原因，暂时只能查看单独视频详情，无法上下切换，因此没有用轮播结构*/
 
 import { Sidebar } from '../../components/SideBar'
-import { promptAction, router } from '@kit.ArkUI'
-import { COLOR_WHITE } from '../../common/color/colors'
+import { router } from '@kit.ArkUI'
+
 
 interface vdSrc {
   src: string
@@ -32,7 +32,7 @@ struct VdDetail {
       })
         .vd()
       Text('<')
-        .fontColor(COLOR_WHITE)
+        .fontColor(Color.White)
         .fontSize(40)
         .position({ x: '5%', y: '5%' })
         .onClick(() => {

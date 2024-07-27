@@ -1,6 +1,6 @@
 /**
  * 卡片项*/
-import { COLOR_SiDerPay } from '../common/color'
+import { Constants } from '../common/Constants'
 
 @Component
 export struct CardItem {
@@ -27,7 +27,7 @@ export struct CardItem {
         .height(30)
         .borderRadius(40)
         .justifyContent(FlexAlign.Center)
-        .backgroundColor(COLOR_SiDerPay)
+        .backgroundColor(Constants.COLOR_SiDerPay)
       }
     }.width('100%').height(60).justifyContent(FlexAlign.SpaceBetween)
   }

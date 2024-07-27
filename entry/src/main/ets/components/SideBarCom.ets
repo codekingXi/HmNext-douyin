@@ -2,7 +2,6 @@
  * 自定义全局侧边栏
  * itemData 数据源必须传！！！
  * */
-import { COLOR_WHITE } from '../common/color'
 
 @Component
 export struct SideBarCom {
@@ -24,7 +23,7 @@ export struct SideBarCom {
    * 侧边栏位置*/
   @State
   sidePositionX: string = ''
-  sideBgColor: ResourceColor = COLOR_WHITE
+  sideBgColor: ResourceColor = Color.White
   sideBottom: number = 90
   sideLeft: number = 20
   sideRight: number = 20

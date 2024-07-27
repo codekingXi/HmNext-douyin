@@ -3,9 +3,9 @@ import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import commonFn from '../../common/Function/commonFn'
 import { LOADING_SHOP, LOADING_VdDETAIL } from '../../router/Index'
-import { COLOR_BLACK, COLOR_GRAY, COLOR_OpacityBlack, COLOR_WHITE } from '../../common/color/colors'
 import { mediaInfo, personVdDta } from '../../models/mediaData'
 import { iconBtn, scrollbar, Skeleton } from '../../components'
+import { Constants } from '../../common/Constants'
 
 @Component
 export default struct My {
@@ -113,7 +113,7 @@ export default struct My {
         .textAlign(TextAlign.Center)
         .animation({ duration: 200 })
         .fontSize(this.personVd[this.currentIndex].id === item.id ? 22 : 16)
-        .fontColor(this.personVd[this.currentIndex].id === item.id ? COLOR_BLACK : '#ff666666')
+        .fontColor(this.personVd[this.currentIndex].id === item.id ? Color.Black : '#ff666666')
     }
     .onClick(() => {
       const index = this.personVd.findIndex(obj => obj.title === item.title)
@@ -138,7 +138,7 @@ export default struct My {
    * 打开右侧边栏*/
   openRightSideBar() {
     this.showDialog = true
-    this.bgColor = COLOR_OpacityBlack
+    this.bgColor = Constants.COLOR_OpacityBlack
     this.IndexX = '-65%'
   }
 
@@ -213,14 +213,14 @@ export default struct My {
                         .onClick(() => {
                           //打开自定义弹窗
                           this.showDialog = true
-                          this.bgColor = COLOR_BLACK
+                          this.bgColor = Color.Black
                         })
                     }
 
                     Column({ space: 5 }) {
                       Text(this.info.username).fontColor(Color.White)
                       Text(`抖音号:${this.info.tiktokNub}`)
-                        .fontColor(COLOR_GRAY)
+                        .fontColor(Color.Gray)
                         .fontSize(16)
                     }.width('100%').alignItems(HorizontalAlign.Start)
 
@@ -240,7 +240,7 @@ export default struct My {
                 ForEach(this.infoTitle, (item: BarClass) => {
                   Row({ space: 5 }) {
                     Text(item.title).fontWeight(600).fontSize(20)
-                    Text(`${item.rightContent}`).fontSize(16).fontColor(COLOR_GRAY)
+                    Text(`${item.rightContent}`).fontSize(16).fontColor(Color.Gray)
                   }.onClick(() => {
                     commonFn.tipDialog()
                   })
@@ -309,7 +309,7 @@ export default struct My {
                 Divider()
                   .strokeWidth(2)
                   .width(AppStorage.get('Btn_title_width'))
-                  .color(COLOR_BLACK)
+                  .color(Color.Black)
                   .translate({ x: this.getX() })
                   .position({ x: '-5%', y: 50 })
                   .animation({ duration: 200 })
@@ -370,7 +370,7 @@ struct personAreaVdCmt {
         })
         .width(120)
         .height(150).border({
-          color: COLOR_WHITE,
+          color: Color.White,
           width: .5
         })
       })
