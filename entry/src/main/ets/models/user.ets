@@ -1,5 +1,6 @@
 import { CURRENT_USER } from '../constants'
 import commonFn from '../common/Function/commonFn'
+
 /**
  * 用户信息接口*/
 export interface UserInfo {
@@ -29,6 +30,7 @@ export class UserInfoModel implements UserInfo {
     this.content = model.content
   }
 }
+
 /**
  * 默认用户数据*/
 export const defaultUserInfo: UserInfo[] = [
@@ -38,7 +40,7 @@ export const defaultUserInfo: UserInfo[] = [
     tiktokNub: commonFn.creteRandom(),
     avatar: 'https://img2.baidu.com/it/u=2778471297,524433918&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
     user_id: '1',
-    content:''
+    content: ''
   },
   {
     username: 'boss',
@@ -57,7 +59,7 @@ export const defaultUserInfo: UserInfo[] = [
     user_id: '3',
   },
   {
-    username: '老婆',
+    username: '布兰德',
     password: '',
     avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Ff1d11ab1-35ff-4f2c-b9e9-3e0c996d34a2%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1708069489&t=e3234db982e8a36639d170fc5cec7848',
     tiktokNub: commonFn.creteRandom(),
