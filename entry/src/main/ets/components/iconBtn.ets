@@ -3,16 +3,17 @@
 @Component
 export struct iconBtn {
   @Require
-  icon:ResourceStr=''
+  icon: ResourceStr = ''
   @Require
-  title:string=''
+  title: string = ''
+
   build() {
     Column({ space: 10 }) {
       Image(this.icon)
-        .width(32)
+        .width(26)
       Text(this.title)
         .fontWeight(500)
-        .fontSize(16)
+        .fontSize(14)
     }
   }
 }
