@@ -1,8 +1,8 @@
 import { UserInfo } from '../../models/user'
 import { Tiktok } from '../../utils/setting'
 import { router } from '@kit.ArkUI'
-import { LOADING_ChatDetail, LOADING_SEARCH } from '../../router/Index'
 import { HeadBar } from '../../components'
+import { Constants } from '../../common/Constants'
 
 /**
  * 消息页面*/
@@ -35,7 +35,7 @@ export struct Message {
    * 搜索联系人*/
   searchConcat() {
     router.pushUrl({
-      url: LOADING_SEARCH,
+      url: Constants.LOADING_SEARCH,
       params: {
         name: '搜索'
       }
@@ -87,7 +87,7 @@ export struct Message {
           }.layoutWeight(1)
           .onClick(() => {
             router.pushUrl({
-              url: LOADING_ChatDetail,
+              url: Constants.LOADING_ChatDetail,
               params: item
             })
           })

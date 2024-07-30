@@ -2,7 +2,6 @@ import { BarClass, DataSource, UserInfoModel } from '../../models'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import commonFn from '../../common/Function/commonFn'
-import { LOADING_SHOP, LOADING_VdDETAIL } from '../../router/Index'
 import { mediaInfo, personVdDta } from '../../models/mediaData'
 import { iconBtn, scrollbar, Skeleton } from '../../components'
 import { Constants } from '../../common/Constants'
@@ -47,7 +46,7 @@ export default struct My {
     {
       icon: $r('app.media.icon_shopCar'), title: '抖音商城', click: () => {
       router.pushUrl({
-        url: LOADING_SHOP
+        url: Constants.LOADING_SHOP
       })
     }
     },
@@ -231,7 +230,7 @@ export default struct My {
                   colors: [['rgba(7, 7, 7, 0.7)', 0.4], ['rgba(78, 77, 77, 0)', 1]]
                 })
               }
-            }.layoutWeight(2).width('100%').margin({ bottom: -10 })
+            }.layoutWeight(3.5).width('100%').margin({ bottom: -10 })
 
             //白色个人内容区
             Column() {
@@ -314,7 +313,6 @@ export default struct My {
                   .position({ x: '-5%', y: 50 })
                   .animation({ duration: 200 })
               }
-
             }
             .layoutWeight(6.5)
             .width('100%')
@@ -327,7 +325,8 @@ export default struct My {
             .backgroundColor(Color.White)
           }.height('100%')
         }
-      }.height('150%')
+      }
+      .height('120%')
       .scrollBar(BarState.Off)
       //修改整个页面的坐标
       .onClick(() => {
@@ -364,7 +363,7 @@ struct personAreaVdCmt {
         }
         .onClick(() => {
           router.pushUrl({
-            url: LOADING_VdDETAIL, //视频详情页
+            url: Constants.LOADING_VdDETAIL, //视频详情页
             params: item
           })
         })

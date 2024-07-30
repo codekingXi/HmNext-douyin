@@ -9,48 +9,72 @@ import { Fn, Store } from '../pages/Index/Index'
 export struct Comment {
   @ObjectLink
   item: commentDataModel
+
   //点赞方法
-  changeLike(){
-    if(this.item.likeFlag){ //如果点过赞
+  changeLike() {
+    if (this.item.likeFlag) { //如果点过赞
       this.item.likeNum--
-    }//没点过赞
-    else{
+    } //没点过赞
+    else {
       this.item.likeNum++
     }
-    this.item.likeFlag=!this.item.likeFlag
+    this.item.likeFlag = !this.item.likeFlag
   }
+
+  @State
+  scaleX: number = 1
+  @State
+  scaleY: number = 1
+
+  /**
+   * 动画*/
+  change() {
+    this.scaleX = 0
+    this.scaleY = 0
+    setTimeout(() => {
+      this.scaleX = 1
+      this.scaleY = 1
+      this.changeLike()
+    }, 200)
+  }
+
   build() {
 
     Row({ space: 10 }) {
-      Image(this.item.avatar) //头像
+      Image(this.item.avatar)//头像
         .width(40)
         .borderRadius(50)
       Column() {
-        Text(this.item.author)  //作者
+        Text(this.item.author)//作者
           .fontColor('#ff737373')
           .fontSize(18)
-        Text(this.item.content) //内容
+        Text(this.item.content)//内容
           .fontColor('#ff1c1c1c')
           .fontSize(22)
         Row({ space: 10 }) {
-          Row(){
-            Text(`${this.item.time}-${this.item.area}`) //事件地区
+          Row() {
+            Text(`${this.item.time}-${this.item.area}`)//事件地区
               .fontColor('#ff8d8b8b')
               .fontSize(18)
           }
-          Row(){
-            Image($r('app.media.ic_public_love')) //爱心
-              .fillColor(this.item.likeFlag?Color.Red: '#ff868585')
+
+          Row() {
+            Image($r('app.media.ic_public_love'))//爱心
+              .fillColor(this.item.likeFlag ? Color.Red : '#ff868585')
               .width(20)
               .height(20)
-              .onClick(()=>{
+              .scale({ x: this.scaleX, y: this.scaleY })
+              .onClick(() => {
                 Fn.redirect()
-                if(Store.getSync(CURRENT_USER,JSON.stringify(CurrentUser))){
-                  this.changeLike()
+                //如果有账号信息
+                if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
+                  this.change()
+                  return
                 }
               })
-            Text(this.item.likeNum.toString())  //点赞数
-              .fontColor(this.item.likeFlag?Color.Red:'#ff868585')
+              .animation({ duration: 200 })
+            Text(this.item.likeNum.toString())//点赞数
+              .fontColor(this.item.likeFlag ? Color.Red : '#ff868585')
               .fontSize(16)
           }
         }

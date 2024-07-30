@@ -1,7 +1,8 @@
 import { CURRENT_USER } from '../../constants'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
-import { LOADING_LOGIN } from '../../router/Index'
+import { Constants } from '../../common/Constants'
+
 /**
  * 设置页*/
 @Entry
@@ -17,7 +18,7 @@ struct Setting {
     router.clear()
     //此时跳转登录再返回就直接到桌面
     router.replaceUrl({
-      url: LOADING_LOGIN
+      url: Constants.LOADING_LOGIN
     })
   }
   build() {

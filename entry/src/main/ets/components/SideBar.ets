@@ -1,49 +1,62 @@
-import { sideData } from '../models'
 import { commentDataModel } from '../models/commentData'
 import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
-import { promptAction } from '@kit.ArkUI'
 import commonFn from '../common/Function/commonFn'
+import { sideData } from '../models'
+import { sideDataModel } from '../models/sidebarData'
+
 /**
  * 视频功能侧边栏*/
 @Component
 struct Sidebar {
   @State
   showDialog: boolean = false
+
+  changeLike() {
+    if (this.sideDataList[0].isLike) {
+      this.sideDataList[0].loveNum--
+    } else {
+      this.sideDataList[0].loveNum++
+    }
+    this.sideDataList[0].isLike = !this.sideDataList[0].isLike
+  }
+
   //侧边栏图标和数据
-  sideDataList: sideData[] = [
-    {
+  @State
+  sideDataList: sideDataModel[] = [
+    new sideDataModel({
       id: 1,
       imgUrl: $r('app.media.love'),
       loveNum: 2010,
-      click:()=>{
-        commonFn.tipDialog()
+      isLike: false,
+      click: () => {
+        this.changeLike()
       }
-    },
-    {
+    }),
+    new sideDataModel({
       id: 2,
       imgUrl: $r('app.media.chat'),
       loveNum: 1650,
       click: () => {
         this.showDialog = !this.showDialog
       }
-    },
-    {
+    }),
+    new sideDataModel({
       id: 3,
       imgUrl: $r('app.media.collect'),
       loveNum: 344,
-      click:()=>{
+      click: () => {
         commonFn.tipDialog()
       }
-    },
-    {
+    }),
+    new sideDataModel({
       id: 4,
       imgUrl: $r('app.media.transmit'),
       loveNum: 568,
-      click:()=>{
+      click: () => {
         commonFn.tipDialog()
       }
-    },
+    })
   ]
   //评论的数据
   @State commentList: commentDataModel[] = [
@@ -108,32 +121,21 @@ struct Sidebar {
       likeFlag: false
     })
   ]
+
   //添加评论方法
-  addComment(content:string){
+  addComment(content: string) {
     this.commentList.unshift(new commentDataModel({
       id: Math.random(),
       avatar: 'https://picx.zhimg.com/027729d02bdf060e24973c3726fea9da_l.jpg?source=06d4cd63',
       author: 'smallMiSu7',
       content,
-      time: `0${(new Date().getMonth()+1).toString().padStart(2,'')}-${(new Date().getDate().toString().padStart(2,'0'))}`,
+      time: `0${(new Date().getMonth() + 1).toString().padStart(2, '')}-${(new Date().getDate()
+        .toString()
+        .padStart(2, '0'))}`,
       area: '上海',
       likeNum: 34,
       likeFlag: false
     }))
-  }
-  @Builder
-  side(item: sideData) {
-    Column() {
-      Image(item.imgUrl)
-        .width(50)
-        .onClick(() => {
-            item.click && item.click()
-        })
-      Text(item.loveNum.toString())
-        .fontColor(Color.White)
-        .fontSize(16)
-    }
-
   }
 
   @Builder
@@ -155,13 +157,13 @@ struct Sidebar {
         })
       }.layoutWeight(1)
       .scrollBar(BarState.Off)
+
       //评论组件
       ReplyInput({
-        publishComment:(content:string)=>{
+        publishComment: (content: string) => {
           this.addComment(content)
         },
-        iptContent:'善语结善缘,恶言伤人心'
-
+        iptContent: '善语结善缘,恶言伤人心'
       })
     }
     .width('100%')
@@ -169,11 +171,13 @@ struct Sidebar {
   }
 
   build() {
+    //主内容
     Column() {
       ForEach(this.sideDataList, (item: sideData) => {
-        this.side(item)
+        sideIcon({ item: item })
       })
-    }
+    }.zIndex(2)
+    .position({ x: '85%', y: '50%' })
 
     //半模态弹层
     .bindSheet($$this.showDialog, this.Dialog, {
@@ -184,3 +188,40 @@ struct Sidebar {
 }
 
 export { Sidebar }
+
+@Component
+struct sideIcon {
+  @ObjectLink
+  item: sideDataModel
+  @State
+  scaleX: number = 1
+  @State
+  scaleY: number = 1
+  /**
+   * 动画*/
+  change(){
+    this.scaleX = 0
+    this.scaleY = 0
+    setTimeout(() => {
+      this.scaleX = 1
+      this.scaleY = 1
+      this.item.click && this.item.click()
+    }, 200)
+  }
+  build() {
+    Column() {
+      Image(this.item.imgUrl)
+        .fillColor(this.item.isLike ? Color.Red : Color.White)
+        .width(50)
+        .aspectRatio(1)
+        .scale({ x: this.scaleX, y: this.scaleY })
+        .onClick(() => {
+          this.change()
+        })
+        .animation({ duration: 200 })
+      Text(this.item.loveNum.toString())
+        .fontColor(Color.White)
+        .fontSize(16)
+    }
+  }
+}

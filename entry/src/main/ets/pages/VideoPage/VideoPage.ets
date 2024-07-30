@@ -117,8 +117,7 @@ struct playVideo {
         }
       }.justifyContent(FlexAlign.Center)
 
-      Sidebar().zIndex(2)
-        .position({ x: '85%', y: '50%' })
+      Sidebar()
     }
   }
 }

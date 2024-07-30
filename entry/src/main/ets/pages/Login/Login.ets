@@ -4,8 +4,7 @@ import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { userData } from '../../api'
 import commonFn from '../../common/Function/commonFn'
-import { LOADING_INDEX } from '../../router/Index'
-
+import { Constants } from '../../common/Constants'
 
 @Extend(Text)
 function textStyle() {
@@ -91,7 +90,7 @@ struct Login {
           })) //写入全局状态
           await new Tiktok(getContext()).setCurrentUser(token) //写入首选项
           this.loading = false
-          router.replaceUrl({ url: LOADING_INDEX })
+          router.replaceUrl({ url: Constants.LOADING_INDEX })
         } else {
           promptAction.showToast({ message: "账号或密码错误!" })
           this.loading = false

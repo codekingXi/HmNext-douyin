@@ -1,6 +1,6 @@
 import { router } from '@kit.ArkUI'
+import { Constants } from '../../common/Constants'
 import { UserInfo, UserInfoModel } from '../../models/user'
-import { LOADING_ChatDetail } from '../../router/Index'
 import { Tiktok } from '../../utils/setting'
 
 interface routerParamsName {
@@ -94,8 +94,8 @@ struct SearchPage {
             }.layoutWeight(1)
             .onClick(() => {
               router.pushUrl({
-                url: LOADING_ChatDetail,
-                params:item
+                url: Constants.LOADING_ChatDetail,
+                params: item
               })
             })
           })

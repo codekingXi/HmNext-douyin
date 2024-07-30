@@ -7,7 +7,6 @@ import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
 import commonFn from '../../common/Function/commonFn'
-import { LOADING_LOGIN, LOADING_SETTING } from '../../router/Index'
 import { common } from '@kit.AbilityKit'
 import { Message } from '../Message/Message'
 import { Constants } from '../../common/Constants'
@@ -29,7 +28,7 @@ export class Fn {
           value: '确定',
           action: () => {
             router.pushUrl({
-              url: LOADING_LOGIN
+              url: Constants.LOADING_LOGIN
             })
           }
         }
@@ -230,7 +229,7 @@ struct Index {
       title: "设置",
       click: () => {
         router.pushUrl({
-          url: LOADING_SETTING
+          url: Constants.LOADING_SETTING
         })
       }
     },
@@ -455,7 +454,7 @@ struct Index {
    * 卡片盒子*/
   @Builder
   CardBox(item: BarClass) {
-    Column() {
+    Scroll() {
       Card({
         leftTitle: item.title,
         rightTip: () => {
@@ -473,7 +472,7 @@ struct Index {
           //常用小程序
           if (item.id === 2) {
             //没有数据就渲染提示
-            if (!!this.commonlyUsedAppletsItemData.length) {
+            if (!this.commonlyUsedAppletsItemData) {
               this.commonlyUsedApplets()
             } else {
               this.FnTip('啥也没有,快去尝鲜吧')
@@ -491,7 +490,6 @@ struct Index {
         }
       })
     }.margin({ left: 15 })
-
   }
 
   /**
@@ -771,7 +769,6 @@ struct Index {
       .bindContentCover($$this.showUploadDialog, this.contentDialog, {
         modalTransition: ModalTransition.DEFAULT
       })
-
 
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏

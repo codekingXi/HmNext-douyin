@@ -3,7 +3,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { display, KeyboardAvoidMode, window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
 import { CURRENT_USER } from '../constants';
-import { LOADING_INDEX } from '../router';
+import { Constants } from '../common/Constants';
 
 
 export default class EntryAbility extends UIAbility {
@@ -40,7 +40,7 @@ export default class EntryAbility extends UIAbility {
     //创建存储用户信息的空间
     AppStorage.setOrCreate(CURRENT_USER, info)
     //加载内容
-    await windowStage.loadContent(LOADING_INDEX)
+    await windowStage.loadContent(Constants.LOADING_INDEX)
     //设置键盘避让模式
     windowStage.getMainWindowSync().getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE)
 
