@@ -6,7 +6,7 @@ import { mediaInfo, mediaInfoModel, mediaList, DataSource as videoData } from '.
 @Entry
 @Component
 struct VideoPage {
-  @Provide
+  @State
   activeIndex: number = 0
   /**
    * 懒加载视频数据列表*/
@@ -15,16 +15,15 @@ struct VideoPage {
   build() {
     Swiper() {
       LazyForEach(this.videoList, (item: mediaInfo, index: number) => {
-        playVideo({ item, index })
+        playVideo({ item, index, activeIndex: this.activeIndex })
       })
     }
     .cachedCount(3)
     .index($$this.activeIndex)
-    //关闭滚动条
+    //关闭指示器
     .indicator(false)
     .duration(200)
-    //允许循环
-    .loop(true)
+    .loop(false)
     //允许滚动
     .vertical(true)
   }
@@ -38,7 +37,7 @@ struct playVideo {
   index: number = -1 //默认值只能是-1
   /**
    * 播放的索引*/
-  @Consume
+  @Prop
   @Watch('updateActiveIndex')
   activeIndex: number
   /**
