@@ -1,7 +1,7 @@
 import { commentDataModel } from '../models/commentData'
 import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
-import commonFn from '../common/Function/commonFn'
+import commonFn, { tipDialog } from '../common/Function/commonFn'
 import { sideData } from '../models'
 import { sideDataModel } from '../models/sidebarData'
 
@@ -46,7 +46,7 @@ struct Sidebar {
       imgUrl: $r('app.media.collect'),
       loveNum: 344,
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       }
     }),
     new sideDataModel({
@@ -54,7 +54,7 @@ struct Sidebar {
       imgUrl: $r('app.media.transmit'),
       loveNum: 568,
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       }
     })
   ]

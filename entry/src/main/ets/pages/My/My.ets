@@ -1,10 +1,10 @@
-import { BarClass, DataSource, UserInfoModel } from '../../models'
+import { BarClass, DataSource, UserInfoModel, mediaInfo } from '../../models'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
-import commonFn from '../../common/Function/commonFn'
-import { mediaInfo, personVdDta } from '../../models/mediaData'
+import commonFn, { tipDialog } from '../../common/Function/commonFn'
 import { iconBtn, scrollbar, Skeleton } from '../../components'
 import { Constants } from '../../common/Constants'
+import { personVdDta } from '../../models'
 
 @Component
 export default struct My {
@@ -52,28 +52,24 @@ export default struct My {
     },
     {
       icon: $r('app.media.icon_time'), title: '观看历史', click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
     },
     {
       icon: $r('app.media.icon_wallet'), title: '我的钱包', click: () => {
-      commonFn.tipDialog()
-    }
+      tipDialog()    }
     },
     {
       icon: $r('app.media.icon_my_user'), title: '常访问的人', click: () => {
-      commonFn.tipDialog()
-    }
+      tipDialog()    }
     },
     {
       icon: $r('app.media.icon_music'), title: '我的音乐', click: () => {
-      commonFn.tipDialog()
-    }
+      tipDialog()    }
     },
     {
       icon: $r('app.media.icon_applet'), title: '我的小程序', click: () => {
-      commonFn.tipDialog()
-    }
+      tipDialog()    }
     },
     {
       icon: $r('app.media.icon_moreFn'), title: '查看更多', click: () => {
@@ -160,7 +156,7 @@ export default struct My {
                     Text("新访客1").fontSize(14).fontColor(Color.White)
                   }.btnBg().width(90).justifyContent(FlexAlign.Center)
                   .onClick(() => {
-                    commonFn.tipDialog()
+                    tipDialog()
                   })
 
                   //搜索和功能按钮区
@@ -169,7 +165,7 @@ export default struct My {
                       Image($r("app.media.icon_search")).width(28).height(28)
                     }.btnBg().justifyContent(FlexAlign.Center)
                     .onClick(() => {
-                      commonFn.tipDialog()
+                      tipDialog()
                     })
 
                     Row() {
@@ -241,7 +237,7 @@ export default struct My {
                     Text(item.title).fontWeight(600).fontSize(20)
                     Text(`${item.rightContent}`).fontSize(16).fontColor(Color.Gray)
                   }.onClick(() => {
-                    commonFn.tipDialog()
+                    tipDialog()
                   })
                 })
               }.width('100%')

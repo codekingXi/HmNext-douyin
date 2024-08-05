@@ -1,6 +1,6 @@
 import goods from '../../common/data/goods.json'
 import { promptAction } from '@kit.ArkUI'
-import commonFn from '../../common/Function/commonFn'
+import commonFn, { tipDialog } from '../../common/Function/commonFn'
 
 /**
  * 商品页*/
@@ -96,7 +96,7 @@ export default struct Shop {
         .columnsGap(10)
         .padding(10)
         .onClick(() => {
-          commonFn.tipDialog()
+          tipDialog()
         })
       }
       .margin({ top: 100 })

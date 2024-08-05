@@ -6,7 +6,7 @@ import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
-import commonFn from '../../common/Function/commonFn'
+import commonFn, { tipDialog } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
 import { Message } from '../Message/Message'
 import { Constants } from '../../common/Constants'
@@ -137,7 +137,7 @@ struct Index {
       icon: $r('app.media.icon_shopCar'),
       title: "我的订单",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -146,7 +146,7 @@ struct Index {
       title: "我的钱包",
       rightContent: '8.88',
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       }
 
     },
@@ -154,7 +154,7 @@ struct Index {
       icon: $r('app.media.icon_QRcode'),
       title: "我的二维码",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
 
@@ -163,7 +163,7 @@ struct Index {
       icon: $r('app.media.icon_time'),
       title: "观看历史",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
 
@@ -172,7 +172,7 @@ struct Index {
       icon: $r('app.media.icon_waitplay'),
       title: "稍后再看",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
 
@@ -181,7 +181,7 @@ struct Index {
       icon: $r('app.media.icon_clouddownload'),
       title: "离线模式",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -189,14 +189,14 @@ struct Index {
       icon: $r('app.media.icon_idea'),
       title: "抖音创作着中心",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       }
     },
     {
       icon: $r('app.media.icon_applet'),
       title: "小程序",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -204,7 +204,7 @@ struct Index {
       icon: $r('app.media.icon_love'),
       title: "抖音公益",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -212,7 +212,7 @@ struct Index {
       icon: $r('app.media.icon_sapling'),
       title: "青少年模式",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -220,7 +220,7 @@ struct Index {
       icon: $r('app.media.icon_service'),
       title: "我的客服",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -237,7 +237,7 @@ struct Index {
       icon: $r('app.media.icon_personedetail'),
       title: "个人信息收集清单",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     },
@@ -245,7 +245,7 @@ struct Index {
       icon: $r('app.media.icon_share'),
       title: "第三方信息共享清单",
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       },
       bottomBorder: true
     }
@@ -328,43 +328,43 @@ struct Index {
       icon: $r('app.media.icon_wallet'),
       title: '我的钱包',
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       }
     }, {
     icon: $r('app.media.icon_leftsider_coupons'),
     title: '优惠卷',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_applet'),
     title: '小程序',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_time'),
     title: '观看历史',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_leftSider_contentLove'),
     title: '内容偏好',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_clouddownload'),
     title: '离线模式',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_waitplay'),
     title: '稍后再看',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   },
   ]
@@ -376,43 +376,43 @@ struct Index {
       icon: $r('app.media.icon_siderLeft_live'),
       title: '直播广场',
       click: () => {
-        commonFn.tipDialog()
+        tipDialog()
       }
     }, {
     icon: $r('app.media.icon_siderLeft_shopCarperson'),
     title: '附近团购',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_siderLeft_activityCenter'),
     title: '活动中心',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_siderLeft_playGame'),
     title: '玩游戏',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_siderLeft_music'),
     title: '听抖音',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_siderLeft_screeningRoom'),
     title: '放映厅',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   }, {
     icon: $r('app.media.icon_siderLeft_singing'),
     title: 'K歌',
     click: () => {
-      commonFn.tipDialog()
+      tipDialog()
     }
   },
   ]
@@ -618,7 +618,7 @@ struct Index {
         bottom: 20
       })
       .onClick(() => {
-        commonFn.tipDialog()
+        tipDialog()
       })
     }.justifyContent(FlexAlign.Center)
   }
@@ -688,7 +688,7 @@ struct Index {
       Column() {
         TitleBtn({
           title: "创建抖音仔仔", borBom: true, click: () => {
-            commonFn.tipDialog()
+            tipDialog()
           }
         })
         TitleBtn({
@@ -698,12 +698,12 @@ struct Index {
         })
         TitleBtn({
           title: "保存头像", borBom: true, click: () => {
-            commonFn.tipDialog()
+            tipDialog()
           }
         })
         TitleBtn({
           title: "查看抖音码", borBom: false, click: () => {
-            commonFn.tipDialog()
+            tipDialog()
           }
         })
       }.width('90%')
