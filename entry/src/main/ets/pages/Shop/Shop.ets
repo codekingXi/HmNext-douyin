@@ -1,6 +1,8 @@
 import goods from '../../common/data/goods.json'
 import { promptAction } from '@kit.ArkUI'
-import commonFn, { tipDialog } from '../../common/Function/commonFn'
+import { tipDialog } from '../../common/Function/commonFn'
+import { DataSource } from '../../models'
+import { shopTypeModel } from '../../models/Type'
 
 /**
  * 商品页*/
@@ -14,7 +16,7 @@ export default struct Shop {
   loadMore() {
     return new Promise<boolean>((resolve, reject) => {
       setTimeout(() => {
-        goods.push(...goods) //es6的方法
+        //goods.pushData(...goods.push(0,9)) //es6的方法
         resolve(true)
       }, 1000)
     })
@@ -35,25 +37,36 @@ export default struct Shop {
   waterFlowItem(index: number) {
     Column({ space: 10 }) {
       Image(`/common/images/goods/${goods[index].cover}`)
-        .objectFit(ImageFit.Cover)
+        .width('100%')
         .height(index % 2 ? 180 : 200)
         .draggable(false)
+        .borderRadius({
+          topLeft: 15, topRight: 15
+        })
       Column() {
         Text(goods[index].name)
-        Row({ space: 10 }) {
+        Row({ space: 5 }) {
           //价格
           Text(`￥${goods[index].price.toString()}`)
             .fontColor(Color.Red).fontSize(16)
+            .fontWeight(600)
           //已售
           Text(`已售${goods[index].sold.toString()}`)
             .fontColor('#ff696868').fontSize(14)
-        }.width('100%').padding({
-          left: 10,
-          right: 10
+        }
+        .width('100%')
+        .padding({
+          left: 0,
+          top: 10
         })
-      }
+      }.margin(10)
     }
+    .onClick(() => {
+      tipDialog()
+    })
   }
+
+  private shopData = new DataSource<shopTypeModel>(goods)
 
   build() {
     Column() {
@@ -66,13 +79,13 @@ export default struct Shop {
         }).margin({ top: -10 })
         //渲染商品列表数据
         WaterFlow({ footer: this.getFooter() }) {
-          ForEach(goods, (item: string, index: number) => {
+          LazyForEach(this.shopData, (item: string, index: number) => {
             FlowItem() {
               this.waterFlowItem(index)
-            }.width('100%')
+            }
             .backgroundColor(Color.White)
             .border({
-              radius: 8
+              radius: 15
             })
 
           })
@@ -95,9 +108,6 @@ export default struct Shop {
         .rowsGap(10)
         .columnsGap(10)
         .padding(10)
-        .onClick(() => {
-          tipDialog()
-        })
       }
       .margin({ top: 100 })
 
@@ -105,3 +115,4 @@ export default struct Shop {
     .height('100%').backgroundColor('#ffe2e2e2')
   }
 }
+
