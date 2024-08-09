@@ -1,6 +1,6 @@
 import { Sidebar } from '../../components'
-import { mediaInfo, mediaInfoModel, mediaList, DataSource as videoData } from '../../models'
-
+import { DataSource as videoData } from '../../models'
+import video from '../../common/data/videos.json'
 
 /**视频页*/
 @Entry
@@ -10,15 +10,14 @@ struct VideoPage {
   activeIndex: number = 0
   /**
    * 懒加载视频数据列表*/
-  videoList = new videoData<mediaInfo>(mediaList)
+  videoList = new videoData(video)
 
   build() {
     Swiper() {
-      LazyForEach(this.videoList, (item: mediaInfo, index: number) => {
-        playVideo({ item, index, activeIndex: this.activeIndex })
+      LazyForEach(this.videoList, (item: string, index: number) => {
+        playVideo({ index, activeIndex: this.activeIndex })
       })
     }
-    .cachedCount(3)
     .index($$this.activeIndex)
     //关闭指示器
     .indicator(false)
@@ -31,7 +30,6 @@ struct VideoPage {
 
 @Component
 struct playVideo {
-  item: mediaInfo = new mediaInfoModel({} as mediaInfo)
   /**
    * 接收传入的视频索引*/
   index: number = -1 //默认值只能是-1
@@ -75,7 +73,7 @@ struct playVideo {
   build() {
     Stack() {
       Video({
-        src: this.item.src,
+        src: `${video[this.index].video.play_addr.url_list}`,
         controller: this.controller
       })// 手势
         // .gesture(
