@@ -4,20 +4,41 @@ import { display, KeyboardAvoidMode, window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
 import { CURRENT_USER } from '../constants';
 import { Constants } from '../common/Constants';
+import { instance, request } from '../utils/request';
+import dayjs from 'dayjs';
+import { Log } from '@abner/log';
 
+// 设置语言为中文
+dayjs.locale('zh-cn');
+
+Log.init({
+  tag: "ECX",
+  domain: 0xEC00,
+  close: false,
+  isHilog: true,
+  showLogLocation: true,
+  logSize: 200
+})
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    Log.info('ability onCreate');
+    request<object>({
+      url: '/api/video/lists'
+    }).then(res => {
+      AlertDialog.show({
+        message: JSON.stringify(res)
+      })
+    })
   }
 
   onDestroy(): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
+    Log.info('ability onDestroy');
   }
 
   async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
     // Main window is created, set main page for this ability
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+    Log.info('ability onWindowStageCreate');
     /**
      * 获取声明窗口*/
     const win = windowStage.getMainWindowSync()
@@ -48,16 +69,16 @@ export default class EntryAbility extends UIAbility {
 
   onWindowStageDestroy(): void {
     // Main window is destroyed, release UI related resources
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageDestroy');
+    Log.info('ability onWindowStageDestroy');
   }
 
   onForeground(): void {
     // Ability has brought to foreground
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onForeground');
+    Log.info('ability onForeground');
   }
 
   onBackground(): void {
     // Ability has back to background
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onBackground');
+    Log.info('ability onBackground');
   }
 }
