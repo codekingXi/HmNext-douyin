@@ -1,8 +1,9 @@
-import { BarClass } from '../models'
+import { BarClass, DataSource } from '../models'
 import Shop from '../pages/Shop/Shop'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { HeadBar } from '.'
+import { ListIndexPosition } from '../models/Type'
 
 /**
  * 顶部栏*/
@@ -64,10 +65,6 @@ export struct TopBar {
     }
   ]
   tabController: TabsController = new TabsController()
-  /**
-   * 导航索引*/
-  @State
-  currentIndex: number = this.topTabList.length - 1 //必须设置为数组最后一位元素
   @Consume
   IndexX: number | string
   @Consume
@@ -76,17 +73,17 @@ export struct TopBar {
   bgColor: string
 
   @Builder
-  titleCommon(item: BarClass) {
+  titleCommon(item: BarClass, index: number) {
     Column({ space: 5 }) {
       Text(item.title)
         .textAlign(TextAlign.Center)
-        .fontColor(this.topTabList[this.currentIndex].id === item.id ? '#ff00ceff' : '#ff5f5f5f')
+        .fontColor(this.currentIndex === index ? '#ff00ceff' : '#ff5f5f5f')
         .fontWeight(600)
         .fontSize(20)
       Divider()
         .strokeWidth(3)
-        .lineCap(LineCapStyle.Round)
-        .width(this.topTabList[this.currentIndex].id === item.id ? 30 : 0)
+        .lineCap(LineCapStyle.Butt)
+        .width(this.currentIndex === index ? 30 : 0)
         .color(this.topTabList[this.currentIndex].name === 'SHOP' ? Color.Black :
         Color.White)
     }
@@ -121,20 +118,75 @@ export struct TopBar {
   }
 
   /**
+   * 顶部列表项数据*/
+  private tabListData = new DataSource(this.topTabList)
+  /**
    * 顶部栏主要内容总宽度*/
   BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
+  /**
+   * 是否点击顶部列表*/
+  private isClickTagList: boolean = false; //
+  /**
+   * 顶部列表滚动控制器*/
+  private classifyScroller: Scroller = new Scroller() //
+  /**
+   * 顶部栏列表可视区域的起始索引和终点索引*/
+  tagIndexPosition: ListIndexPosition = { start: 0, end: 0 } // 一级列表可视区域的起始索引和终点索引
+  /**
+   * 顶部导航栏焦点索引值 当前索引
+   * */
+  @State
+  @Watch('onIndexChange')
+  currentIndex: number = this.topTabList.length - 1
+
+  /**
+   * 当索引发生变化时调用此方法，用于调整分类滚动视图的显示位置
+   * 该方法根据当前索引的位置，决定是向左滚动还是向右滚动以展示合适的分类
+   */
+  /**
+   * 当索引发生变化时调用此方法，用于调整分类滚动视图的显示位置
+   * 该方法通过比较当前索引和预设的起始、结束位置，决定滚动的方向和目标索引
+   */
+  onIndexChange() {
+    // 获取当前标签索引位置的起始和结束值
+    const start = this.tagIndexPosition.start;
+    const end = this.tagIndexPosition.end;
+
+    // 当前索引接近结束位置时，向左滚动
+    if (this.currentIndex === end || this.currentIndex === end - 1) {
+      // 计算需要滚动到的左侧目标索引
+      let leftScrollCount: number = this.currentIndex + 2;
+      // 确保目标索引不会超出数组范围
+      leftScrollCount = leftScrollCount >= this.topTabList.length - 1 ? this.topTabList.length - 1 : leftScrollCount;
+      // 执行滚动操作
+      this.classifyScroller.scrollToIndex(leftScrollCount, true); // 使获焦item向左滚动
+    }
+
+    // 当前索引接近起始位置时，向右滚动
+    if (this.currentIndex === start || this.currentIndex === start + 1) {
+      // 计算需要滚动到的右侧目标索引
+      let rightScrollCount: number = this.currentIndex - 1;
+      // 确保目标索引不会超出数组范围
+      rightScrollCount = rightScrollCount <= 0 ? 0 : rightScrollCount;
+      // 执行滚动操作
+      this.classifyScroller.scrollToIndex(rightScrollCount, true); // 使获焦item向右滚动
+    }
+  }
 
   /**
    * 顶部栏主要内容*/
   @Builder
   barMainContent() {
-    List({ space: 15, initialIndex: this.currentIndex }) {
-      ForEach(this.topTabList, (item: BarClass) => {
+    List({ space: 15, initialIndex: this.currentIndex, scroller: this.classifyScroller }) {
+      LazyForEach(this.tabListData, (item: BarClass, index: number) => {
         ListItem() {
-          this.titleCommon(item)
+          this.titleCommon(item, index)
         }
       })
     }
+    .onScrollIndex((start: number, end: number) => {
+      this.tagIndexPosition = { start, end }
+    })
     .edgeEffect(EdgeEffect.None)
     .scrollBar(BarState.Off)
     .listDirection(Axis.Horizontal)
@@ -157,17 +209,17 @@ export struct TopBar {
             if (item.name === 'EXPERIMENT') {
               Column() {
                 Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              }
             } else if (item.name === 'HOTPOT') {
               VideoPage()
             } else if (item.name === 'LIVE') {
               Column() {
                 Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              }
             } else if (item.name === 'SELECTED') {
               Column() {
                 Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              }
             } else if (item.name === 'LOT OF BUY') {
               Shop()
             } else if (item.name === 'AREA') {
@@ -180,7 +232,6 @@ export struct TopBar {
               VideoPage()
             }
           }
-          .tabBar()
         })
       }
       .height('106%')
