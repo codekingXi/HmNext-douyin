@@ -1,17 +1,14 @@
 /*
  * 公共方法类库*/
-import { promptAction, router } from '@kit.ArkUI'
+import { promptAction } from '@kit.ArkUI'
 
 /**
  * 提示弹窗
- * @param {String} msg
- * @param msg 传入需要的提示信息
+ * @param {String} msg传入需要的提示信息 默认值:
+ * @default 功能未完善
  * @return {Function} 返回一个弹窗信息*/
 export const tipDialog = (msg: string = "功能未完善") => {
-  if(msg===null){
-    return
-  }else
-  promptAction.showToast({ message: msg })
+  promptAction.showToast({ message: msg, bottom: 100 })
 }
 
 export default class commonFn {
@@ -32,6 +29,4 @@ export default class commonFn {
     return Math.floor(Math.random() * (n + 1)) + m
   }
 
-  /**
-   * 文本提示弹窗*/
 }
