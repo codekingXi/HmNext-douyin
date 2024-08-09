@@ -6,7 +6,7 @@ import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
-import commonFn, { tipDialog } from '../../common/Function/commonFn'
+import { tipDialog } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
 import { Message } from '../Message/Message'
 import { Constants } from '../../common/Constants'
@@ -569,7 +569,7 @@ struct Index {
 
   //底部tab的的结构
   @Builder
-  bottomBar(item: BarClass) {
+  bottomBar(item: BarClass, index: number) {
     Column() {
       if (item.id === 3) {
         Image(item.icon)
@@ -577,7 +577,7 @@ struct Index {
       } else {
         Text(item.title)
           .fontSize(24)
-          .fontColor(this.btmTabList[this.currentIndex].id === item.id ? this.titleColor[0] : this.titleColor[1])
+          .fontColor(this.currentIndex === index ? this.titleColor[0] : this.titleColor[1])
       }
     }
     .onClick(async () => {
@@ -614,13 +614,13 @@ struct Index {
       .margin({
         top: 5,
         left: 15,
-        right: 15,
+        right: 20,
         bottom: 20
       })
       .onClick(() => {
         tipDialog()
       })
-    }.justifyContent(FlexAlign.Center)
+    }
   }
 
   // 上传视频等用的弹窗
@@ -722,7 +722,9 @@ struct Index {
               if (item.name === 'Home') {
                 TopBar()
               } else if (item.name === 'Friend') {
-                Text('Friend')
+                Column() {
+                  Text('敬请期待')
+                }
               } else if (item.name === 'Message') {
                 Message()
               } else if (item.name === 'My') {
@@ -735,8 +737,8 @@ struct Index {
         .scrollable(false)
 
         Row({ space: 20 }) {
-          ForEach(this.btmTabList, (item: BarClass) => {
-            this.bottomBar(item)
+          ForEach(this.btmTabList, (item: BarClass, index: number) => {
+            this.bottomBar(item, index)
           })
         }
         .width('100%')
