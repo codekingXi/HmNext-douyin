@@ -123,9 +123,7 @@ export struct TopBar {
   /**
    * 顶部栏主要内容总宽度*/
   BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
-  /**
-   * 是否点击顶部列表*/
-  private isClickTagList: boolean = false; //
+
   /**
    * 顶部列表滚动控制器*/
   private classifyScroller: Scroller = new Scroller() //
@@ -139,10 +137,6 @@ export struct TopBar {
   @Watch('onIndexChange')
   currentIndex: number = this.topTabList.length - 1
 
-  /**
-   * 当索引发生变化时调用此方法，用于调整分类滚动视图的显示位置
-   * 该方法根据当前索引的位置，决定是向左滚动还是向右滚动以展示合适的分类
-   */
   /**
    * 当索引发生变化时调用此方法，用于调整分类滚动视图的显示位置
    * 该方法通过比较当前索引和预设的起始、结束位置，决定滚动的方向和目标索引

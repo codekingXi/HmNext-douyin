@@ -46,13 +46,6 @@ export class Tiktok {
     }
   }
 
-  /**
-   * 获取我和某个人的聊天记录的仓库*/
-  // getChatMessageStore(userId:string){
-  //   preferences.getPreferencesSync(this.context,{
-  //     name:`${UserRecord_KEY}_${userId}` //仓库名称
-  //   })
-  // }
 
   /**
    * 获取'我'和某个用户的整个的聊天记录 userid对话者的id

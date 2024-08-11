@@ -2,7 +2,6 @@ import goods from '../../common/data/goods.json'
 import { promptAction } from '@kit.ArkUI'
 import { tipDialog } from '../../common/Function/commonFn'
 import { DataSource } from '../../models'
-import { shopTypeModel } from '../../models/Type'
 
 /**
  * 商品页*/
@@ -66,7 +65,7 @@ export default struct Shop {
     })
   }
 
-  private shopData = new DataSource<shopTypeModel>(goods)
+  private shopData = new DataSource(goods)
 
   build() {
     Column() {
