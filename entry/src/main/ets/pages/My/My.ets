@@ -1,7 +1,7 @@
 import { BarClass, DataSource, UserInfoModel, mediaInfo } from '../../models'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
-import commonFn, { tipDialog } from '../../common/Function/commonFn'
+import { tipDialog } from '../../common'
 import { iconBtn, scrollbar, Skeleton } from '../../components'
 import { Constants } from '../../common/Constants'
 import { personVdDta } from '../../models'
@@ -128,7 +128,7 @@ export default struct My {
     const X = AppStorage.get('Btn_title_width') as number / 3 - 5
     /**
      * 索引*/
-    const id = this.personVd[this.currentIndex].id as number
+    const id = this.currentIndex + 1
     //返回坐标长度
     return id === 1 ? 20 : AppStorage.get('Btn_title_width') as number * (id - 1) + X
   }
@@ -140,6 +140,7 @@ export default struct My {
     this.bgColor = Constants.COLOR_OpacityBlack
     this.IndexX = '-65%'
   }
+
   /**
    * 滚动条控制器
    * */
@@ -311,7 +312,9 @@ export default struct My {
                 .strokeWidth(2.5)
                 .width(AppStorage.get('Btn_title_width'))
                 .color(Color.Black)
-                .translate({ x: this.getX() })
+                .translate({
+                  x: this.getX()
+                })
                 .position({ x: '-5%', y: 52 })
                 .animation({ duration: 200 })
             }
@@ -325,7 +328,7 @@ export default struct My {
             topLeft: 15, topRight: 15
           })
           .backgroundColor(Color.White)
-        }.height('100%')
+        }
       }
       .scrollBar(BarState.Off)
       .height('120%')
@@ -353,28 +356,30 @@ struct personAreaVdCmt {
   private videoData = new DataSource<mediaInfo>(personVdDta) //简化代码不写完整格式
 
   build() {
-    List() {
-      LazyForEach(this.videoData, (item: mediaInfo) => {
-        ListItem() {
-          Video({
-            src: item.src
-          }).vdSty()
-        }
-        .height(150)
-        .border({
-          color: Color.White,
-          width: .5
-        })
-        .onClick(() => {
-          router.pushUrl({
-            url: Constants.LOADING_VdDETAIL, //视频详情页
-            params: item
+    Column() {
+      WaterFlow() {
+        LazyForEach(this.videoData, (item: mediaInfo) => {
+          FlowItem() {
+            Video({
+              src: item.src
+            }).vdSty()
+          }
+          .height(150)
+          .border({
+            color: Color.White,
+            width: .5
+          })
+          .onClick(() => {
+            router.pushUrl({
+              url: Constants.LOADING_VdDETAIL, //视频详情页
+              params: item
+            })
           })
         })
-      })
-    }
-    .scrollBar(BarState.Off)
-    .lanes(3)
+      }.columnsTemplate('1fr 1fr 1fr')
+      .scrollBar(BarState.Off)
+    }.height('100%')
+
   }
 }
 

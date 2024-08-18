@@ -1,5 +1,5 @@
+import { commonFn } from '../common'
 import { CURRENT_USER } from '../constants'
-import commonFn from '../common/Function/commonFn'
 
 /**
  * 用户信息接口*/

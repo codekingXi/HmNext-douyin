@@ -1,9 +1,9 @@
 import { commentDataModel } from '../models/commentData'
 import { Comment } from './Comment'
 import { ReplyInput } from './ReplyInput'
-import commonFn, { tipDialog } from '../common/Function/commonFn'
 import { sideData } from '../models'
 import { sideDataModel } from '../models/sidebarData'
+import { tipDialog } from '../common'
 
 /**
  * 视频功能侧边栏*/
