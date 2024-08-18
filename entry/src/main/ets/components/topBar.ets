@@ -9,11 +9,6 @@ import { ListIndexPosition } from '../models/Type'
  * 顶部栏*/
 @Component
 export struct TopBar {
-  aboutToAppear(): void {
-    //重新赋值宽度
-    AppStorage.set('Btn_title_width', AppStorage.get('Screen_width') as number / this.topTabList.length)
-  }
-
   /**
    * 顶部栏信息*/
   @State
@@ -87,7 +82,6 @@ export struct TopBar {
         .color(this.topTabList[this.currentIndex].name === 'SHOP' ? Color.Black :
         Color.White)
     }
-
     .onClick(() => {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj => obj.id === item.id)
@@ -123,7 +117,6 @@ export struct TopBar {
   /**
    * 顶部栏主要内容总宽度*/
   BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
-
   /**
    * 顶部列表滚动控制器*/
   private classifyScroller: Scroller = new Scroller() //
@@ -159,7 +152,7 @@ export struct TopBar {
     // 当前索引接近起始位置时，向右滚动
     if (this.currentIndex === start || this.currentIndex === start + 1) {
       // 计算需要滚动到的右侧目标索引
-      let rightScrollCount: number = this.currentIndex - 1;
+      let rightScrollCount: number = this.currentIndex - 2;
       // 确保目标索引不会超出数组范围
       rightScrollCount = rightScrollCount <= 0 ? 0 : rightScrollCount;
       // 执行滚动操作
@@ -203,17 +196,17 @@ export struct TopBar {
             if (item.name === 'EXPERIMENT') {
               Column() {
                 Text('敬请期待')
-              }
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'HOTPOT') {
               VideoPage()
             } else if (item.name === 'LIVE') {
               Column() {
                 Text('敬请期待')
-              }
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'SELECTED') {
               Column() {
                 Text('敬请期待')
-              }
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'LOT OF BUY') {
               Shop()
             } else if (item.name === 'AREA') {
