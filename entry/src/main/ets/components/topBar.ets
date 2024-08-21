@@ -4,6 +4,7 @@ import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
+import { videoController } from '../common'
 
 /**
  * 顶部栏*/
@@ -57,8 +58,7 @@ export struct TopBar {
       id: 8,
       title: "推荐",
       name: "FOR YOU"
-    }
-  ]
+    }]
   tabController: TabsController = new TabsController()
   @Consume
   IndexX: number | string
@@ -72,20 +72,26 @@ export struct TopBar {
     Column({ space: 5 }) {
       Text(item.title)
         .textAlign(TextAlign.Center)
-        .fontColor(this.currentIndex === index ? '#ff00ceff' : '#ff5f5f5f')
+        .fontColor(this.topNavCurrentIndex === index ? '#ff00ceff' : '#ff5f5f5f')
         .fontWeight(600)
         .fontSize(20)
       Divider()
         .strokeWidth(3)
         .lineCap(LineCapStyle.Butt)
-        .width(this.currentIndex === index ? 30 : 0)
-        .color(this.topTabList[this.currentIndex].name === 'SHOP' ? Color.Black :
+        .width(this.topNavCurrentIndex === index ? 30 : 0)
+        .color(this.topTabList[this.topNavCurrentIndex].name === 'SHOP' ? Color.Black :
         Color.White)
     }
     .onClick(() => {
       //通过name找到索引
       const index = this.topTabList.findIndex(obj => obj.id === item.id)
       this.tabController.changeIndex(index) //切换索引值
+      //如果不是推荐页暂停播放
+      if (index !== this.topTabList.length - 1) {
+        this.pauseVideo()
+      } else {
+        this.startVideo()
+      }
     })
   }
 
@@ -126,9 +132,9 @@ export struct TopBar {
   /**
    * 顶部导航栏焦点索引值 当前索引
    * */
-  @State
+  @Link
   @Watch('onIndexChange')
-  currentIndex: number = this.topTabList.length - 1
+  topNavCurrentIndex: number
 
   /**
    * 当索引发生变化时调用此方法，用于调整分类滚动视图的显示位置
@@ -140,9 +146,9 @@ export struct TopBar {
     const end = this.tagIndexPosition.end;
 
     // 当前索引接近结束位置时，向左滚动
-    if (this.currentIndex === end || this.currentIndex === end - 1) {
+    if (this.topNavCurrentIndex === end || this.topNavCurrentIndex === end - 1) {
       // 计算需要滚动到的左侧目标索引
-      let leftScrollCount: number = this.currentIndex + 2;
+      let leftScrollCount: number = this.topNavCurrentIndex + 2;
       // 确保目标索引不会超出数组范围
       leftScrollCount = leftScrollCount >= this.topTabList.length - 1 ? this.topTabList.length - 1 : leftScrollCount;
       // 执行滚动操作
@@ -150,9 +156,9 @@ export struct TopBar {
     }
 
     // 当前索引接近起始位置时，向右滚动
-    if (this.currentIndex === start || this.currentIndex === start + 1) {
+    if (this.topNavCurrentIndex === start || this.topNavCurrentIndex === start + 1) {
       // 计算需要滚动到的右侧目标索引
-      let rightScrollCount: number = this.currentIndex - 2;
+      let rightScrollCount: number = this.topNavCurrentIndex - 2;
       // 确保目标索引不会超出数组范围
       rightScrollCount = rightScrollCount <= 0 ? 0 : rightScrollCount;
       // 执行滚动操作
@@ -164,7 +170,7 @@ export struct TopBar {
    * 顶部栏主要内容*/
   @Builder
   barMainContent() {
-    List({ space: 15, initialIndex: this.currentIndex, scroller: this.classifyScroller }) {
+    List({ space: 15, initialIndex: this.topNavCurrentIndex, scroller: this.classifyScroller }) {
       LazyForEach(this.tabListData, (item: BarClass, index: number) => {
         ListItem() {
           this.titleCommon(item, index)
@@ -188,9 +194,26 @@ export struct TopBar {
     .height('100%').backgroundColor(Color.Gray)
   }
 
+  @Consume
+  playIng: boolean
+
+  /**
+   * 播放视频*/
+  startVideo() {
+    videoController(true)
+    this.playIng = true
+  }
+
+  /**
+   * 暂停视频*/
+  pauseVideo() {
+    videoController(false)
+    this.playIng = false
+  }
+
   build() {
     Stack() {
-      Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.Start }) {
+      Tabs({ index: $$this.topNavCurrentIndex, controller: this.tabController, barPosition: BarPosition.Start }) {
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === 'EXPERIMENT') {
@@ -198,7 +221,9 @@ export struct TopBar {
                 Text('敬请期待')
               }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'HOTPOT') {
-              VideoPage()
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'LIVE') {
               Column() {
                 Text('敬请期待')
@@ -210,9 +235,13 @@ export struct TopBar {
             } else if (item.name === 'LOT OF BUY') {
               Shop()
             } else if (item.name === 'AREA') {
-              VideoPage()
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'CONCERN') {
-              VideoPage()
+              Column() {
+                Text('敬请期待')
+              }.Colum().justifyContent(FlexAlign.Center)
             } else if (item.name === 'SHOP') {
               Shop()
             } else if (item.name === 'FOR YOU') {
@@ -221,6 +250,16 @@ export struct TopBar {
           }
         })
       }
+      .onChange(() => {
+        //如果不是推荐页 暂停视频
+        if (this.topNavCurrentIndex !== this.topTabList.length - 1) {
+          this.pauseVideo()
+        }
+        //是推荐页 播放视频
+        if (this.topNavCurrentIndex === this.topTabList.length - 1) {
+          this.startVideo()
+        }
+      })
       .height('106%')
       .position({ y: -(AppStorage.get('Area_height') as number) })
       .animationDuration(200)
@@ -231,6 +270,7 @@ export struct TopBar {
         RightIcon: $r('app.media.icon_search'),
         LeftIconClick: () => {
           this.openLeftSideBar()
+          this.pauseVideo()
         },
         RightIconClick: () => {
           this.clickSearch()

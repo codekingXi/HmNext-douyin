@@ -1,11 +1,15 @@
+import { controllerClass, videoController } from '../../common'
 import { Sidebar } from '../../components'
 import { DataSource as videoData } from '../../models'
+
 import video from '../../common/data/videos.json'
 
 /**视频页*/
 @Entry
 @Component
 struct VideoPage {
+  /**
+   * 索引*/
   @State
   activeIndex: number = 0
   /**
@@ -39,24 +43,21 @@ struct playVideo {
   @Watch('updateActiveIndex')
   activeIndex: number
   /**
-   * 视频控制器*/
-  controller: VideoController = new VideoController()
-  /**
    * 视频播放状态*/
-  @State
-  playIng: boolean = false
+  @Consume
+  playIng: boolean
 
-  /**
-   * 播放*/
-  playVd() {
-    this.controller.start()
+  onPageShow(): void {
+    this.startVideo()
+  }
+
+  startVideo() {
+    videoController(true)
     this.playIng = true
   }
 
-  /**
-   * 暂停*/
-  pauseVd() {
-    this.controller.pause()
+  pauseVideo() {
+    videoController(false)
     this.playIng = false
   }
 
@@ -64,36 +65,33 @@ struct playVideo {
    * 更新切换索引的状态*/
   updateActiveIndex() {
     if (this.activeIndex === this.index) {
-      this.playVd()
+      this.startVideo()
     } else {
-      this.pauseVd()
+      this.pauseVideo()
     }
   }
 
   build() {
     Stack() {
       Video({
-        src: `${video[this.index].video.play_addr.url_list}`,
-        controller: this.controller
+        src: `${video[this.index].video.play_addr.url_list}` as string,
+        controller: controllerClass
       })// 手势
-        // .gesture(
-        //   PanGesture({
-        //     direction:PanDirection.Horizontal,
-        //     distance:1
-        //   })
-        //     .onActionUpdate((e:GestureEvent)=>{
-        //       if(e){
-        //         //this.titleWidth = e.offsetX
+        // .gesture(GestureGroup(GestureMode.Parallel,
+        //   SwipeGesture({ direction: SwipeDirection.Horizontal })
+        //     .onAction((event: GestureEvent) => {
+        //       if (event) {
+        //
         //       }
         //     })
-        // )
+        // ))
         .autoPlay(true)
         .objectFit(ImageFit.Contain)//推荐使用压缩的方式
         .onClick(() => {
           if (this.playIng) {
-            this.controller.pause()
+            this.startVideo()
           } else {
-            this.controller.start()
+            this.pauseVideo()
           }
           this.playIng = !this.playIng //修改状态 取反
         })

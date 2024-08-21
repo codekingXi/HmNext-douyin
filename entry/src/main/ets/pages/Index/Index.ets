@@ -1,4 +1,4 @@
-import { BarClass, UserInfo, UserInfoModel } from '../../models'
+import { BarClass, TabList, UserInfo, UserInfoModel } from '../../models'
 import { Card, CardItem, customDialog, iconBtn, SideBarCom, TitleBtn, TopBar } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import My from '../My/My'
@@ -6,7 +6,7 @@ import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
 import { picker } from '@kit.CoreFileKit'
-import { tipDialog } from '../../common/Function/commonFn'
+import { tipDialog, videoController } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
 import { Message } from '../Message/Message'
 import { Constants } from '../../common/Constants'
@@ -43,6 +43,10 @@ struct Index {
   /**
    * 记录返回时间*/
   backTime: number = 0
+  /**
+   * 顶部栏信息*/
+  @State
+  topTabList: BarClass[] = TabList
 
   onBackPress(): boolean | void {
     let now = Date.now() //获取时间戳
@@ -427,6 +431,10 @@ struct Index {
    * 提示内容*/
   @State
   TipContent: string = ''
+  /**
+   * 视频播放状态*/
+  @Provide
+  playIng: boolean = false
 
   /**
    * 提示内容功能*/
@@ -567,6 +575,20 @@ struct Index {
       })
   }
 
+  /**
+   * 顶部栏索引*/
+  @State
+  topNavCurrentIndex: number = this.topTabList.length - 1
+  /**
+   * 播放视频*/
+  startVideo(){
+    videoController(true)
+  }
+  /**
+   * 暂停视频*/
+  pauseVideo(){
+    videoController(false)
+  }
   //底部tab的的结构
   @Builder
   bottomBar(item: BarClass, index: number) {
@@ -580,13 +602,24 @@ struct Index {
           .fontColor(this.currentIndex === index ? this.titleColor[0] : this.titleColor[1])
       }
     }
-    .onClick(async () => {
+    .onClick(() => {
       //通过获取索引值实现点击切换tab
       item.click && item.click()
       if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
         if (item.id !== 3) {
           const index = this.btmTabList.findIndex(obj => obj.name === item.name)
           this.tabController.changeIndex(index)
+          if (item.id !== 1) {
+            this.pauseVideo()
+          }
+          //如果底部栏索引是首页且顶部栏索引是推荐页开启播放器
+          if (item.id === 1 && this.topNavCurrentIndex === this.topTabList.length - 1) {
+            this.startVideo()
+          }
+        }
+        //如果是功能按钮关闭播放器
+        if (item.id === 3) {
+          this.pauseVideo()
         }
       }
     })
@@ -641,9 +674,9 @@ struct Index {
       })
       .justifyContent(FlexAlign.Start)
     }.width('100%')
-    .height('110%')
+    .height('100%')
     .backgroundColor(Color.Black)
-    .zIndex(999)
+    .zIndex(99999)
   }
 
   /*
@@ -720,7 +753,7 @@ struct Index {
           ForEach(this.btmTabList, (item: BarClass) => {
             TabContent() {
               if (item.name === 'Home') {
-                TopBar()
+                TopBar({ topNavCurrentIndex: this.topNavCurrentIndex })
               } else if (item.name === 'Friend') {
                 Column() {
                   Text('敬请期待')
@@ -762,6 +795,7 @@ struct Index {
                 if (this.bgColor !== Color.Black) {
                   this.showDialog = !this.showDialog
                   this.IndexX = '0%' //修改整个Index界面的x坐标
+                  this.pauseVideo()
                 }
               })
             })
