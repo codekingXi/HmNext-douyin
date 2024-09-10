@@ -1,10 +1,10 @@
 /**
- * 自定义全局侧边栏
- * itemData 数据源必须传！！！
+ * 侧边栏
  * */
 
 @Component
 export struct SideBarCom {
+  @Require
   @State
   itemData: object[] = []
   /**
@@ -19,6 +19,8 @@ export struct SideBarCom {
    * 更多功能*/
   @BuilderParam
   contentMore: () => void
+  @BuilderParam
+  topContentArea: () => void
   /**
    * 侧边栏位置*/
   @State
@@ -31,6 +33,13 @@ export struct SideBarCom {
   build() {
     Column() {
       List() {
+        //卡片顶部内容有数据就渲染
+        if (this.topContentArea) {
+          ListItem() {
+            this.topContentArea()
+          }
+        }
+
         ForEach(this.itemData, (item: object) => {
           ListItem() {
             if (this.contentItem) {
