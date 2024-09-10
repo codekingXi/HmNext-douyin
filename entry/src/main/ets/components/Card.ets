@@ -1,4 +1,3 @@
-
 /**
  * 卡片*/
 @Component
@@ -12,11 +11,10 @@ export struct Card {
    * 卡片顶部右侧提示*/
   @BuilderParam
   rightTip: () => void
-
-
   /**
    * 卡片标签*/
   leftTitle: string = ""
+  bgColor: ResourceColor = Color.Transparent
 
   build() {
     Column({ space: 10 }) {
@@ -35,9 +33,9 @@ export struct Card {
 
       }
     }
-    .margin({ top: 10 })
+    .margin({ top: 10, bottom: 10 })
     .padding(10)
-    .backgroundColor(Color.White)
+    .backgroundColor(this.bgColor)
     .border({
       color: '#ff888787',
       radius: 15,
