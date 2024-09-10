@@ -293,7 +293,6 @@ export default struct My {
 
                     }
                   }
-                  .tabBar()
                 })
               }
 
@@ -378,7 +377,7 @@ struct personAreaVdCmt {
         })
       }.columnsTemplate('1fr 1fr 1fr')
       .scrollBar(BarState.Off)
-    }.height('100%')
+    }
 
   }
 }
