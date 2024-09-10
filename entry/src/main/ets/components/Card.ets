@@ -33,7 +33,7 @@ export struct Card {
 
       }
     }
-    .margin({ top: 10, bottom: 10 })
+    .margin({ bottom: 10 })
     .padding(10)
     .backgroundColor(this.bgColor)
     .border({
