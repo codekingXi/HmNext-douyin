@@ -14,9 +14,7 @@ const tipDialog = (msg: string = "功能未完善") => {
 /**
  * 视频控制器源对象*/
 const controllerClass: VideoController = new VideoController()
-/**
- * 播放状态*/
-let playIng:boolean = false
+
 /**
  * 视频控制器
  * @param {Boolean} flag 播放状态
