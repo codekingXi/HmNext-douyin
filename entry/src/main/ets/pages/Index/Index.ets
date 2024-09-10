@@ -1,4 +1,4 @@
-import { BarClass, TabList, UserInfo, UserInfoModel } from '../../models'
+import { BarClass } from '../../models'
 import { bottomNav, Card, CardItem, iconBtn, SideBarCom } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
 import { CURRENT_USER } from '../../constants'
@@ -40,10 +40,6 @@ struct Index {
   /**
    * 记录返回时间*/
   backTime: number = 0
-  /**
-   * 顶部栏信息*/
-  @State
-  topTabList: BarClass[] = TabList
 
   onBackPress(): boolean | void {
     let now = Date.now() //获取时间戳
@@ -63,67 +59,14 @@ struct Index {
     return true //使用自定义功能而非router
   }
 
-  @State
-  userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-  //底部tab的数据
-  @State
-  btmTabList: BarClass[] = [
-    {
-      title: '首页',
-      name: "Home",
-      id: 1
-    },
-    {
-      title: '朋友',
-      name: "Friend",
-      id: 2,
-      click: () => {
-        Fn.redirect()
-      }
-    },
-    {
-      icon: $r('app.media.ic_uploading'),
-      name: "Upload",
-      id: 3,
-      click: () => {
-        Fn.redirect()
-        if (Store.getSync(CURRENT_USER, CurrentUser)) {
-          this.showUploadDialog = true
-        }
-      }
-    },
-    {
-      title: '信息',
-      name: "Message",
-      id: 4,
-      click: () => {
-        Fn.redirect()
-      }
-    },
-    {
-      title: '我',
-      name: "My",
-      id: 5,
-      click: () => {
-        Fn.redirect()
-      }
-    }
-  ]
-  tabController: TabsController = new TabsController()
   @Provide
   IndexX: number | string = '' //整个index页面的x坐标
-  @State
-  currentIndex: number = 0
-  /**
-   * 是否显示上传弹窗*/
-  @State
-  showUploadDialog: boolean = false
   @State
   sidePosition: boolean = false
   //因为有改变页面元素的事件所以不能和接口放在一个文件
   //右侧边栏的数据
   @State
-  itemData: BarClass[] = [
+  rightItemData: BarClass[] = [
     {
       icon: $r('app.media.icon_shopCar'),
       title: "我的订单",
@@ -242,7 +185,7 @@ struct Index {
     }
   ]
   @State
-  CardData: BarClass[] = [
+  leftCardData: BarClass[] = [
     {
       title: '通知消息',
       id: 1,
@@ -430,7 +373,7 @@ struct Index {
         .fontColor(Color.Red)
         .maxLines(1)
         .fontSize(20)
-        .textOverflow({ overflow: TextOverflow.MARQUEE })
+        .textOverflow({ overflow: TextOverflow.MARQUEE }) //跑马灯效果
     }.padding({ left: 20, right: 20 })
     .justifyContent(FlexAlign.Center)
     .width('100%')
@@ -461,7 +404,7 @@ struct Index {
     Card({
       leftTitle: item.title,
       rightTip: () => {
-        if (item.id as number < this.CardData.length - 1) {
+        if (item.id as number < this.leftCardData.length - 1) {
           this.rightTipContent()
         }
       },
@@ -553,9 +496,9 @@ struct Index {
     }.columnsTemplate('1fr 1fr 1fr')
   }
 
-  //右侧侧边栏的结构
+  //右侧边栏的结构
   @Builder
-  contentItem(item: BarClass) {
+  rightSidebar(item: BarClass) {
     CardItem({
       icon: item.icon,
       leftTitle: item.title,
@@ -571,7 +514,7 @@ struct Index {
       })
   }
 
-  //更多功能
+  //右侧边栏的更多功能按钮结构
   @Builder
   moreFn() {
     Row() {
@@ -604,6 +547,7 @@ struct Index {
 
   build() {
     Column() {
+      //底部导航栏
       bottomNav()
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
@@ -612,7 +556,7 @@ struct Index {
         topContentArea: () => {
           this.topContent()
         },
-        itemData: this.CardData,
+        itemData: this.leftCardData,
         contentBox: (item: object) => {
           this.CardBox(item as BarClass)
         },
@@ -624,9 +568,9 @@ struct Index {
       //右侧边栏
       SideBarCom({
         sidePositionX: "100%",
-        itemData: this.itemData,
+        itemData: this.rightItemData,
         contentItem: (item: object) => {
-          this.contentItem(item as BarClass)
+          this.rightSidebar(item as BarClass)
         },
         contentMore: () => {
           this.moreFn()
