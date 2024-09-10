@@ -7,10 +7,10 @@ import video from '../../common/data/videos.json'
 /**视频页*/
 @Entry
 @Component
-struct VideoPage {
+export struct VideoPage {
   /**
    * 索引*/
-  @State
+  @Provide
   activeIndex: number = 0
   /**
    * 懒加载视频数据列表*/
@@ -19,7 +19,7 @@ struct VideoPage {
   build() {
     Swiper() {
       LazyForEach(this.videoList, (item: string, index: number) => {
-        playVideo({ index, activeIndex: this.activeIndex })
+        playVideo({ index })
       })
     }
     .index($$this.activeIndex)
@@ -36,10 +36,10 @@ struct VideoPage {
 struct playVideo {
   /**
    * 接收传入的视频索引*/
-  index: number = -1 //默认值只能是-1
+  index: number = 0 //默认值给负数 防止对不上数据
   /**
    * 播放的索引*/
-  @Prop
+  @Consume
   @Watch('updateActiveIndex')
   activeIndex: number
   /**
@@ -74,7 +74,7 @@ struct playVideo {
   build() {
     Stack() {
       Video({
-        src: `${video[this.index].video.play_addr.url_list}` as string,
+        src: `${video[this.index].video.play_addr.url_list}`,
         controller: controllerClass
       })// 手势
         // .gesture(GestureGroup(GestureMode.Parallel,
@@ -85,36 +85,32 @@ struct playVideo {
         //       }
         //     })
         // ))
+        .width('100%')
+        .height('100%')
         .autoPlay(true)
         .objectFit(ImageFit.Contain)//推荐使用压缩的方式
-        .onClick(() => {
-          if (this.playIng) {
-            this.startVideo()
-          } else {
-            this.pauseVideo()
-          }
-          this.playIng = !this.playIng //修改状态 取反
-        })
-        .onAppear(() => {
-          this.updateActiveIndex()
-        })
         .muted(this.activeIndex === this.index ? false : true)
         .loop(true)
         .controls(false)//隐藏控制条
-        .width('100%')
-        .height('100%')
+        .onAppear(() => {
+          this.updateActiveIndex()
+        })
       Column() {
         if (!this.playIng) {
-          Image($r("app.media.Content_play"))
-            .width(68)
-            .height(68)
-            .opacity(.7)
+          Image($r("app.media.Content_play")).width(68).height(68).opacity(.7)
         }
       }.justifyContent(FlexAlign.Center)
 
+      //侧边功能区组件
       Sidebar()
-    }
+    }.onClick(() => {
+      //点击控制播放和暂停
+      if (this.playIng) { //默认在播放
+        this.pauseVideo()
+      } else {
+        this.startVideo()
+      }
+    })
   }
 }
 
-export { VideoPage }
