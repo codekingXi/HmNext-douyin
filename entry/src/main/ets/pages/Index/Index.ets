@@ -1,14 +1,11 @@
 import { BarClass, TabList, UserInfo, UserInfoModel } from '../../models'
-import { Card, CardItem, customDialog, iconBtn, SideBarCom, TitleBtn, TopBar } from '../../components'
+import { bottomNav, Card, CardItem, iconBtn, SideBarCom } from '../../components'
 import { promptAction, router } from '@kit.ArkUI'
-import My from '../My/My'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
-import { picker } from '@kit.CoreFileKit'
-import { tipDialog, videoController } from '../../common/Function/commonFn'
+import { tipDialog } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
-import { Message } from '../Message/Message'
 import { Constants } from '../../common/Constants'
 
 export const Store = new Tiktok(getContext()).getStore()
@@ -66,8 +63,6 @@ struct Index {
     return true //使用自定义功能而非router
   }
 
-  @Provide
-  info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
   //底部tab的数据
@@ -120,17 +115,9 @@ struct Index {
   @State
   currentIndex: number = 0
   /**
-   * 是否显示弹窗 */
-  @Provide
-  showDialog: boolean = false
-  /**
    * 是否显示上传弹窗*/
   @State
   showUploadDialog: boolean = false
-  /**
-   * 弹窗的背景色*/
-  @Provide
-  bgColor: ResourceColor = '' //修改渐变背景色只能通过#00000000的方式
   @State
   sidePosition: boolean = false
   //因为有改变页面元素的事件所以不能和接口放在一个文件
@@ -420,9 +407,6 @@ struct Index {
     }
   },
   ]
-  //底部title字体的颜色
-  @State
-  titleColor: ResourceColor[] = [Color.White, Color.Gray]
   /**
    * 默认提示内容功能*/
   @BuilderParam
@@ -432,9 +416,9 @@ struct Index {
   @State
   TipContent: string = ''
   /**
-   * 视频播放状态*/
+   * 是否显示弹窗 */
   @Provide
-  playIng: boolean = false
+  showDialog: boolean = false
 
   /**
    * 提示内容功能*/
@@ -458,46 +442,58 @@ struct Index {
       .fontSize(20)
   }
 
+  @Builder
+  topContent() {
+    Row() {
+      Text('设置')
+      Text('反馈')
+    }
+    .width('95%')
+    .height(50)
+    .justifyContent(FlexAlign.SpaceBetween)
+    .margin({ left: 15, right: 15 })
+  }
+
   /**
    * 卡片盒子*/
   @Builder
   CardBox(item: BarClass) {
-    Scroll() {
-      Card({
-        leftTitle: item.title,
-        rightTip: () => {
-          if (item.id as number < this.CardData.length - 1) {
-            this.rightTipContent()
-          }
-        },
-        CardItem: () => {
-          //通知消息
-          if (item.id === 1) {
-            if (this.FnTip) {
-              this.FnTip('没有消息')
-            }
-          }
-          //常用小程序
-          if (item.id === 2) {
-            //没有数据就渲染提示
-            if (!this.commonlyUsedAppletsItemData) {
-              this.commonlyUsedApplets()
-            } else {
-              this.FnTip('啥也没有,快去尝鲜吧')
-            }
-
-          }
-          //常用功能
-          if (item.id === 3) {
-            this.CommonFn()
-          }
-          //生活动态
-          if (item.id === 4) {
-            this.lifeDynamics()
+    Card({
+      leftTitle: item.title,
+      rightTip: () => {
+        if (item.id as number < this.CardData.length - 1) {
+          this.rightTipContent()
+        }
+      },
+      bgColor: Color.White,
+      CardItem: () => {
+        //通知消息
+        if (item.id === 1) {
+          if (this.FnTip) {
+            this.FnTip('没有消息')
           }
         }
-      })
-    }.margin({ left: 15 })
+        //常用小程序
+        if (item.id === 2) {
+          //没有数据就渲染提示
+          if (!this.commonlyUsedAppletsItemData) {
+            this.commonlyUsedApplets()
+          } else {
+            this.FnTip('啥也没有,快去尝鲜吧')
+          }
+
+        }
+        //常用功能
+        if (item.id === 3) {
+          this.CommonFn()
+        }
+        //生活动态
+        if (item.id === 4) {
+          this.lifeDynamics()
+        }
+      }
+    })
+      .margin({ left: 15 })
   }
 
   /**
@@ -575,56 +571,6 @@ struct Index {
       })
   }
 
-  /**
-   * 顶部栏索引*/
-  @State
-  topNavCurrentIndex: number = this.topTabList.length - 1
-  /**
-   * 播放视频*/
-  startVideo(){
-    videoController(true)
-  }
-  /**
-   * 暂停视频*/
-  pauseVideo(){
-    videoController(false)
-  }
-  //底部tab的的结构
-  @Builder
-  bottomBar(item: BarClass, index: number) {
-    Column() {
-      if (item.id === 3) {
-        Image(item.icon)
-          .width(50).aspectRatio(1)
-      } else {
-        Text(item.title)
-          .fontSize(24)
-          .fontColor(this.currentIndex === index ? this.titleColor[0] : this.titleColor[1])
-      }
-    }
-    .onClick(() => {
-      //通过获取索引值实现点击切换tab
-      item.click && item.click()
-      if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
-        if (item.id !== 3) {
-          const index = this.btmTabList.findIndex(obj => obj.name === item.name)
-          this.tabController.changeIndex(index)
-          if (item.id !== 1) {
-            this.pauseVideo()
-          }
-          //如果底部栏索引是首页且顶部栏索引是推荐页开启播放器
-          if (item.id === 1 && this.topNavCurrentIndex === this.topTabList.length - 1) {
-            this.startVideo()
-          }
-        }
-        //如果是功能按钮关闭播放器
-        if (item.id === 3) {
-          this.pauseVideo()
-        }
-      }
-    })
-  }
-
   //更多功能
   @Builder
   moreFn() {
@@ -656,160 +602,16 @@ struct Index {
     }
   }
 
-  // 上传视频等用的弹窗
-  @Builder
-  contentDialog() {
-    Column() {
-      Row() {
-        Text('x')
-          .fontSize(44)
-          .fontColor(Color.White)
-          .onClick(() => {
-            this.showUploadDialog = false
-          })
-      }.width('100%')
-      .margin({
-        top: 30,
-        left: 20
-      })
-      .justifyContent(FlexAlign.Start)
-    }.width('100%')
-    .height('100%')
-    .backgroundColor(Color.Black)
-    .zIndex(99999)
-  }
-
-  /*
-   * 图片选择数量*/
-  maxImgNumber: number = 1 //最多可选1张图片
-
-  /**
-   * 选择图片*/
-  async selectPhoto() {
-    const photo = new picker.PhotoViewPicker() //图片选择对象
-    const result = await photo.select({
-      //选择类型
-      MIMEType: picker.PhotoViewMIMETypes.IMAGE_TYPE,
-      //最大可选数量
-      maxSelectNumber: this.maxImgNumber
-    })
-    //如果有图片 这里的业务只需要单个图片
-    if (result.photoUris.length) {
-      this.info.avatar = result.photoUris.toString()
-      const token = this.info
-      await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
-    }
-  }
-
-  /**
-   * 头像详情界面*/
-  @Builder
-  imgAvatar() {
-    Column({ space: 40 }) {
-      Text('x')
-        .fontSize(54)
-        .fontColor(Color.White)
-        .fontWeight(100)
-        .onClick(() => {
-          this.showDialog = false
-        })
-        .margin({ top: "5%", left: '-85%' })
-      Image(this.info.avatar)
-        .draggable(true)
-        .height('50%')
-        .width('100%')
-      Column() {
-        TitleBtn({
-          title: "创建抖音仔仔", borBom: true, click: () => {
-            tipDialog()
-          }
-        })
-        TitleBtn({
-          title: "更换头像", borBom: true, click: () => {
-            this.selectPhoto()
-          }
-        })
-        TitleBtn({
-          title: "保存头像", borBom: true, click: () => {
-            tipDialog()
-          }
-        })
-        TitleBtn({
-          title: "查看抖音码", borBom: false, click: () => {
-            tipDialog()
-          }
-        })
-      }.width('90%')
-      .borderRadius(10)
-      .margin({ top: -20 })
-    }
-  }
-
   build() {
     Column() {
-      //底部的nav
-      Stack({ alignContent: Alignment.Bottom }) {
-        Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
-          ForEach(this.btmTabList, (item: BarClass) => {
-            TabContent() {
-              if (item.name === 'Home') {
-                TopBar({ topNavCurrentIndex: this.topNavCurrentIndex })
-              } else if (item.name === 'Friend') {
-                Column() {
-                  Text('敬请期待')
-                }
-              } else if (item.name === 'Message') {
-                Message()
-              } else if (item.name === 'My') {
-                My()
-              }
-            }
-          })
-        }
-        .animationDuration(0)
-        .scrollable(false)
-
-        Row({ space: 20 }) {
-          ForEach(this.btmTabList, (item: BarClass, index: number) => {
-            this.bottomBar(item, index)
-          })
-        }
-        .width('100%')
-        .height(75)
-        .position({ y: '91.1%' })
-        .backgroundColor(Constants.COLOR_GrayNAV)
-        .justifyContent(FlexAlign.SpaceAround)
-
-        //默认不显示遮罩层
-        if (this.showDialog) {
-          customDialog({
-            imgAvatar: () => {
-              if (this.bgColor === Color.Black) {
-                this.imgAvatar()
-              }
-            }
-          })
-            .onClick(() => {
-              animateTo({ duration: 200 }, () => {
-                //通过判断色值区别弹窗是哪个页面的再进行相应改变
-                if (this.bgColor !== Color.Black) {
-                  this.showDialog = !this.showDialog
-                  this.IndexX = '0%' //修改整个Index界面的x坐标
-                  this.pauseVideo()
-                }
-              })
-            })
-        }
-      }
-      //全屏模态弹窗
-      .bindContentCover($$this.showUploadDialog, this.contentDialog, {
-        modalTransition: ModalTransition.DEFAULT
-      })
-
+      bottomNav()
       //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
       SideBarCom({
         sidePositionX: '-70%',
+        topContentArea: () => {
+          this.topContent()
+        },
         itemData: this.CardData,
         contentBox: (item: object) => {
           this.CardBox(item as BarClass)
@@ -822,7 +624,6 @@ struct Index {
       //右侧边栏
       SideBarCom({
         sidePositionX: "100%",
-        //必须传的值 关键数据！！！
         itemData: this.itemData,
         contentItem: (item: object) => {
           this.contentItem(item as BarClass)

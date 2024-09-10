@@ -24,3 +24,5 @@ export { iconBtn } from './iconBtn'
 export { HeadBar } from './HeadBar'
 
 export { scrollbar } from './scrollbar'
+
+export { bottomNav } from './bottomNav'
