@@ -1,6 +1,6 @@
-import { controllerClass, videoController } from '../../common'
+import { VideoCtl } from '../../common'
 import { Sidebar } from '../../components'
-import { DataSource as videoData } from '../../models'
+import { DataSource as videoData, mediaInfo, mediaList } from '../../models'
 
 import video from '../../common/data/videos.json'
 
@@ -21,6 +21,9 @@ export struct VideoPage {
       LazyForEach(this.videoList, (item: string, index: number) => {
         playVideo({ index })
       })
+      // ForEach(mediaList, (item: mediaInfo, index: number) => {
+      //   playVideo({ item, index })
+      // })
     }
     .index($$this.activeIndex)
     //关闭指示器
@@ -36,7 +39,9 @@ export struct VideoPage {
 struct playVideo {
   /**
    * 接收传入的视频索引*/
-  index: number = 0 //默认值给负数 防止对不上数据
+  index: number = -1 //默认值给负数 防止对不上数据
+  @Prop
+  item: mediaInfo
   /**
    * 播放的索引*/
   @Consume
@@ -44,20 +49,16 @@ struct playVideo {
   activeIndex: number
   /**
    * 视频播放状态*/
-  @Consume
-  playIng: boolean
-
-  onPageShow(): void {
-    this.startVideo()
-  }
+  @State
+  playIng: boolean = false
 
   startVideo() {
-    videoController(true)
+    VideoCtl.start()
     this.playIng = true
   }
 
   pauseVideo() {
-    videoController(false)
+    VideoCtl.pause()
     this.playIng = false
   }
 
@@ -74,8 +75,8 @@ struct playVideo {
   build() {
     Stack() {
       Video({
-        src: `${video[this.index].video.play_addr.url_list}`,
-        controller: controllerClass
+        src: `${video[this.index].video.play_addr.url_list}` as string,
+        controller: VideoCtl
       })// 手势
         // .gesture(GestureGroup(GestureMode.Parallel,
         //   SwipeGesture({ direction: SwipeDirection.Horizontal })
@@ -87,7 +88,7 @@ struct playVideo {
         // ))
         .width('100%')
         .height('100%')
-        .autoPlay(true)
+        .autoPlay(this.index === 0)
         .objectFit(ImageFit.Contain)//推荐使用压缩的方式
         .muted(this.activeIndex === this.index ? false : true)
         .loop(true)
@@ -95,11 +96,12 @@ struct playVideo {
         .onAppear(() => {
           this.updateActiveIndex()
         })
-      Column() {
-        if (!this.playIng) {
+      if (!this.playIng) {
+        Column() {
           Image($r("app.media.Content_play")).width(68).height(68).opacity(.7)
         }
-      }.justifyContent(FlexAlign.Center)
+        .justifyContent(FlexAlign.Center)
+      }
 
       //侧边功能区组件
       Sidebar()
@@ -113,4 +115,3 @@ struct playVideo {
     })
   }
 }
-

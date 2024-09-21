@@ -7,22 +7,14 @@ import { promptAction } from '@kit.ArkUI'
  * @param {String} msg传入需要的提示信息 默认值
  * @default 默认值:功能未完善
  * @return {Function} 返回一个弹窗信息*/
-const tipDialog = (msg: string = "功能未完善") => {
+const showToast = (msg: string = "功能未完善") => {
   promptAction.showToast({ message: msg, bottom: 100 })
 }
 
 /**
- * 视频控制器源对象*/
-const controllerClass: VideoController = new VideoController()
+ * 全局视频控制器*/
+const VideoCtl: VideoController = new VideoController()
 
-/**
- * 视频控制器
- * @param {Boolean} flag 播放状态
- * @param {Boolean} true 播放
- * @param {Boolean} false 暂停*/
-const videoController = (flag: boolean): VideoController => {
-  return flag ? controllerClass.start() : controllerClass.pause()
-}
 
 class commonFn {
   /**
@@ -43,4 +35,4 @@ class commonFn {
   }
 }
 
-export { tipDialog, videoController, controllerClass, commonFn }
+export { showToast as tipDialog, VideoCtl, commonFn }

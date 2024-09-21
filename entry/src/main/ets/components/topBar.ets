@@ -4,7 +4,7 @@ import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
-import { videoController } from '../common'
+import { VideoCtl } from '../common'
 
 /**
  * 顶部栏*/
@@ -122,7 +122,7 @@ export struct TopBar {
   private tabListData = new DataSource(this.topTabList)
   /**
    * 顶部栏主要内容总宽度*/
-  BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
+  private BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
   /**
    * 顶部列表滚动控制器*/
   private classifyScroller: Scroller = new Scroller() //
@@ -194,21 +194,16 @@ export struct TopBar {
     .height('100%').backgroundColor(Color.Gray)
   }
 
-  @Consume
-  playIng: boolean
-
   /**
    * 播放视频*/
   startVideo() {
-    videoController(true)
-    this.playIng = true
+    VideoCtl.start()
   }
 
   /**
    * 暂停视频*/
   pauseVideo() {
-    videoController(false)
-    this.playIng = false
+    VideoCtl.pause()
   }
 
   build() {

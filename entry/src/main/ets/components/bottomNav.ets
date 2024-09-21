@@ -1,5 +1,5 @@
 import { customDialog, TitleBtn, TopBar } from '.'
-import { Constants, tipDialog, videoController } from '../common'
+import { Constants, tipDialog, VideoCtl } from '../common'
 import { CURRENT_USER } from '../constants'
 import { BarClass, TabList } from '../models'
 import { CurrentUser, UserInfo, UserInfoModel } from '../models/user'
@@ -9,6 +9,7 @@ import { Message } from '../pages/Message/Message'
 import My from '../pages/My/My'
 import { Tiktok } from '../utils/setting'
 import { picker } from '@kit.CoreFileKit'
+import { VideoPage } from '../pages/VideoPage/VideoPage'
 
 @Component
 export struct bottomNav {
@@ -70,13 +71,10 @@ export struct bottomNav {
   ]
   tabController: TabsController = new TabsController()
   @State
-  currentIndex:number = 0
+  currentIndex: number = 0
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-  /**
-   * 视频播放状态*/
-  @Provide
-  playIng: boolean = false
+
   //底部title字体的颜色
   @State
   titleColor: ResourceColor[] = [Color.White, Color.Gray]
@@ -89,10 +87,11 @@ export struct bottomNav {
   @Provide
   info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @Consume
-  IndexX: number | string  //整个index页面的x坐标
+  IndexX: number | string //整个index页面的x坐标
   /*
    * 图片选择数量*/
   maxImgNumber: number = 1 //最多可选1张图片
+
   /**
    * 选择图片*/
   async selectPhoto() {
@@ -110,19 +109,19 @@ export struct bottomNav {
       await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
     }
   }
+
   /**
    * 播放视频*/
   startVideo() {
-    videoController(true)
-    this.playIng = true
+    VideoCtl.start()
   }
 
   /**
    * 暂停视频*/
   pauseVideo() {
-    videoController(false)
-    this.playIng = false
+    VideoCtl.pause()
   }
+
   // 上传视频等用的弹窗
   @Builder
   contentDialog() {
@@ -145,6 +144,7 @@ export struct bottomNav {
     .backgroundColor(Color.Black)
     .zIndex(99999)
   }
+
   /**
    * 头像详情界面*/
   @Builder
@@ -188,6 +188,7 @@ export struct bottomNav {
       .margin({ top: -20 })
     }
   }
+
   //底部tab的的结构
   @Builder
   bottomBar(item: BarClass, index: number) {
@@ -223,6 +224,7 @@ export struct bottomNav {
       }
     })
   }
+
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
@@ -231,9 +233,7 @@ export struct bottomNav {
             if (item.name === 'Home') {
               TopBar({ topNavCurrentIndex: this.topNavCurrentIndex })
             } else if (item.name === 'Friend') {
-              Column() {
-                Text('敬请期待')
-              }
+              VideoPage()
             } else if (item.name === 'Message') {
               Message()
             } else if (item.name === 'My') {
@@ -259,6 +259,7 @@ export struct bottomNav {
       .bindContentCover($$this.showUploadDialog, this.contentDialog, {
         modalTransition: ModalTransition.DEFAULT
       })
+
       //默认不显示遮罩层
       if (this.showDialog) {
         customDialog({
