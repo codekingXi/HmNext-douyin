@@ -12,6 +12,7 @@ export struct VideoPage {
    * 索引*/
   @Provide
   activeIndex: number = 0
+
   /**
    * 懒加载视频数据列表*/
   videoList = new videoData(video)
@@ -51,6 +52,10 @@ struct playVideo {
    * 视频播放状态*/
   @State
   playIng: boolean = false
+  @Consume
+  isShowSpeed: boolean
+  @State
+  videoSpeed: number = 1 //视频倍速
 
   startVideo() {
     VideoCtl.start()
@@ -72,20 +77,32 @@ struct playVideo {
     }
   }
 
+  startSpeed() {
+    this.isShowSpeed = true
+    this.videoSpeed = 2
+  }
+
+  closeSpeed() {
+    this.isShowSpeed = false
+    this.videoSpeed = 1
+  }
+
   build() {
     Stack() {
       Video({
-        src: `${video[this.index].video.play_addr.url_list}` as string,
-        controller: VideoCtl
+        src:`${video[this.index].video.play_addr.url_list}`,
+        controller: VideoCtl,
+        currentProgressRate: this.videoSpeed
       })// 手势
-        // .gesture(GestureGroup(GestureMode.Parallel,
-        //   SwipeGesture({ direction: SwipeDirection.Horizontal })
-        //     .onAction((event: GestureEvent) => {
-        //       if (event) {
-        //
-        //       }
-        //     })
-        // ))
+        .gesture(GestureGroup(GestureMode.Parallel,
+          LongPressGesture()
+            .onAction(() => {
+              this.startSpeed()
+            })
+            .onActionEnd(() => {
+              this.closeSpeed()
+            })
+        ))
         .width('100%')
         .height('100%')
         .autoPlay(this.index === 0)

@@ -74,7 +74,6 @@ export struct bottomNav {
   currentIndex: number = 0
   @State
   userInfo: UserInfoModel = new UserInfoModel({} as UserInfo)
-
   //底部title字体的颜色
   @State
   titleColor: ResourceColor[] = [Color.White, Color.Gray]
@@ -88,6 +87,8 @@ export struct bottomNav {
   info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @Consume
   IndexX: number | string //整个index页面的x坐标
+  @Provide
+  isShowSpeed: boolean = false //是否显示倍速提示
   /*
    * 图片选择数量*/
   maxImgNumber: number = 1 //最多可选1张图片
@@ -246,9 +247,23 @@ export struct bottomNav {
       .scrollable(false)
 
       Row({ space: 20 }) {
-        ForEach(this.btmTabList, (item: BarClass, index: number) => {
-          this.bottomBar(item, index)
-        })
+        if (!this.isShowSpeed) {
+          ForEach(this.btmTabList, (item: BarClass, index: number) => {
+            this.bottomBar(item, index)
+          })
+        } else {
+          Row() {
+            Text('2x 快进中')
+              .fontColor(Color.White)
+              .fontSize(24)
+          }.width('100%').height(75).justifyContent(FlexAlign.Center)
+          .shadow({
+            radius: 20,
+            offsetY: -20,
+            color: Color.Blue
+          })
+        }
+
       }
       .width('100%')
       .height(75)
