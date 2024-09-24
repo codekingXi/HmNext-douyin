@@ -7,8 +7,8 @@ import { promptAction } from '@kit.ArkUI'
  * @param {String} msg传入需要的提示信息 默认值
  * @default 默认值:功能未完善
  * @return {Function} 返回一个弹窗信息*/
-const showToast = (msg: string = "功能未完善") => {
-  promptAction.showToast({ message: msg, bottom: 100 })
+const showToast = (msg: string = "功能未完善",bottom:number=100) => {
+  promptAction.showToast({ message: msg, bottom: bottom })
 }
 
 /**
