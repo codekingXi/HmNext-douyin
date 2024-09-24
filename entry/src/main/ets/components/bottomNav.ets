@@ -5,11 +5,11 @@ import { BarClass, TabList } from '../models'
 import { CurrentUser, UserInfo, UserInfoModel } from '../models/user'
 import { Store } from '../pages/Index/Index'
 import { Fn } from '../pages/Index/Index'
-import { MessagePage } from '../pages/Message/Message'
-import My from '../pages/My/My'
+import { MessagePage } from '../pages/Message/MessagePage'
 import { Tiktok } from '../utils/setting'
 import { picker } from '@kit.CoreFileKit'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
+import MyPage from '../pages/My/My'
 
 @Component
 export struct bottomNav {
@@ -196,9 +196,9 @@ export struct bottomNav {
     Column() {
       if (item.id === 3) {
         ImgComp({
-          imgWidth:50,
-          imgSrc:item.icon,
-        }).aspectRatio(1)
+          imgWidth: 50,
+          imgSrc: item.icon
+        })
       } else {
         Text(item.title)
           .fontSize(24)
@@ -240,7 +240,7 @@ export struct bottomNav {
             } else if (item.name === 'Message') {
               MessagePage()
             } else if (item.name === 'My') {
-              My()
+              MyPage()
             }
           }
         })

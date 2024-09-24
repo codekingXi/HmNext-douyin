@@ -7,7 +7,7 @@ import { Constants } from '../../common/Constants'
 import { personVdDta } from '../../models'
 
 @Component
-export default struct My {
+export default struct MyPage {
   @Consume
   info: UserInfoModel
 
@@ -159,8 +159,8 @@ export default struct My {
               Row({ space: 20 }) {
                 Row({ space: 5 }) {
                   ImgComp({
-                    imgWidth:16,
-                    imgSrc:$r("app.media.icon_connect")
+                    imgWidth: 16,
+                    imgSrc: $r("app.media.icon_connect")
                   })
                   Text("新访客1").fontSize(14).fontColor(Color.White)
                 }.btnBg().width(90).justifyContent(FlexAlign.Center)
@@ -172,8 +172,8 @@ export default struct My {
                 Row({ space: 10 }) {
                   Row() {
                     ImgComp({
-                      imgWidth:28,
-                      imgSrc:$r("app.media.icon_search")
+                      imgWidth: 28,
+                      imgSrc: $r("app.media.icon_search")
                     })
                   }.btnBg().justifyContent(FlexAlign.Center)
                   .onClick(() => {
@@ -182,8 +182,8 @@ export default struct My {
 
                   Row() {
                     ImgComp({
-                      imgWidth:16,
-                      imgSrc:$r("app.media.icon_Tab")
+                      imgWidth: 16,
+                      imgSrc: $r("app.media.icon_Tab")
                     })
                   }.btnBg().justifyContent(FlexAlign.Center)
                   .onClick(() => {
@@ -213,14 +213,12 @@ export default struct My {
                   Row() {
                     //头像
                     ImgComp({
-                      imgWidth:100,
-                      imgSrc:this.info.avatar
+                      imgWidth: 100,
+                      imgSrc: this.info.avatar,
+                      bordWidth: 3,
+                      bordColor: Color.White,
+                      bordRadius: 50
                     })
-                      .border({
-                        width: 3,
-                        color: Color.White,
-                        radius: 50
-                      })
                       .onClick(() => {
                         //打开自定义弹窗
                         this.showDialog = true
@@ -272,7 +270,6 @@ export default struct My {
                   iconBtn({ icon: item.icon, title: item.title })
                     .onClick(() => {
                       item.click && item.click()
-
                     })
                 }
               })

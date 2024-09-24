@@ -13,8 +13,8 @@ export struct CardItem {
     Row() {
       Row({ space: 10 }) {
         ImgComp({
-          imgWidth:20,
-          imgSrc:this.icon
+          imgWidth: 20,
+          imgSrc: this.icon
         })
         Text(this.leftTitle)
           .fontSize(16)

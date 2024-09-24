@@ -1,5 +1,5 @@
 import { BarClass, DataSource } from '../models'
-import Shop from '../pages/Shop/Shop'
+import Shop from '../pages/Shop/ShopPage'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { HeadBar } from '.'

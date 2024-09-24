@@ -21,44 +21,17 @@ export class mediaInfoModel implements mediaInfo {
  * */
 export const mediaList: mediaInfo[] = [
   {
-    src: 'https://v2.kwaicdn.com/ksc2/QCbVGzxvQkoOYz4k9j5RNfjqk5ggXU-NHoeM3rLUDHTYQIZXUaxtpUpiHQ2LMLmxS8JJoSKtKJysVOn4l__mfk5H1AU1c0A5nf4pGnz2W7s3QOD_gIouj4OfoMVDMYl_fZjW6kIV_xemkZSDbY6WlxKF89z3ayyCvH7ikUbeATdpHV1R-ugfC4n4fKAnUr5h.mp4?pkey=AAWDAc20xMVMK4Twit9Yp4MnDMKSGigKWZSEz44AmQx6xvGZ1EM12WyFYuw46GwmzMQ40WZBa3PDGJZxbeyYNxUMEtoh0SHkUvrk8TzLUDZpYBpwagCC89SzTbFEgSVBGWo&tag=1-1721816201-unknown-0-b3totccoew-af0c28bf99131620&clientCacheKey=3xqnppgvseewvj2_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
+    src: 'https://v26-web-prime.douyinvod.com/video/tos/cn/tos-cn-ve-15/o0AG0HtQdINFi9EPnbF8tZIilKhMBAWPWYwRu/?a=6383&br=877&bt=877&btag=c0000e00008000&cd=0%7C0%7C0%7C3&ch=5&cquery=101s_100B_100x_100z_100o&cr=3&cs=0&cv=1&dr=0&ds=6&dy_q=1727101637&expire=1727112443&feature_id=f0150a16a324336cda5d6dd0b69ed299&ft=4SNWjAIMppfttOLJusd.C_bAja-CInNPZptc6Bbw_14fwGpHDDFLZtt_TVktLusZ.&is_ssr=1&l=20240923222716393676C4948DF51CEFA5&lr=all&mime_type=video_mp4&ply_type=4&policy=4&qs=0&rc=OWQ3ZThmO2Y7PGdpZjdlaUBpajhzc3Y5cnA5dTMzNGkzM0AuYWI1M18vXzIxXl41YTViYSMvLzVyMmQ0YmBgLS1kLTBzcw%3D%3D&signature=c86f12ddec41b531cf896bcf0040ceff&tk=webid&__vid=7410787105703464218&webid=c4683e1a43ffa6bc6852097c712d14b81f04bc9b5ca6d30214b0e66b4e38528070dd6a8f7b681012cfe1119f36411ee6699a15754480952c362189d34307fcd49ae53b9ab4d383e9ea28eb92ed284aeb9f5b38e79ea6b8464123946275bf2632825261df1e88075d1508e7e9fe3f2c0decd3dad70f53f1572b16b0be64146ceca0deb063bd0745d24dc20b158cf4070b0223f1260a2a5422a3cbe22868894a56-25f9bcd324119456bca36018d8985d37&fid=e68f4b92601ecfcddefa2571fa2d86f2',
     id: 1
   },
   {
-    src: 'https://v1.kwaicdn.com/ksc2/_XFdsmyxbUa5Y81dL04jqMm16zd3JuXlX7coKSQ28EG1Muk99KvPE3LNQWw7K2GMeKWto9zrgZEHIqVbvmD3m7jNg_McWSvAnEueoY1bfmmBRugy49gyclgKXrwXclXZPpLdKlmhvDYwiGZzsKztnDQGxkqjrSxG3LrpDxUs5pvcrjx3mvtmNsKp-fkL85ev.mp4?pkey=AAU6-L2S3vRwTK4gQBt-7DHdKtYY6Gb6Mhy_SMTgRJ6HwgL5Kb86dCx10XMToMEXNEI9Opun0wbJIcBrEI3rV7e9_e2mDAWRvXzOZi5a_lClUc-mqqr4EbUaXJMVCiYnghU&tag=1-1721816227-unknown-0-0setw3ra2s-f24237a978d4d0e2&clientCacheKey=3xsmaqb6qibhq2q_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
+    src: 'https://v2.kwaicdn.com/ksc2/Bjd_DvmaE3PugX8nMGATNKuc6F549bGFhtvstwKhLFLT3Bqbch3cwf4sq46_ppdAfvVmOznxTRZ2YmJQ0FmUUMFbKYxP_7Mo56AU7a1YVh3iO8Z3QJm-LJKjEkc6wTg9j6QtSPx6gMjnIkYY9uP0RUPa12-GRa2835gBPgzkei8H9bpqYEYwfPJIv_9JiNih.mp4?pkey=AAXjGgaq9X17O3pls_m8wKyyQKitZf399mhalKIiar4ym9jMMUyhL85CYk2ikTIszGo-d4iZ65YxLUjWb5wKATa-XoEr7TmcfEaVVU5gRrN6jspqFjHuteMbAgsijsbZ8YI&tag=1-1727101748-unknown-0-jepgtefgfi-7897b91d4173b3be&clientCacheKey=3xnadgw6vxsqpi9_b.mp4&di=7b93f921&bp=14944&tt=b&ss=vp',
     id: 2
   },
   {
-    src: 'https://v1.kwaicdn.com/ksc2/VAoYWiL5tcALWxdx5oS1im1qx-EXQQKubzQHxpFenSxCb7rm25GQsbTbif5dwMydAVW2jRRW3Dz3uA8Vh3zH9uNRH7-BfeqyYBJmY4UbRKbGofJV6r5ZR6nxthprzHF5B_KVF9F9g4KCcDu62bUi1WByFtPpbLMmXy_kaEPD1FVrOO_uTqbjJRL3qljoI6sC.mp4?pkey=AAUZGwvx29Zpd5IpYOAm58aMW4N-CdJPG-E5N0_B8wvyBW5ydTNTxeZT-jYzRZ4rN4LJaMdV30bZ6I8JyZB5-CisucgGNXccWzR30D3cSY8z8PRA_3B35OBXOYwvgdq-pPU&tag=1-1721816227-unknown-0-uewvfkmyfu-b8d8d062569205ea&clientCacheKey=3x5wmpmzd2wwnjc_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
+    src: 'https://v1.kwaicdn.com/ksc2/ifwHbgZhHcIZuZAAS_2FgbO8utNOIEOFwU94mku69tJ4Zlzr2p2gAtmo6tJlKGd3fIXcfKW9cVeZVbKvZ4xJX6sBXqxtpStffgw5OYAMq5VAEiVEwDdjMzenKlLmqNEZVspGyZd6x74v5UwMC9JxbzqRRYgOy1SRcY11aIqMnnOB01IVzV8fH5rMT0k3LWNz.mp4?pkey=AAWZhniECq5Tms4fVeHjpAZjTxXs-M_8FjptJe8LxxM6R8bohHrrYYrA0zQCRsaQIc11pZgCp9DfbGl2vPVwjFxGeGArvQ1ItqBqhEFLoSclI9VMd2STGHFxqRPgCV49-Dc&tag=1-1727101748-unknown-0-fualfapizz-33b9ce03fd835010&clientCacheKey=3xkvzseaaiihhzc_b.mp4&di=7b93f921&bp=14944&tt=b&ss=vp',
     id: 3
   },
-  {
-    src: 'https://v1.kwaicdn.com/ksc2/KNufC2M3u68Ka5EIlEJFfkbWxPlbR-2Ud1yx-KSok6qh0WqJdHoejtkN4fU1cHaGzyOilVifXNRyRonERf4NIpDlFcgD3x_HRIOTT9_Kz-R9SM2kRxIKmQGadhTSJ77CLs4d-iiIdRnFNQxhpxRn8H_N4zQLp5W4MmKFKHTfJ0xagUq3b9ddIWSemPJTclNj.mp4?pkey=AAUwG57GBdRqCbn1nta6v7sQZtuPNYmZmzYgvUTXbQR-XmrctNJWPgkk0oVUnFjfkFQMK05jgAOywGf8mxIOJ8ZJetpFvsC1-3P4mTlnzrHBVIbaTA9W7PSnYV2vOXEtrPk&tag=1-1721816227-unknown-0-w4zcx5hnvv-1f2589cfa6248c8e&clientCacheKey=3x9zyret5tn2tjm_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-    id: 4
-  },
-  {
-    src: 'https://v2.kwaicdn.com/ksc2/-DlgdR2K-wmb0eGUDYA_5raY1Z4vgQ9urYt_6sF8GXGeWOrf-VIwzp1o__FKmol7SVcEnMD_ut_u0UI9O8i2g0s567TEp7qQGLhxEUWaUFMeuP5gZ-uvIAlo0a8dssZskwPUQ0OkL9FvyPU5x06E32Wpj_h4Um7--qFiJM933Hg.mp4?pkey=AAXXySzkE-KGeifujRHnz58yM0DnDxbFSgdYTsYv3T-fuJENKkFYkr0miPs5_x6idouA_e2FuPb94NYKTXBsx-Nf2DuwDYkRRAEq-Ex4My-QEJGPAIb6RowsOgLHj6yQSe4&tag=1-1721816227-unknown-0-k5mc1sqlod-0e7caff6aac676d8&clientCacheKey=3xhm6vcjuepy836_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-    id: 5
-  },
-  {
-    src: 'https://v2.kwaicdn.com/ksc2/gP7OSPBCfOjMNT1jtswZfT1wP_KFUZtgfomIS-C7qGoerPiwYZkgFEJIP7vuCzBp3rBfqB1UUC9sM3RkOQ2SXpIztLawYxONH_MtRLWbC_a4D8PprJ2fLwEtFhvsZylJ1F2dzT7C1_kQUZVSlfpKmnLPCaxd3p2plkUvuxoyvQJWwMAQBx75J1RhDug_7-k_.mp4?pkey=AAVwG_Uz990MRkSVLq0B2kRgObg3f_hmRuh856MuI4bI7M4h7g5PLoX9_DUiMalZBl6BCjna1CZ7lOJ_ZdashMXDm1N9hDLi6gmSfLmgYECjXEEa0SfMWYaKWmhedqC8Tro&tag=1-1721816227-unknown-0-s1kvayrr79-bdfbd895650bb294&clientCacheKey=3xdji66qea58bcg_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-    id: 6
-  },
-  {
-    src: 'https://v1.kwaicdn.com/ksc2/YMwL9fGIR8Ro-MD2omZzP_IXgUOg9KV8Lqr0EGc1q3gGm-ONJ-Aj_Q44-0LECjW5PpTqDrMrztjRAhzvjJLn5FN2lX4J81uRyRvTRmYH1LIhqJRTc8tNZjQnWi54XIlaocn36IFm7FanxfIi3er-37LOiQP1Ff750hqYOcbrzPZ-3eIMItfAqMTtNYQafMMg.mp4?pkey=AAVQDW1Wzn9GMMTO3fHn1AVMVPdpGhiycUuwOVvWWqoUJTuTKAHu4maOZI0d7E8QW9D_DFmFnbzi4YWgyqURL08DfdKCLA1j2E9YtJLOsat2vMd0MhwLG0PnZMMZtSM8ES4&tag=1-1721816227-unknown-0-8kgfuibx2i-bcd6ff6829ae9c21&clientCacheKey=3x4wjehi9wy5tpm_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-    id: 7
-  },
-  {
-    src: 'https://v1.kwaicdn.com/ksc2/F335JyMrPhiKUUl0oAehgxff9BgqxIg5KPnVCtFtRh9vmIOPhxRi2sQkk0DkMi94hHDlzE0_Njt2j3Hgj0nafB3I_2pELERHtaxSIpOCRFHUW-PqXpg1eg9OFLP_FxI7pMXa02Ty5hBcGJTwQKk1JZT-LmdoHrZgyuB05mutt6hafteSKMbTYF7aIZCtnx8d.mp4?pkey=AAXlg0lJR4qwslvMX66RKXhrf2IyjcW65nQSgEEUlZMh8L6bzvGut5cDTChHZTqns92QD7cUypRu1qMyE4PTdLoE5KRanL4WgwYN4UITqlgsFAKi-vB6xYDkSP0FXTqiBLk&tag=1-1721816227-unknown-0-bkgoqgvf2c-d30aab9ddb2b3080&clientCacheKey=3xqasp6bmtdgy94_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-    id: 8
-  },
-  {
-    src: 'https://v2.kwaicdn.com/ksc2/6X7S0DQZd9c4-AFuNM8XEgxJ9qJJkIBos8RFbaeBMer230Lw1VFR_yuDSFFDxplb0I81NA4KQo-rdwBtWF37UfXOpWDEqN0srthWOqT5s68ux22Aw2NmvRzl5LXo7q4XgLvR2ucNgFSmvAtkR1Wp0gtOGpzMoP5-rpgzT3bdBDalxjXsRWt5IBANFM8FymvK.mp4?pkey=AAVh6l4Ib1TUsqU232woXJ5da8yOFUH8T2kPNeOLIRC2Qsw9F9G_kvukiCrgs0NAnIzV0AdXQKkeVKkFbNZsIEs5RutgTTIUh6TtmyAHJrQuJnNDG4pNuIHxJtbQSzfJaXw&tag=1-1721816227-unknown-0-49gnrn8ef6-298b77268a94e88b&clientCacheKey=3xtbz9mrix7u7wc_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-    id: 9
-  }, {
-  src: 'https://v1.kwaicdn.com/ksc2/fWh7mS7DsqWoif4I5iYZow_dN20RMbOvji7XdRcABCxc3adbku8ULT0RtEJtyfqpho9ehTsqkQX9-lPuCtplql-dbT58bTw5iMRZRv3IsDjo-yfhYGg6O2NHfglKAxxZB3cgeU6ByJDnUZeciCRAjQt3DmcutCMCcqx8bsEzT79jEeIsGo_Y2OL1E2JLDCxb.mp4?pkey=AAVsS6-6_0uJgVOourb7vPwT1IlhADHwap6F54-53OXW4uNVlIGTagCLY_tPXsoC35-50qWGLkAzHaTBuFR787dDIsC3sh60AN9LKQslq4PauAO7WHqx6Kbh8aIFKQvc8f8&tag=1-1721816755-unknown-0-mjt9bvqpe9-e833c79191f9e70b&clientCacheKey=3xg7gaa46jst97s_b.mp4&di=75b1c47a&bp=14944&tt=b&ss=vp',
-  id: 10
-},
 ]
 
 /**
