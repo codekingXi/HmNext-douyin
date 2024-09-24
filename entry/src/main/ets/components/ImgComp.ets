@@ -16,13 +16,20 @@ export struct ImgComp {
   ImageFitType: ImageFit = ImageFit.Contain //图片压缩类型
   color_1: ResourceColor = ''
   color_2: ResourceColor = ''
-
+  bordWidth:number=0
+  bordRadius:number=0
+  bordColor:ResourceColor=''
   build() {
     Image(this.imgSrc)
       .draggable(this.isDraggable)
       .width(this.imgWidth)
-      .height(this.imgHeight)
+      .height(this.imgHeight ? this.imgHeight : null)
       .objectFit(this.ImageFitType)
       .fillColor(this.isFillColor ? this.color_1 : this.color_2)
+      .border({
+        width:this.bordWidth,
+        color:this.bordColor,
+        radius:this.bordRadius
+      })
   }
 }
