@@ -8,7 +8,7 @@ import { ImgComp } from '../../components'
  * 商品页*/
 @Entry
 @Component
-export default struct Shop {
+export default struct ShopPage {
   @State
   loading: boolean = false //加载的激活条件
 

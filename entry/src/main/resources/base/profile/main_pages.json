@@ -2,10 +2,10 @@
   "src": [
     "pages/Index/Index",
     "pages/VideoPage/VideoPage",
-    "pages/Login/Login",
-    "pages/Setting/Setting",
-    "pages/Shop/Shop",
-    "pages/Message/Message",
+    "pages/Login/LoginPage",
+    "pages/Setting/SettingPage",
+    "pages/Shop/ShopPage",
+    "pages/Message/MessagePage",
     "pages/Search/SearchPage",
     "pages/ChatDetail/ChatDetail",
     "pages/My/VdDetail"

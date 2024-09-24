@@ -18,7 +18,7 @@ function textStyle() {
  * 登录页*/
 @Entry
 @Component
-struct Login {
+struct LoginPage {
   @Styles
   ipt(){
     .width(300)
@@ -152,4 +152,4 @@ struct Login {
   }
 }
 
-export default Login
+export default LoginPage

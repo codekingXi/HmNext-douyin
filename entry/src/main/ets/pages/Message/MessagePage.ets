@@ -8,7 +8,7 @@ import { Constants } from '../../common/Constants'
  * 消息页面*/
 @Entry
 @Component
-export struct Message {
+export struct MessagePage {
   @State
   userList: UserInfo[] = [] //渲染默认用户列表
   @Consume
