@@ -1,7 +1,7 @@
 {
   "app": {
     "bundleName": "com.example.myapplication",
-    "patchVersionCode": 2003428,
+    "patchVersionCode": 2003458,
     "versionCode": 1000000
   },
   "module": {
