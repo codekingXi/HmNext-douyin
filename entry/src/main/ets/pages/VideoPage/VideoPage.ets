@@ -12,7 +12,6 @@ export struct VideoPage {
    * 索引*/
   @Provide
   activeIndex: number = 0
-
   /**
    * 懒加载视频数据列表*/
   videoList = new videoData(video)
@@ -90,7 +89,7 @@ struct playVideo {
   build() {
     Stack() {
       Video({
-        src:`${video[this.index].video.play_addr.url_list}`,
+        src: `${video[this.index].video.play_addr.url_list}`,
         controller: VideoCtl,
         currentProgressRate: this.videoSpeed
       })// 手势
@@ -105,9 +104,9 @@ struct playVideo {
         ))
         .width('100%')
         .height('100%')
-        .autoPlay(this.index === 0)
+        .autoPlay(true)
         .objectFit(ImageFit.Contain)//推荐使用压缩的方式
-        .muted(this.activeIndex === this.index ? false : true)
+        .muted(this.activeIndex === this.index ? false : true)//轮到播放就取静音
         .loop(true)
         .controls(false)//隐藏控制条
         .onAppear(() => {
