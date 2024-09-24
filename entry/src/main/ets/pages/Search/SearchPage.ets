@@ -1,5 +1,6 @@
 import { router } from '@kit.ArkUI'
 import { Constants } from '../../common/Constants'
+import { ImgComp } from '../../components'
 import { UserInfo, UserInfoModel } from '../../models/user'
 import { Tiktok } from '../../utils/setting'
 
@@ -82,7 +83,11 @@ struct SearchPage {
           ForEach(this.filterList, (item: UserInfo) => {
             ListItem() {
               Row({ space: 10 }) {
-                Image(item.avatar).width(70).height(70).border({ radius: 35 })
+                ImgComp({
+                  imgWidth: 70,
+                  imgSrc: item.avatar
+                })
+                  .border({ radius: 35 })
                 Row() {
                   Column() {
                     Text(item.username).fontWeight(600).fontSize(24)

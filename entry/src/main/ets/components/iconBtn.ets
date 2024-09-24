@@ -1,5 +1,7 @@
 /**
  * 图标按钮组件*/
+import { ImgComp } from '.'
+
 @Component
 export struct iconBtn {
   @Require
@@ -9,8 +11,12 @@ export struct iconBtn {
 
   build() {
     Column({ space: 10 }) {
-      Image(this.icon)
-        .width(26)
+      ImgComp({
+        imgSrc: this.icon,
+        imgWidth: 26,
+        isDraggable: false,
+        ImageFitType: ImageFit.Contain
+      })
       Text(this.title)
         .fontWeight(500)
         .fontSize(14)

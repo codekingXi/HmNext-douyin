@@ -4,6 +4,7 @@ import { ReplyInput } from './ReplyInput'
 import { sideData } from '../models'
 import { sideDataModel } from '../models/sidebarData'
 import { tipDialog } from '../common'
+import { ImgComp } from '.'
 
 /**
  * 视频功能侧边栏*/
@@ -210,10 +211,13 @@ struct sideIcon {
   }
   build() {
     Column() {
-      Image(this.item.imgUrl)
-        .fillColor(this.item.isLike ? Color.Red : Color.White)
-        .width(50)
-        .aspectRatio(1)
+      ImgComp({
+        imgWidth:50,
+        imgSrc:this.item.imgUrl,
+        isFillColor:this.item.isLike,
+        color_1:Color.Red,
+        color_2:Color.White
+      }).aspectRatio(1)
         .scale({ x: this.scaleX, y: this.scaleY })
         .onClick(() => {
           this.change()

@@ -1,11 +1,11 @@
-import { customDialog, TitleBtn, TopBar } from '.'
+import { customDialog, ImgComp, TitleBtn, TopBar } from '.'
 import { Constants, tipDialog, VideoCtl } from '../common'
 import { CURRENT_USER } from '../constants'
 import { BarClass, TabList } from '../models'
 import { CurrentUser, UserInfo, UserInfoModel } from '../models/user'
 import { Store } from '../pages/Index/Index'
 import { Fn } from '../pages/Index/Index'
-import { Message } from '../pages/Message/Message'
+import { MessagePage } from '../pages/Message/Message'
 import My from '../pages/My/My'
 import { Tiktok } from '../utils/setting'
 import { picker } from '@kit.CoreFileKit'
@@ -195,8 +195,10 @@ export struct bottomNav {
   bottomBar(item: BarClass, index: number) {
     Column() {
       if (item.id === 3) {
-        Image(item.icon)
-          .width(50).aspectRatio(1)
+        ImgComp({
+          imgWidth:50,
+          imgSrc:item.icon,
+        }).aspectRatio(1)
       } else {
         Text(item.title)
           .fontSize(24)
@@ -236,7 +238,7 @@ export struct bottomNav {
             } else if (item.name === 'Friend') {
               VideoPage()
             } else if (item.name === 'Message') {
-              Message()
+              MessagePage()
             } else if (item.name === 'My') {
               My()
             }

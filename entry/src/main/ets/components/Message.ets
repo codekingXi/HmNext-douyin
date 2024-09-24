@@ -1,3 +1,4 @@
+import { ImgComp } from '.'
 import { CURRENT_USER } from '../constants'
 import { UserInfo, UserInfoModel } from '../models'
 import { MessageInfo, MessageInfoModel } from '../models/message'
@@ -18,9 +19,10 @@ export default struct Message {
   isOwnMessage:boolean = this.currentUser.user_id === this.currentMessage?.sendUser?.user_id //判断谁发的消息
   build() {
     Row(){
-      Image(this.currentMessage.sendUser?.avatar)  //消息的发送者的头像
-        .width(50)
-        .aspectRatio(1)
+      ImgComp({
+        imgWidth:50,
+        imgSrc:this.currentMessage.sendUser?.avatar //消息的发送者的头像
+      }).aspectRatio(1)
         .borderRadius(25)
       Row(){
         Text(this.currentMessage.messageContent)  //消息的内容

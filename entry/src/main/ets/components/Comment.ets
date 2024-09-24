@@ -1,3 +1,4 @@
+import { ImgComp } from '.'
 import { CURRENT_USER } from '../constants'
 import { commentDataModel } from '../models'
 import { CurrentUser } from '../models/user'
@@ -41,8 +42,10 @@ export struct Comment {
   build() {
 
     Row({ space: 10 }) {
-      Image(this.item.avatar)//头像
-        .width(40)
+      ImgComp({
+        imgSrc: this.item.avatar, //头像
+        imgWidth: 40
+      })
         .borderRadius(50)
       Column() {
         Text(this.item.author)//作者
@@ -59,17 +62,19 @@ export struct Comment {
           }
 
           Row() {
-            Image($r('app.media.ic_public_love'))//爱心
-              .fillColor(this.item.likeFlag ? Color.Red : '#ff868585')
-              .width(20)
-              .height(20)
+            ImgComp({
+              imgWidth: 20,
+              imgSrc: $r('app.media.ic_public_love'),
+              isFillColor: this.item.likeFlag,
+              color_1: Color.Red,
+              color_2: '#ff868585'//爱心
+            })
               .scale({ x: this.scaleX, y: this.scaleY })
               .onClick(() => {
                 Fn.redirect()
                 //如果有账号信息
                 if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
                   this.change()
-                  return
                 }
               })
               .animation({ duration: 200 })

@@ -2,7 +2,7 @@ import { BarClass, DataSource, UserInfoModel, mediaInfo } from '../../models'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common'
-import { iconBtn, scrollbar, Skeleton } from '../../components'
+import { iconBtn, ImgComp, scrollbar, Skeleton } from '../../components'
 import { Constants } from '../../common/Constants'
 import { personVdDta } from '../../models'
 
@@ -158,8 +158,10 @@ export default struct My {
             Stack() {
               Row({ space: 20 }) {
                 Row({ space: 5 }) {
-                  Image($r("app.media.icon_connect"))
-                    .imgBg()
+                  ImgComp({
+                    imgWidth:16,
+                    imgSrc:$r("app.media.icon_connect")
+                  })
                   Text("新访客1").fontSize(14).fontColor(Color.White)
                 }.btnBg().width(90).justifyContent(FlexAlign.Center)
                 .onClick(() => {
@@ -169,15 +171,20 @@ export default struct My {
                 //搜索和功能按钮区
                 Row({ space: 10 }) {
                   Row() {
-                    Image($r("app.media.icon_search")).width(28).height(28)
+                    ImgComp({
+                      imgWidth:28,
+                      imgSrc:$r("app.media.icon_search")
+                    })
                   }.btnBg().justifyContent(FlexAlign.Center)
                   .onClick(() => {
                     tipDialog()
                   })
 
                   Row() {
-                    Image($r("app.media.icon_Tab")).imgBg()
-
+                    ImgComp({
+                      imgWidth:16,
+                      imgSrc:$r("app.media.icon_Tab")
+                    })
                   }.btnBg().justifyContent(FlexAlign.Center)
                   .onClick(() => {
                     animateTo({ duration: 200 }, () => {
@@ -205,8 +212,10 @@ export default struct My {
                 Row({ space: 20 }) {
                   Row() {
                     //头像
-                    Image(this.info.avatar)
-                      .width(100).height(100)
+                    ImgComp({
+                      imgWidth:100,
+                      imgSrc:this.info.avatar
+                    })
                       .border({
                         width: 3,
                         color: Color.White,

@@ -2,6 +2,7 @@ import goods from '../../common/data/goods.json'
 import { promptAction } from '@kit.ArkUI'
 import { tipDialog } from '../../common/Function/commonFn'
 import { DataSource } from '../../models'
+import { ImgComp } from '../../components'
 
 /**
  * 商品页*/
@@ -35,10 +36,11 @@ export default struct Shop {
   @Builder
   waterFlowItem(index: number) {
     Column({ space: 10 }) {
-      Image(`/common/images/goods/${goods[index].cover}`)
-        .width('100%')
+      ImgComp({
+        imgWidth:'100%',
+        imgSrc:`/common/images/goods/${goods[index].cover}`
+      })
         .height(index % 2 ? 180 : 200)
-        .draggable(false)
         .borderRadius({
           topLeft: 15, topRight: 15
         })

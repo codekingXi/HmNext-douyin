@@ -1,5 +1,6 @@
 /**
  * 卡片项*/
+import { ImgComp } from '.'
 import { Constants } from '../common/Constants'
 
 @Component
@@ -11,8 +12,10 @@ export struct CardItem {
   build() {
     Row() {
       Row({ space: 10 }) {
-        Image(this.icon)
-          .width(20)
+        ImgComp({
+          imgWidth:20,
+          imgSrc:this.icon
+        })
         Text(this.leftTitle)
           .fontSize(16)
       }
