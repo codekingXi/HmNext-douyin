@@ -1,9 +1,9 @@
 import { UserInfo, UserInfoModel } from '../../models/index'
-import { promptAction, router } from '@kit.ArkUI'
+import { router } from '@kit.ArkUI'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { userData } from '../../api'
-import { Constants, commonFn } from '../../common'
+import { Constants, commonFn, tipDialog } from '../../common'
 
 @Extend(Text)
 function textStyle() {
@@ -35,7 +35,7 @@ struct Login {
   @State
   showText: boolean = false
   @State
-  loginErrorTip: string = ''
+  loginErrorTip: string = '用户名或密码长度小于6位'
   @State
   @Watch('watchIpt')
   userInfo: UserInfoModel = new UserInfoModel({
@@ -69,7 +69,6 @@ struct Login {
     if (this.userInfo.username.length < 6 && this.userInfo.password.length < 6 ||
       this.userInfo.username.length < 6 || this.userInfo.password.length < 6) {
       this.showText = !this.showText
-      this.loginErrorTip = '用户名或密码长度小于6位'
     } else {
       this.loading = true
 
@@ -91,11 +90,11 @@ struct Login {
           this.loading = false
           router.replaceUrl({ url: Constants.LOADING_INDEX })
         } else {
-          promptAction.showToast({ message: "账号或密码错误!" })
+          tipDialog("账号或密码错误!", 200)
           this.loading = false
           return
         }
-      }, 750)
+      }, 200)
     }
   }
 
