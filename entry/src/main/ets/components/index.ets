@@ -26,3 +26,5 @@ export { HeadBar } from './HeadBar'
 export { scrollbar } from './scrollbar'
 
 export { bottomNav } from './bottomNav'
+
+export { ImgComp } from './ImgComp'
