@@ -17,7 +17,7 @@ export class Constants {
   //统一路由管理
   /**
    * 加载登录页*/
-  static readonly LOADING_LOGIN = "pages/Login/Login"
+  static readonly LOADING_LOGIN = "pages/Login/LoginPage"
   /**
    * 加载主页*/
   static readonly LOADING_INDEX = "pages/Index/Index"
@@ -29,10 +29,10 @@ export class Constants {
   static readonly LOADING_SEARCH = "pages/Search/SearchPage"
   /**
    * 加载设置页*/
-  static readonly LOADING_SETTING = "pages/Setting/Setting"
+  static readonly LOADING_SETTING = "pages/Setting/SettingPage"
   /**
    * 加载商品页*/
-  static readonly LOADING_SHOP = "pages/Shop/Shop"
+  static readonly LOADING_SHOP = "pages/Shop/ShopPage"
   /**
    * 加载视频详情页*/
   static readonly LOADING_VdDETAIL = "pages/My/VdDetail"

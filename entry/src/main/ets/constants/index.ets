@@ -1,6 +1,6 @@
 /**
  *仓库Key */
-export const USER_SETTING = "Tiktok_setting"
+export const STORY = "Tiktok_story"
 
 /**
  * 用户信息key*/
