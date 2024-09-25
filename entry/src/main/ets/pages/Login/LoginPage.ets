@@ -35,7 +35,7 @@ struct LoginPage {
   @State
   showText: boolean = false
   @State
-  loginErrorTip: string = '用户名或密码长度小于6位'
+  loginErrorTip: string = ''
   @State
   @Watch('watchIpt')
   userInfo: UserInfoModel = new UserInfoModel({
@@ -68,7 +68,8 @@ struct LoginPage {
     //因为没有真实数据，模拟登录
     if (this.userInfo.username.length < 6 && this.userInfo.password.length < 6 ||
       this.userInfo.username.length < 6 || this.userInfo.password.length < 6) {
-      this.showText = !this.showText
+      this.loginErrorTip = '用户名或密码长度小于6位'
+      this.showText = true
     } else {
       this.loading = true
 
@@ -122,10 +123,14 @@ struct LoginPage {
           .ipt()
           .maxLength(15)
           .type(InputType.Password)
+
+      }
+
+      Row() {
         if (this.showText) {
           Text(this.loginErrorTip).textStyle()
         }
-      }
+      }.width('100%').height(30)
 
       Button({ type: ButtonType.Normal }) {
         Row() {
