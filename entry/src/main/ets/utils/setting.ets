@@ -1,4 +1,4 @@
-import { USER_SETTING, TIKTOK_CONNECT, CURRENT_USER, UserRecord_KEY } from '../constants'
+import { TIKTOK_CONNECT, CURRENT_USER, UserRecord_KEY, STORY } from '../constants'
 import { preferences } from '@kit.ArkData'
 import { CurrentUser, defaultUserInfo, UserInfo, UserInfoModel } from '../models/user'
 import { MessageInfoModel } from '../models/message'
@@ -16,7 +16,7 @@ export class Tiktok {
 
   getStore() {
     return preferences.getPreferencesSync(this.context || getContext(), {
-      name: USER_SETTING  //仓库名
+      name: STORY  //仓库名
     })
   }
 
