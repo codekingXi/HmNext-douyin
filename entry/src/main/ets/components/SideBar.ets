@@ -198,9 +198,10 @@ struct sideIcon {
   scaleX: number = 1
   @State
   scaleY: number = 1
+
   /**
    * 动画*/
-  change(){
+  change() {
     this.scaleX = 0
     this.scaleY = 0
     setTimeout(() => {
@@ -209,14 +210,15 @@ struct sideIcon {
       this.item.click && this.item.click()
     }, 200)
   }
+
   build() {
     Column() {
       ImgComp({
-        imgWidth:50,
-        imgSrc:this.item.imgUrl,
-        isFillColor:this.item.isLike,
-        color_1:Color.Red,
-        color_2:Color.White
+        imgWidth: 50,
+        imgSrc: this.item.imgUrl,
+        isFillColor: this.item.isLike,
+        color_1: Color.Red,
+        color_2: Color.White
       }).aspectRatio(1)
         .scale({ x: this.scaleX, y: this.scaleY })
         .onClick(() => {

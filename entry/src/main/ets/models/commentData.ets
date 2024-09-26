@@ -8,7 +8,7 @@ export interface commentData{
   author:string //作者
   area:string //地区
   likeNum:number //点赞数
-  likeFlag:boolean |null //当前用户是否点过赞
+  likeFlag:boolean //当前用户是否点过赞
 }
 @Observed //观察类的变化
 export class commentDataModel implements commentData {
@@ -19,7 +19,7 @@ export class commentDataModel implements commentData {
   author: string = ''
   area: string = ''
   likeNum: number = 0
-  likeFlag: boolean |null = null
+  likeFlag: boolean = false
 
   constructor(model: commentData) {
     this.avatar = model.avatar

@@ -4,7 +4,7 @@ export interface sideData {
   imgUrl: ResourceStr
   loveNum: number
   click: () => void
-  isLike?: boolean | null
+  isLike?: boolean
 }
 
 @Observed
@@ -13,7 +13,7 @@ export class sideDataModel implements sideData {
   imgUrl: ResourceStr = ''
   loveNum: number = 0
   click: () => void
-  isLike?: boolean | null = null
+  isLike?: boolean = false
 
   constructor(model: sideData) {
     this.id = model.id

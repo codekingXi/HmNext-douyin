@@ -44,9 +44,12 @@ export struct Comment {
     Row({ space: 10 }) {
       ImgComp({
         imgSrc: this.item.avatar, //头像
-        imgWidth: 40
+        isFillColor: this.item.likeFlag,
+        imgWidth: 40,
+        color_1: Color.Red,
+        color_2: '#ff868585',
+        bordRadius: 50
       })
-        .borderRadius(50)
       Column() {
         Text(this.item.author)//作者
           .fontColor('#ff737373')
