@@ -1,6 +1,6 @@
 import { BarClass } from '../../models'
 import { bottomNav, Card, CardItem, iconBtn, SideBarCom } from '../../components'
-import { promptAction, router } from '@kit.ArkUI'
+import { router } from '@kit.ArkUI'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { CurrentUser } from '../../models/user'
@@ -49,12 +49,7 @@ struct Index {
       ctx.terminateSelf() //终止程序
     } else {
       this.backTime = now
-      promptAction.showToast({
-        message: '再按一次退出',
-        alignment: Alignment.Top,
-        duration: 2000,
-        offset: { dx: 0, dy: 250 }
-      })
+      tipDialog('再按一次退出', Constants.COLOR_OpacityBlack, 2000, { dx: 0, dy: 200 }, Alignment.Top)
     }
     return true //使用自定义功能而非router
   }

@@ -1,15 +1,26 @@
 /*
  * 公共方法类库*/
 import { promptAction } from '@kit.ArkUI'
+import { Constants } from '../Constants'
 
 /**
  * 提示弹窗
  * @param {String} msg传入需要的提示信息 默认值
  * @default 默认值:功能未完善
  * @return {Function} 返回一个弹窗信息*/
-const showToast = (msg: string = "功能未完善",bottom:number=100) => {
-  promptAction.showToast({ message: msg, bottom: bottom })
-}
+const showToast =
+  (msg: string = "功能未完善", bgColor: ResourceColor = Constants.COLOR_GREY, time?: number, offset?: Offset,
+    Alm?: Alignment) => {
+    promptAction.showToast({
+      message: msg,
+      backgroundColor: bgColor,
+      textColor: Color.White,
+      duration: time ? time : 1500,
+      backgroundBlurStyle: BlurStyle.NONE,
+      alignment: Alm,
+      offset: offset
+    })
+  }
 
 /**
  * 全局视频控制器*/
