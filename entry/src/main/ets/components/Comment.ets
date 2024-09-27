@@ -1,4 +1,5 @@
 import { ImgComp } from '.'
+import { Constants } from '../common'
 import { CURRENT_USER } from '../constants'
 import { commentDataModel } from '../models'
 import { CurrentUser } from '../models/user'
@@ -47,12 +48,12 @@ export struct Comment {
         isFillColor: this.item.likeFlag,
         imgWidth: 40,
         color_1: Color.Red,
-        color_2: '#ff868585',
+        color_2: Constants.COLOR_GREY,
         bordRadius: 50
       })
       Column() {
         Text(this.item.author)//作者
-          .fontColor('#ff737373')
+          .fontColor(Constants.COLOR_GREY)
           .fontSize(18)
         Text(this.item.content)//内容
           .fontColor('#ff1c1c1c')
@@ -60,7 +61,7 @@ export struct Comment {
         Row({ space: 10 }) {
           Row() {
             Text(`${this.item.time}-${this.item.area}`)//事件地区
-              .fontColor('#ff8d8b8b')
+              .fontColor(Constants.COLOR_GREY)
               .fontSize(18)
           }
 
@@ -70,7 +71,7 @@ export struct Comment {
               imgSrc: $r('app.media.ic_public_love'),
               isFillColor: this.item.likeFlag,
               color_1: Color.Red,
-              color_2: '#ff868585'//爱心
+              color_2: Constants.COLOR_GREY//爱心
             })
               .scale({ x: this.scaleX, y: this.scaleY })
               .onClick(() => {
@@ -82,7 +83,7 @@ export struct Comment {
               })
               .animation({ duration: 200 })
             Text(this.item.likeNum.toString())//点赞数
-              .fontColor(this.item.likeFlag ? Color.Red : '#ff868585')
+              .fontColor(this.item.likeFlag ? Color.Red : Constants.COLOR_GREY)
               .fontSize(16)
           }
         }

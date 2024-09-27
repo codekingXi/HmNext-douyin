@@ -39,6 +39,7 @@ export struct VideoPage {
 struct playVideo {
   /**
    * 接收传入的视频索引*/
+  @Prop
   index: number = -1 //默认值给负数 防止对不上数据
   @Prop
   item: mediaInfo

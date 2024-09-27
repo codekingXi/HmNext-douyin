@@ -7,6 +7,9 @@ export class Constants {
    * 弹窗背景色*/
   static readonly COLOR_OpacityBlack = '#80000000'
   /**
+   * 灰色*/
+  static readonly COLOR_GREY = '#ff868585'
+  /**
    * 底部栏背景色*/
   static readonly COLOR_GrayNAV = '#ff393939'
   /**

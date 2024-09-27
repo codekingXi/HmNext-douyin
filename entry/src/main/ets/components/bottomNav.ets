@@ -7,9 +7,9 @@ import { Store } from '../pages/Index/Index'
 import { Fn } from '../pages/Index/Index'
 import { MessagePage } from '../pages/Message/MessagePage'
 import { Tiktok } from '../utils/setting'
-import { picker } from '@kit.CoreFileKit'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 import MyPage from '../pages/My/My'
+import { photoAccessHelper } from '@kit.MediaLibraryKit'
 
 @Component
 export struct bottomNav {
@@ -96,12 +96,10 @@ export struct bottomNav {
   /**
    * 选择图片*/
   async selectPhoto() {
-    const photo = new picker.PhotoViewPicker() //图片选择对象
+    const photo = new photoAccessHelper.PhotoViewPicker(); //图片选择对象
     const result = await photo.select({
-      //选择类型
-      MIMEType: picker.PhotoViewMIMETypes.IMAGE_TYPE,
-      //最大可选数量
-      maxSelectNumber: this.maxImgNumber
+      MIMEType: photoAccessHelper.PhotoViewMIMETypes.IMAGE_TYPE, //指定选择类型
+      maxSelectNumber: this.maxImgNumber  //最大数量
     })
     //如果有图片 这里的业务只需要单个图片
     if (result.photoUris.length) {

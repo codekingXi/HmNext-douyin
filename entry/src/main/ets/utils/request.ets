@@ -1,6 +1,6 @@
 import { Log } from '@abner/log'
 import { http } from '@kit.NetworkKit'
-import axios, { Axios, AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from '@ohos/axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from '@ohos/axios'
 import { ChatResponse } from '../models/chat'
 
 /*
@@ -20,7 +20,7 @@ export async function getRequestMessage(content: string) {
 
 //创建实例
 const instance = axios.create({
-  baseURL: 'http://api2.titodata.com', //基础地址
+  baseURL: 'http://api2.titodata.com/', //基础地址
   timeout: 20000  //超时时间
 })
 //请求拦截器
@@ -38,13 +38,11 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 instance.interceptors.response.use((response: AxiosResponse) => {
   //response是服务器返回的结果
   if (response.data && response.data.code !== 200) {
-    AlertDialog.show({ message: response.data.msg }) //提示错误
     return Promise.reject(new Error(response.data.msg)) //返回错误信息
   }
   Log.info('2.响应结果' + JSON.stringify(response.data))
   return response.data.data //返回需要的数据
 }, (error: AxiosError) => {
-  AlertDialog.show({ message: error.message }) //提示错误
   Log.error('3.异常信息' + JSON.stringify(error))
   return Promise.reject(error)
 })
