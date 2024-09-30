@@ -29,18 +29,26 @@ export struct ImgComp {
   bordRadius: number = 0
   @Prop
   bordColor: ResourceColor = ''
+  @Prop
+  shadowValue: number | Resource = 0
+  @Prop
+  shadowColor: string | Color | Resource | undefined = ''
 
   build() {
     Image(this.imgSrc)
       .draggable(this.isDraggable)
       .width(this.imgWidth)
-      .height(this.imgHeight ? this.imgHeight : null)
+      .height(this.imgHeight || null)
       .objectFit(this.ImageFitType)
       .fillColor(this.isFillColor ? this.color_1 : this.color_2)
       .border({
         width: this.bordWidth,
         color: this.bordColor,
         radius: this.bordRadius
+      })
+      .shadow({
+        radius: this.shadowValue,
+        color: this.shadowColor
       })
   }
 }
