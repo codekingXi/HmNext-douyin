@@ -1,10 +1,9 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
-import { hilog } from '@kit.PerformanceAnalysisKit';
 import { display, KeyboardAvoidMode, window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
 import { CURRENT_USER } from '../constants';
 import { Constants } from '../common/Constants';
-import { instance, request } from '../utils/request';
+import { request } from '../utils/request';
 import dayjs from 'dayjs';
 import { Log } from '@abner/log';
 
@@ -36,7 +35,7 @@ export default class EntryAbility extends UIAbility {
     Log.info('ability onDestroy');
   }
 
-  async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
+  onWindowStageCreate(windowStage: window.WindowStage){
     // Main window is created, set main page for this ability
     Log.info('ability onWindowStageCreate');
     /**
@@ -61,9 +60,11 @@ export default class EntryAbility extends UIAbility {
     //创建存储用户信息的空间
     AppStorage.setOrCreate(CURRENT_USER, info)
     //加载内容
-    await windowStage.loadContent(Constants.LOADING_INDEX)
-    //设置键盘避让模式
-    windowStage.getMainWindowSync().getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE)
+    windowStage.loadContent(Constants.LOADING_INDEX, () => {
+      //设置键盘避让模式
+      windowStage.getMainWindowSync().getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE)
+    })
+
 
   }
 
