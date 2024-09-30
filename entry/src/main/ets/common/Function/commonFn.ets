@@ -5,7 +5,7 @@ import { Constants } from '../Constants'
 
 /**
  * 提示弹窗
- * @param {String} msg传入需要的提示信息 默认值
+ * @param {String} msg传入需要的提示信息
  * @default 默认值:功能未完善
  * @return {Function} 返回一个弹窗信息*/
 const showToast =
@@ -23,7 +23,7 @@ const showToast =
   }
 
 /**
- * 全局视频控制器*/
+ * 推荐页视频控制器*/
 const VideoCtl: VideoController = new VideoController()
 
 
