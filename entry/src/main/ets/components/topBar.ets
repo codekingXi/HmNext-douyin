@@ -188,12 +188,6 @@ export struct TopBar {
     .padding({ top: 15, left: 5, right: 5 })
   }
 
-  @Styles
-  Colum(){
-    .width('100%')
-    .height('100%').backgroundColor(Color.Gray)
-  }
-
   /**
    * 播放视频*/
   startVideo() {
@@ -212,31 +206,19 @@ export struct TopBar {
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === 'EXPERIMENT') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Colm()
             } else if (item.name === 'HOTPOT') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Colm()
             } else if (item.name === 'LIVE') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Colm()
             } else if (item.name === 'SELECTED') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Colm()
             } else if (item.name === 'LOT OF BUY') {
               Shop()
             } else if (item.name === 'AREA') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Colm()
             } else if (item.name === 'CONCERN') {
-              Column() {
-                Text('敬请期待')
-              }.Colum().justifyContent(FlexAlign.Center)
+              Colm()
             } else if (item.name === 'SHOP') {
               Shop()
             } else if (item.name === 'FOR YOU') {
@@ -276,5 +258,19 @@ export struct TopBar {
       })
         .position({ y: AppStorage.get('Area_height') as number + 10 })
     }.position({ y: '-2.5%' })
+  }
+}
+
+@Component
+struct Colm {
+  @Styles
+  Colum(){
+    .width('100%')
+    .height('100%').backgroundColor(Color.Gray)
+  }
+  build() {
+    Column() {
+      Text('敬请期待')
+    }.Colum().justifyContent(FlexAlign.Center)
   }
 }
