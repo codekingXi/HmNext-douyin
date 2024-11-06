@@ -45,6 +45,8 @@ export default class EntryAbility extends UIAbility {
      * 安全区域高度*/
     const areaHeight: number = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
       .topRect.height)
+    const bottomHeight:number = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
+      .bottomRect.height)
     /**
      * 屏幕宽度*/
     const screenWidth: number = px2vp(display.getDefaultDisplaySync().width)
@@ -54,6 +56,7 @@ export default class EntryAbility extends UIAbility {
     AppStorage.setOrCreate("Screen_width", screenWidth)
     AppStorage.setOrCreate("Btn_title_width", btnTitleWidth)
     AppStorage.setOrCreate('Area_height', areaHeight)
+    AppStorage.setOrCreate('bottom_height', bottomHeight)
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
     //获取用户信息
     const info = new Tiktok(this.context).getCurrentUser()
