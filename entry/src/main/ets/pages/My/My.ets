@@ -104,35 +104,6 @@ export default struct MyPage {
   btnTitleWidth: number = 0
   tabController: TabsController = new TabsController()
 
-  @Builder
-  personBtn(item: BarClass, index: number) {
-    Column() {
-      Text(item.title)
-        .width(AppStorage.get('Btn_title_width'))
-        .textAlign(TextAlign.Center)
-        .animation({ duration: 200 })
-        .fontSize(this.currentIndex === index ? 22 : 16)
-        .fontColor(this.currentIndex === index ? Color.Black : '#ff666666')
-    }
-    .onClick(() => {
-      const index = this.personVd.findIndex(obj => obj.title === item.title)
-      this.tabController.changeIndex(index)
-    })
-  }
-
-  /**
-   * 获得x坐标*/
-  getX() {
-    /**
-     * 剩余宽度*/
-    const X = AppStorage.get('Btn_title_width') as number / 3 - 5
-    /**
-     * 索引*/
-    const id = this.currentIndex + 1
-    //返回坐标长度
-    return id === 1 ? 20 : AppStorage.get('Btn_title_width') as number * (id - 1) + X
-  }
-
   /**
    * 打开右侧边栏*/
   openRightSideBar() {
@@ -284,7 +255,7 @@ export default struct MyPage {
             scrollbar({ scroller: this.scroll })
 
             Stack() {
-              Tabs({ controller: this.tabController, barPosition: BarPosition.Start, index: $$this.currentIndex }) {
+              Tabs({ barPosition: BarPosition.Start, index: $$this.currentIndex }) {
                 ForEach(this.personVd, (item: BarClass) => {
                   TabContent() {
                     if (item.id === 1) {
@@ -299,29 +270,21 @@ export default struct MyPage {
 
                     }
                   }
+                  .tabBar(SubTabBarStyle.of(item.title)
+                    .indicator({
+                      borderRadius: 10,
+                      color: Color.Black,
+                      width: AppStorage.get('Btn_title_width') as number,
+                      height: 4,
+                      marginTop: 13
+                    })
+                    .labelStyle({
+                      unselectedColor: Color.Grey,
+                      selectedColor: Color.Black
+                    })
+                  )
                 })
               }
-
-              //自定义tab栏
-              Row() {
-                ForEach(this.personVd, (item: BarClass, index: number) => {
-                  this.personBtn(item, index)
-                })
-              }.width('100%')
-              .height(50)
-              .position({ x: 0, y: 0 })
-              .justifyContent(FlexAlign.SpaceAround)
-
-              //下划线
-              Divider()
-                .strokeWidth(2.5)
-                .width(AppStorage.get('Btn_title_width'))
-                .color(Color.Black)
-                .translate({
-                  x: this.getX()
-                })
-                .position({ x: '-5%', y: 52 })
-                .animation({ duration: 200 })
             }
           }
           .layoutWeight(6.5)
