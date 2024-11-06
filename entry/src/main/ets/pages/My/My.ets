@@ -285,6 +285,7 @@ export default struct MyPage {
                   )
                 })
               }
+              .edgeEffect(EdgeEffect.None)
             }
           }
           .layoutWeight(6.5)
