@@ -1,5 +1,5 @@
 import { customDialog, ImgComp, TitleBtn, TopBar } from '.'
-import { Constants, tipDialog, VideoCtl } from '../common'
+import { Constants, tipDialog, common } from '../common'
 import { CURRENT_USER } from '../constants'
 import { BarClass, TabList } from '../models'
 import { CurrentUser, UserInfo, UserInfoModel } from '../models/user'
@@ -13,9 +13,11 @@ import { photoAccessHelper } from '@kit.MediaLibraryKit'
 
 @Component
 export struct bottomNav {
+  @StorageProp('bottom_height')
+  BtmAreaHeight: number = 0
+  vdController: VideoController = common.globalVideoController
   /**
    * 顶部栏信息*/
-  @State
   topTabList: BarClass[] = TabList
   /**
    * 顶部栏索引*/
@@ -112,13 +114,13 @@ export struct bottomNav {
   /**
    * 播放视频*/
   startVideo() {
-    VideoCtl.start()
+    this.vdController.start()
   }
 
   /**
-   * 暂停视频*/
-  pauseVideo() {
-    VideoCtl.pause()
+   * 停止视频*/
+  stopVideo() {
+    this.vdController.stop()
   }
 
   // 上传视频等用的弹窗
@@ -211,16 +213,16 @@ export struct bottomNav {
           const index = this.btmTabList.findIndex(obj => obj.name === item.name)
           this.tabController.changeIndex(index)
           if (item.id !== 1) {
-            this.pauseVideo()
+            this.stopVideo()
           }
           //如果底部栏索引是首页且顶部栏索引是推荐页开启播放器
           if (item.id === 1 && this.topNavCurrentIndex === this.topTabList.length - 1) {
             this.startVideo()
           }
         }
-        //如果是功能按钮关闭播放器
+        //如果是功能按钮停止播放
         if (item.id === 3) {
-          this.pauseVideo()
+          this.stopVideo()
         }
       }
     })
@@ -232,7 +234,10 @@ export struct bottomNav {
         ForEach(this.btmTabList, (item: BarClass) => {
           TabContent() {
             if (item.name === 'Home') {
-              TopBar({ topNavCurrentIndex: this.topNavCurrentIndex })
+              TopBar({
+                topNavCurrentIndex: this.topNavCurrentIndex,
+                controller: this.vdController
+              })
             } else if (item.name === 'Friend') {
               VideoPage()
             } else if (item.name === 'Message') {
@@ -267,7 +272,7 @@ export struct bottomNav {
       }
       .width('100%')
       .height(75)
-      .position({ y: '91.1%' })
+      .margin({ bottom: this.BtmAreaHeight })
       .backgroundColor(Constants.COLOR_GrayNAV)
       .justifyContent(FlexAlign.SpaceAround)
       //全屏模态弹窗
@@ -290,7 +295,7 @@ export struct bottomNav {
               if (this.bgColor !== Color.Black) {
                 this.showDialog = !this.showDialog
                 this.IndexX = '0%' //修改整个Index界面的x坐标
-                this.pauseVideo()
+                this.startVideo()
               }
             })
           })

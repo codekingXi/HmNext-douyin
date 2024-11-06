@@ -4,12 +4,14 @@ import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
-import { VideoCtl } from '../common'
 
 /**
  * 顶部栏*/
 @Component
 export struct TopBar {
+  @StorageProp('Area_height')
+  topHeight: number = 0
+  controller?: VideoController
   /**
    * 顶部栏信息*/
   @State
@@ -88,7 +90,7 @@ export struct TopBar {
       this.tabController.changeIndex(index) //切换索引值
       //如果不是推荐页暂停播放
       if (index !== this.topTabList.length - 1) {
-        this.pauseVideo()
+        this.stopVideo()
       } else {
         this.startVideo()
       }
@@ -191,13 +193,13 @@ export struct TopBar {
   /**
    * 播放视频*/
   startVideo() {
-    VideoCtl.start()
+    this.controller!.start()
   }
 
   /**
-   * 暂停视频*/
-  pauseVideo() {
-    VideoCtl.pause()
+   * 停止视频*/
+  stopVideo() {
+    this.controller!.stop()
   }
 
   build() {
@@ -222,15 +224,15 @@ export struct TopBar {
             } else if (item.name === 'SHOP') {
               Shop()
             } else if (item.name === 'FOR YOU') {
-              VideoPage()
+              VideoPage({controller: this.controller})
             }
           }
         })
       }
       .onChange(() => {
-        //如果不是推荐页 暂停视频
+        //如果不是推荐页 停止视频
         if (this.topNavCurrentIndex !== this.topTabList.length - 1) {
-          this.pauseVideo()
+          this.stopVideo()
         }
         //是推荐页 播放视频
         if (this.topNavCurrentIndex === this.topTabList.length - 1) {
@@ -247,7 +249,7 @@ export struct TopBar {
         RightIcon: $r('app.media.icon_search'),
         LeftIconClick: () => {
           this.openLeftSideBar()
-          this.pauseVideo()
+          this.stopVideo()
         },
         RightIconClick: () => {
           this.clickSearch()
@@ -256,7 +258,7 @@ export struct TopBar {
           this.barMainContent()
         }
       })
-        .position({ y: AppStorage.get('Area_height') as number + 10 })
+        .position({ y: this.topHeight + 10 })
     }.position({ y: '-2.5%' })
   }
 }
@@ -268,6 +270,7 @@ struct Colm {
     .width('100%')
     .height('100%').backgroundColor(Color.Gray)
   }
+
   build() {
     Column() {
       Text('敬请期待')

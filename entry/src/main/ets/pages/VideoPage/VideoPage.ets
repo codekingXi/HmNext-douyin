@@ -1,8 +1,7 @@
-import { VideoCtl } from '../../common'
 import { Comment, ReplyInput, Sidebar } from '../../components'
 import { commentDataModel, DataSource as videoData, mediaInfo, mediaList } from '../../models'
 
-import video from '../../common/data/videos.json'
+//import video from '../../common/data/videos.json'
 
 /**视频页*/
 @Entry
@@ -10,20 +9,25 @@ import video from '../../common/data/videos.json'
 export struct VideoPage {
   /**
    * 索引*/
-  @State
+  @Provide
   activeIndex: number = 0
+  controller?: VideoController
   /**
    * 懒加载视频数据列表*/
-  videoList = new videoData(video)
+  videoList = new videoData(mediaList)
 
   build() {
     Swiper() {
-      LazyForEach(this.videoList, (item: string, index: number) => {
-        playVideo({ index, activeIndex: this.activeIndex })
-      })
-      // ForEach(mediaList, (item: mediaInfo, index: number) => {
-      //   playVideo({ item, index })
+      // LazyForEach(this.videoList, (item: string, index: number) => {
+      //   playVideo({ index, activeIndex: this.activeIndex })
       // })
+      LazyForEach(this.videoList, (item: mediaInfo, index: number) => {
+        playVideo({
+          item,
+          index,
+          videoController: this.controller
+        })
+      })
     }
     .index($$this.activeIndex)
     //关闭指示器
@@ -39,44 +43,44 @@ export struct VideoPage {
 struct playVideo {
   /**
    * 接收传入的视频索引*/
+  @Require
   @Prop
-  index: number = -1 //默认值给负数 防止对不上数据
+  index: number = -1
   @Prop
   item: mediaInfo
   /**
    * 播放的索引*/
-  @Prop
+  @Consume
   @Watch('updateActiveIndex')
   activeIndex: number
   /**
    * 视频播放状态*/
   @State
-  playIng: boolean = false
+  playIng: boolean = true
   @Consume
   isShowSpeed: boolean
   @State
   videoSpeed: number = 1 //视频倍速
   @Provide
   showCommentDialog: boolean = false
-
-  startVideo() {
-    VideoCtl.start()
-    this.playIng = true
-  }
-
-  pauseVideo() {
-    VideoCtl.pause()
-    this.playIng = false
-  }
+  videoController = new VideoController()
 
   /**
    * 更新切换索引的状态*/
   updateActiveIndex() {
-    if (this.activeIndex === this.index) {
-      this.startVideo()
-    } else {
-      this.pauseVideo()
-    }
+    this.activeIndex === this.index ? this.startVideo() : this.stopVideo()
+  }
+
+  startVideo() {
+    this.videoController.start()
+  }
+
+  pauseVideo() {
+    this.videoController.pause()
+  }
+
+  stopVideo() {
+    this.videoController.stop()
   }
 
   startSpeed() {
@@ -205,10 +209,16 @@ struct playVideo {
   build() {
     Stack() {
       Video({
-        src: `${video[this.index].video.play_addr.url_list}`,
-        controller: VideoCtl,
+        src: this.item.src, //`${video[this.index].video.play_addr.url_list}`,
+        controller: this.videoController,
         currentProgressRate: this.videoSpeed
-      })//半模态弹层
+      })
+        .onStart(() => {
+          this.playIng = true
+        })
+        .onPause(() => {
+          this.playIng = false
+        })
         .bindSheet($$this.showCommentDialog, this.Dialog, {
           height: '65%',
           backgroundColor: '#ffefecec'
@@ -224,9 +234,9 @@ struct playVideo {
         ))
         .width('100%')
         .height('100%')
-        .autoPlay(this.activeIndex === this.index ? true : false)
+        .autoPlay(this.index === this.activeIndex)
         .objectFit(ImageFit.Contain)//推荐使用压缩的方式
-        .muted(this.activeIndex === this.index ? false : true)//轮到播放就取静音
+        .muted(this.activeIndex === this.index ? false : true)//轮到播放就取消静音
         .loop(true)
         .controls(false)//隐藏控制条
         .onAppear(() => {
@@ -242,12 +252,8 @@ struct playVideo {
       //侧边功能区组件
       Sidebar()
     }.onClick(() => {
-      //点击控制播放和暂停
-      if (this.playIng) { //默认在播放
-        this.pauseVideo()
-      } else {
-        this.startVideo()
-      }
+      //点击控制播放和暂停 默认在播放
+      this.playIng ? this.pauseVideo() : this.startVideo()
     })
   }
 }

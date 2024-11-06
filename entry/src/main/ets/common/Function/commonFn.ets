@@ -22,18 +22,14 @@ const showToast =
     })
   }
 
-/**
- * 推荐页视频控制器*/
-const VideoCtl: VideoController = new VideoController()
-
-
 class commonFn {
+  globalVideoController:VideoController = new VideoController()
   /**
    * 生成11位数的抖音号
    * @param n 最小值
    * @param m 最大值
    * */
-  static creteRandom(n: number = 9999999999, m: number = 10000000000): number {
+  creteRandom(n: number = 9999999999, m: number = 10000000000): number {
     return Math.floor(Math.random() * (m - n + 1)) + m
   }
 
@@ -41,9 +37,9 @@ class commonFn {
    * 生成固定范围类的随机数
    * @param n 最小值
    * @param m 最大值*/
-  static creteUserID(n: number, m: number): number {
+ creteUserID(n: number, m: number): number {
     return Math.floor(Math.random() * (n + 1)) + m
   }
 }
-
-export { showToast as tipDialog, VideoCtl, commonFn }
+const common = new commonFn()
+export { showToast as tipDialog, common }
