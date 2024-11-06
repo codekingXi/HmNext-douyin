@@ -3,7 +3,7 @@ import { router } from '@kit.ArkUI'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
 import { userData } from '../../api'
-import { Constants, commonFn, tipDialog } from '../../common'
+import { Constants, common, tipDialog } from '../../common'
 
 @Extend(Text)
 function textStyle() {
@@ -56,9 +56,9 @@ struct LoginPage {
 
   //初始化时自动获取一些基本数据
   aboutToAppear(): void {
-    this.userInfo.tiktokNub = commonFn.creteRandom() //获取随机生成的抖音号
+    this.userInfo.tiktokNub = common.creteRandom() //获取随机生成的抖音号
     this.userInfo.avatar = 'https://c-ssl.dtstatic.com/uploads/blog/202206/16/20220616151457_21591.thumb.400_0.jpg'
-    this.userInfo.user_id = commonFn.creteUserID(11, 100).toString() //获取随机生产的id
+    this.userInfo.user_id = common.creteUserID(11, 100).toString() //获取随机生产的id
   }
 
   /*
