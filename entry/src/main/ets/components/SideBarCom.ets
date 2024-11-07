@@ -8,7 +8,7 @@ export struct SideBarCom {
   @State
   itemData: object[] = []
   /**
-   * 右侧变栏内容*/
+   * 右侧边栏内容*/
   @BuilderParam
   contentItem: (item: object) => void
   /**
