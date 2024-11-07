@@ -552,7 +552,7 @@ struct Index {
           this.topContent()
         },
         itemData: this.leftCardData,
-        contentBox: (item: object) => {
+        contentItem: (item: object) => {
           this.CardBox(item as BarClass)
         },
         sideBgColor: '#ffefefef',

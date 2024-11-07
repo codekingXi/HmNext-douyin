@@ -1,5 +1,9 @@
 /**
  * 侧边栏
+ * @param itemData 侧边栏核心数据
+ * @param contentItem 侧边栏内容
+ * @param topContentArea 顶部内容插槽
+ * @param contentMore 更多功能插槽
  * */
 
 @Component
@@ -8,13 +12,9 @@ export struct SideBarCom {
   @State
   itemData: object[] = []
   /**
-   * 右侧边栏内容*/
+   * 侧边栏内容*/
   @BuilderParam
   contentItem: (item: object) => void
-  /**
-   * 左侧边栏内容*/
-  @BuilderParam
-  contentBox: (item: object) => void
   /**
    * 更多功能*/
   @BuilderParam
@@ -39,14 +39,11 @@ export struct SideBarCom {
             this.topContentArea()
           }
         }
-
+        //核心数据内容
         ForEach(this.itemData, (item: object) => {
           ListItem() {
             if (this.contentItem) {
               this.contentItem(item)
-            }
-            if (this.contentBox) {
-              this.contentBox(item)
             }
           }
         })
