@@ -28,3 +28,5 @@ export { scrollbar } from './scrollbar'
 export { bottomNav } from './bottomNav'
 
 export { ImgComp } from './ImgComp'
+
+export { iconContent } from './IconContent'

@@ -1,5 +1,5 @@
 import { BarClass } from '../../models'
-import { bottomNav, Card, CardItem, iconBtn, SideBarCom } from '../../components'
+import { bottomNav, Card, CardItem, iconBtn, iconContent, SideBarCom } from '../../components'
 import { router } from '@kit.ArkUI'
 import { CURRENT_USER } from '../../constants'
 import { Tiktok } from '../../utils/setting'
@@ -457,38 +457,18 @@ struct Index {
    * 常用功能*/
   @Builder
   CommonFn() {
-    Grid() {
-      ForEach(this.commonFnItemData, (item: BarClass) => {
-        GridItem() {
-          iconBtn({
-            icon: item.icon,
-            title: item.title
-          })
-            .onClick(() => {
-              item.click && item.click()
-            })
-        }.margin({ top: 15, bottom: 10 })
-      })
-    }.columnsTemplate('1fr 1fr 1fr')
+    iconContent({
+      itemData: this.commonFnItemData
+    })
   }
 
   /**
    * 生活动态*/
   @Builder
   lifeDynamics() {
-    Grid() {
-      ForEach(this.lifeDynamicsItemData, (item: BarClass) => {
-        GridItem() {
-          iconBtn({
-            icon: item.icon,
-            title: item.title
-          })
-            .onClick(() => {
-              item.click && item.click()
-            })
-        }.margin({ top: 15, bottom: 10 })
-      })
-    }.columnsTemplate('1fr 1fr 1fr')
+    iconContent({
+      itemData: this.lifeDynamicsItemData
+    })
   }
 
   //右侧边栏的结构
