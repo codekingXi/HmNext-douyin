@@ -175,6 +175,23 @@ struct playVideo {
     .backgroundColor(Color.White)
   }
 
+  @Consume speedColor: string
+  @Consume speedSize: number
+
+  startSpeedAnimation() {
+    animateTo({ duration: 500, iterations: -1 }, () => {
+      this.speedColor = '#ff98fd25'
+      this.speedSize = 40
+    })
+  }
+
+  stopSpeedAnimation() {
+    animateTo({ duration: 500, iterations: -1 }, () => {
+      this.speedColor = '#ff4e4e4e'
+      this.speedSize = 30
+    })
+  }
+
   build() {
     Stack({ alignContent: Alignment.BottomStart }) {
       Video({
@@ -196,9 +213,11 @@ struct playVideo {
           LongPressGesture()
             .onAction(() => {
               this.startSpeed()
+              this.startSpeedAnimation()
             })
             .onActionEnd(() => {
               this.closeSpeed()
+              this.stopSpeedAnimation()
             })
         ))
         .width('100%')
