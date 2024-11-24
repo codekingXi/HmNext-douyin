@@ -16,7 +16,7 @@ export class Constants {
    * 侧边栏钱包背景色*/
   static readonly COLOR_SiDerPay = 'rgba(227, 227, 227, 0.50)'
 
-
+  static readonly COLOR_DIALOG_BG = 'rgba(0, 0, 0, 0.50)'
   //统一路由管理
   /**
    * 加载登录页*/
