@@ -1,4 +1,3 @@
-import { Constants } from '../common'
 import { Fn } from '../pages/Index/Index'
 
 /**
@@ -8,16 +7,17 @@ import { Fn } from '../pages/Index/Index'
 struct ReplyInput {
   @State
   content: string = '' //输入框内容
-  publishComment: (content: string) => void = () => {}
+  publishComment: (content: string) => void = () => {
+  }
   iptContent: string = ''
 
   build() {
-    Row({ space: 10 }) {
+    Row() {
       TextInput({ placeholder: this.iptContent, text: $$this.content })
         .textAlign(TextAlign.Center)
-        .layoutWeight(1)
-        .height(40)
-        .borderRadius(40)//键盘回车事件
+        .width('90%')
+        .height(45)
+        .borderRadius(40)
         .onSubmit(() => {
           if (this.content) {
             this.publishComment(this.content)
@@ -30,10 +30,17 @@ struct ReplyInput {
           }
         })
     }
-    .width('95%')
-    .height(40)
-    .borderRadius(20)
-    .backgroundColor('#fff3f3f3')
+    .width('100%')
+    .padding({ top: 20 })
+    .margin({ bottom: 30 })
+    .height(50)
+    .justifyContent(FlexAlign.Center)
+    .border({
+      width: {
+        top: .5
+      },
+      color: Color.Gray
+    })
   }
 }
 
