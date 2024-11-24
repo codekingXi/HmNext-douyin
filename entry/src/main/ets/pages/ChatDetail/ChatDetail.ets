@@ -6,6 +6,7 @@ import { UserInfo, UserInfoModel } from '../../models'
 import { MessageInfo, MessageInfoModel } from '../../models/message'
 import { getRequestMessage } from '../../utils/request'
 import { Tiktok } from '../../utils/setting'
+
 /**
  * 聊天详情页*/
 @Entry
@@ -90,7 +91,7 @@ struct ChatDetail {
             .zIndex(2)
           //顶部的头像和聊天对象用户名信息
           Row({ space: 10 }) {
-            Image(this.talkUser.avatar===undefined?'':this.talkUser.avatar).width(40).height(40).borderRadius(20)
+            Image(this.talkUser.avatar === undefined ? '' : this.talkUser.avatar).width(40).height(40).borderRadius(20)
             Text(this.textInputIng ? '对方正在输入' : this.talkUser.username)
               .fontWeight(400)
               .fontSize(20)
@@ -119,7 +120,7 @@ struct ChatDetail {
         iptContent: '发送消息', publishComment: (content: string) => {
           this.sendTextMessage(content)
         }
-      }).layoutWeight(1)
+      })
     }
     .height('100%').justifyContent(FlexAlign.SpaceBetween).margin({ top: '10%' }).padding({ bottom: '10%' })
   }
