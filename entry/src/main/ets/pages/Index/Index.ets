@@ -43,6 +43,7 @@ struct Index {
 
   onBackPress(): boolean | void {
     let now = Date.now() //获取时间戳
+    //1秒内重复触发就退出程序
     if (now - this.backTime < 1000) {
       //获取声明公共UI能力上下文方法
       const ctx = getContext(this) as common.UIAbilityContext
