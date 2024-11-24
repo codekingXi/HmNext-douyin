@@ -1,6 +1,6 @@
-import { sideData } from '../models'
+import { mediaType, sideData } from '../models'
 import { sideDataModel } from '../models/sidebarData'
-import { tipDialog } from '../common'
+import { common, tipDialog } from '../common'
 import { ImgComp } from '.'
 
 /**
@@ -9,12 +9,14 @@ import { ImgComp } from '.'
 struct Sidebar {
   @Consume
   showCommentDialog: boolean
+  @Prop
+  item: mediaType //视频数据
 
   changeLike() {
     if (this.sideDataList[0].isLike) {
-      this.sideDataList[0].loveNum--
+      this.sideDataList[0].Num!++
     } else {
-      this.sideDataList[0].loveNum++
+      this.sideDataList[0].Num!--
     }
     this.sideDataList[0].isLike = !this.sideDataList[0].isLike
   }
@@ -23,35 +25,34 @@ struct Sidebar {
   @State
   sideDataList: sideDataModel[] = [
     new sideDataModel({
-      id: 1,
+      name: '点赞',
       imgUrl: $r('app.media.love'),
-      loveNum: 2010,
+      Num: this.item.statistics.digg_count,
       isLike: false,
       click: () => {
         this.changeLike()
       }
     }),
     new sideDataModel({
-      id: 2,
+      name: '评论',
       imgUrl: $r('app.media.chat'),
-      loveNum: 1650,
+      Num: this.item.statistics.comment_count,
       click: () => {
         this.showCommentDialog = !this.showCommentDialog
-        this.getUIContext()
       }
     }),
     new sideDataModel({
-      id: 3,
+      name: '收藏',
       imgUrl: $r('app.media.collect'),
-      loveNum: 344,
+      Num: this.item.statistics.comment_count,
       click: () => {
         tipDialog()
       }
     }),
     new sideDataModel({
-      id: 4,
+      name: '分享',
       imgUrl: $r('app.media.transmit'),
-      loveNum: 568,
+      Num: this.item.statistics.share_count,
       click: () => {
         tipDialog()
       }
@@ -65,8 +66,7 @@ struct Sidebar {
         sideIcon({ item: item })
       })
     }.zIndex(2)
-    .position({ x: '85%', y: '50%' })
-
+    .position({ x: '82.5%', y: '50%' })
   }
 }
 
@@ -96,7 +96,7 @@ struct sideIcon {
   build() {
     Column() {
       ImgComp({
-        imgWidth: 50,
+        imgWidth: 45,
         imgSrc: this.item.imgUrl,
         isFillColor: this.item.isLike,
         color_1: Color.Red,
@@ -106,10 +106,15 @@ struct sideIcon {
         .onClick(() => {
           this.change()
         })
-        .animation({ duration: 200 })
-      Text(this.item.loveNum.toString())
-        .fontColor(Color.White)
-        .fontSize(16)
+      Text(this.item.Num! > 9999
+        ? ((this.item.Num!) / 10000).toFixed(1) + '万'
+        : this.item.Num!.toString()).iconSty()
     }
   }
+}
+
+@Extend(Text)
+function iconSty() {
+  .fontColor(Color.White)
+  .fontSize(16)
 }
