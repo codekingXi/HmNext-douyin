@@ -17,6 +17,8 @@ export struct MessagePage {
   showDialog: boolean
   @Consume
   IndexX: number | string
+  @StorageProp('Area_height')
+  topArea: number = 0
 
   aboutToAppear(): void {
     this.getUserList()
@@ -84,7 +86,7 @@ export struct MessagePage {
                 }.width('100%').alignItems(HorizontalAlign.Start)
               }
             }.width('100%')
-          }.layoutWeight(1)
+          }
           .onClick(() => {
             router.pushUrl({
               url: Constants.LOADING_ChatDetail,
@@ -92,8 +94,16 @@ export struct MessagePage {
             })
           })
         })
-      }.scrollBar(BarState.Off).margin({ top: 10, left: 15, right: 15 })
+      }.layoutWeight(1)
+      .scrollBar(BarState.Off)
+      .margin({
+        top: 10,
+        left: 15,
+        right: 15,
+        bottom: 59
+      })
+
     }.width('100%').height('100%')
-    .margin({ top: AppStorage.get('Area_height') as number })
+    .margin({ top: this.topArea })
   }
 }
