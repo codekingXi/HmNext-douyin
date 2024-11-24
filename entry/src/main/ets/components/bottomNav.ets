@@ -228,6 +228,11 @@ export struct bottomNav {
     })
   }
 
+  @Provide
+  speedColor: string = '#ff4e4e4e'
+  @Provide
+  speedSize: number = 16
+
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
@@ -257,15 +262,20 @@ export struct bottomNav {
             this.bottomBar(item, index)
           })
         } else {
-          Row() {
+          Row({ space: 5 }) {
             Text('2x 快进中')
               .fontColor(Color.White)
               .fontSize(24)
-          }.width('100%').height(75).justifyContent(FlexAlign.Center)
-          .shadow({
-            radius: 20,
-            offsetY: -20,
-            color: Color.Blue
+            Text('>')
+              .fontColor(this.speedColor)
+              .fontSize(this.speedSize)
+          }
+          .width('100%')
+          .height(75)
+          .justifyContent(FlexAlign.Center)
+          .linearGradient({
+            direction: GradientDirection.Top, //渐变方向
+            colors: [['rgba(0, 0, 0, 0.3)', 0.3], ['rgba(0, 0, 0, 0)', 1]]
           })
         }
 
