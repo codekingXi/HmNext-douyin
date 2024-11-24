@@ -1,7 +1,7 @@
 //统一导出
-export { mediaInfo, mediaInfoModel, mediaList,personVdDta } from './mediaData'
+export { mediaInfo, mediaInfoModel, mediaList, personVdDta } from './mediaData'
 
-export { BarClass,TabList } from './barData'
+export { BarClass, TabList } from './barData'
 
 export { sideData } from './sidebarData'
 
@@ -11,3 +11,6 @@ export { UserInfo, UserInfoModel } from './user'
 
 export { DataSource } from './DataSource'
 
+export { cities } from './cityNames'
+
+export { mediaType } from './mediaType'
