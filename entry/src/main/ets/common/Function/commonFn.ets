@@ -1,7 +1,10 @@
 /*
  * 公共方法类库*/
 import { promptAction } from '@kit.ArkUI'
+import { cities } from '../../models'
 import { Constants } from '../Constants'
+import { util } from '@kit.ArkTS'
+
 
 /**
  * 提示弹窗
@@ -9,21 +12,40 @@ import { Constants } from '../Constants'
  * @default 默认值:功能未完善
  * @return {Function} 返回一个弹窗信息*/
 const showToast =
-  (msg: string = "功能未完善", bgColor: ResourceColor = Constants.COLOR_GREY, time?: number, offset?: Offset,
-    Alm?: Alignment) => {
+  (message: string = "功能未完善", backgroundColor: ResourceColor = Constants.COLOR_DIALOG_BG, time?: number, offset?: Offset,
+    alignment?: Alignment) => {
     promptAction.showToast({
-      message: msg,
-      backgroundColor: bgColor,
+      message,
+      backgroundColor,
       textColor: Color.White,
       duration: time ? time : 1500,
       backgroundBlurStyle: BlurStyle.NONE,
-      alignment: Alm,
-      offset: offset
+      alignment,
+      offset
     })
   }
 
 class commonFn {
-  globalVideoController:VideoController = new VideoController()
+  globalVideoController: VideoController = new VideoController()
+
+  getJSONFIleData(path: string) {
+    return new util.TextDecoder().decodeToString(getContext().resourceManager.getRawFileContentSync(path))
+  }
+
+  /**
+   * 获取随机地名*/
+  getRandomCity() {
+    const randomIndex = Math.floor(Math.random() * cities.length)
+    return cities[randomIndex]
+  }
+
+  /**
+   * 随机点赞量*/
+  getRandomLikes() {
+    const randomLikes = Math.floor(Math.random() * 10000)
+    return randomLikes
+  }
+
   /**
    * 生成11位数的抖音号
    * @param n 最小值
@@ -37,9 +59,11 @@ class commonFn {
    * 生成固定范围类的随机数
    * @param n 最小值
    * @param m 最大值*/
- creteUserID(n: number, m: number): number {
+  creteUserID(n: number, m: number): number {
     return Math.floor(Math.random() * (n + 1)) + m
   }
 }
+
 const common = new commonFn()
+
 export { showToast as tipDialog, common }
