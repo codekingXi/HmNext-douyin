@@ -2,6 +2,8 @@ import { common } from '../../common'
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from '../../components'
 import { commentDataModel, DataSource as videoData, mediaInfo, mediaType } from '../../models'
 import { tiktok_ChatStory } from '../../utils'
+import { util } from '@kit.ArkTS'
+
 
 /**视频页*/
 @Entry
@@ -69,6 +71,10 @@ struct playVideo {
   @Provide
   showCommentDialog: boolean = false
   videoController = new VideoController()
+  //评论的数据
+  @State commentList: commentDataModel[] = []
+  @Consume speedColor: string
+  @Consume speedSize: number
 
   /**
    * 更新切换索引的状态*/
@@ -98,17 +104,14 @@ struct playVideo {
     this.videoSpeed = 1
   }
 
-  //评论的数据
-  @State commentList: commentDataModel[] = []
-
-  async aboutToAppear(): Promise<void> {
+  aboutToAppear() {
     this.commentList = tiktok_ChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
   }
 
   //添加评论方法
   addComment(content: string) {
     const msg = new commentDataModel({
-      id: Math.floor(Math.random() * Infinity),
+      id: Number(util.generateRandomUUID()),
       avatar: 'https://picx.zhimg.com/027729d02bdf060e24973c3726fea9da_l.jpg?source=06d4cd63',
       author: 'smallMiSu7',
       content,
@@ -116,7 +119,7 @@ struct playVideo {
         .toString()
         .padStart(2, '0'))}`,
       area: common.getRandomCity(),
-      likeNum: Math.floor(Math.random() * 10000),
+      likeNum: Math.floor(Math.random() * 9999999 + 1),
       likeFlag: false
     })
     //写到ui
@@ -153,7 +156,7 @@ struct playVideo {
       List({ space: 20 }) {
         ForEach(this.commentList, (item: commentDataModel, index: number) => {
           ListItem() {
-            Comment({ item: item })
+            Comment({ item: item, videoItem: this.item })
           }
           .swipeAction({
             end: this.endMegItem(item, index)
@@ -174,9 +177,6 @@ struct playVideo {
     .height('100%')
     .backgroundColor(Color.White)
   }
-
-  @Consume speedColor: string
-  @Consume speedSize: number
 
   startSpeedAnimation() {
     animateTo({ duration: 500, iterations: -1 }, () => {
@@ -208,7 +208,7 @@ struct playVideo {
         .bindSheet($$this.showCommentDialog, this.Dialog, {
           height: '65%',
           backgroundColor: '#ffefecec'
-        })// 手势
+        })
         .gesture(GestureGroup(GestureMode.Parallel,
           LongPressGesture()
             .onAction(() => {
