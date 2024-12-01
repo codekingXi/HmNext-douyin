@@ -2,7 +2,7 @@
  * 评论接口*/
 export interface commentData{
   avatar: ResourceStr //头像
-  id:number|string //评论的id
+  id:number //评论的id
   content:string //评论内容
   time:string //发表时间
   author:string //作者
@@ -13,7 +13,7 @@ export interface commentData{
 @Observed //观察类的变化
 export class commentDataModel implements commentData {
   avatar: ResourceStr = ''
-  id: number|string = 0
+  id: number = 0
   content: string = ''
   time: string = ''
   author: string = ''
