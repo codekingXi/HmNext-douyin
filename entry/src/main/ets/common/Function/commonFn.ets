@@ -12,8 +12,9 @@ import { util } from '@kit.ArkTS'
  * @default 默认值:功能未完善
  * @return {Function} 返回一个弹窗信息*/
 const showToast =
-  (message: string = "功能未完善", backgroundColor: ResourceColor = Constants.COLOR_DIALOG_BG, time?: number, offset?: Offset,
-    alignment?: Alignment) => {
+  (message: string = "功能未完善", time?: number, alignment?: Alignment,
+    backgroundColor: ResourceColor = Constants.COLOR_DIALOG_BG, offset?: Offset
+  ) => {
     promptAction.showToast({
       message,
       backgroundColor,
@@ -21,7 +22,7 @@ const showToast =
       duration: time ? time : 1500,
       backgroundBlurStyle: BlurStyle.NONE,
       alignment,
-      offset
+      offset:offset?offset:{dx:null,dy:200}
     })
   }
 
