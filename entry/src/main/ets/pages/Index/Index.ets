@@ -50,7 +50,7 @@ struct Index {
       ctx.terminateSelf() //终止程序
     } else {
       this.backTime = now
-      tipDialog('再按一次退出', Constants.COLOR_OpacityBlack, 2000, { dx: 0, dy: 200 }, Alignment.Top)
+      tipDialog('再按一次退出', 2000, Alignment.Top)
     }
     return true //使用自定义功能而非router
   }
