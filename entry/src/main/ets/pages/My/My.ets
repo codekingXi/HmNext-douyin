@@ -2,7 +2,7 @@ import { BarClass, DataSource, UserInfoModel, mediaInfo } from '../../models'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common'
-import { iconBtn, ImgComp, scrollbar, Skeleton } from '../../components'
+import { iconBtn, ImgComp, scrollbar } from '../../components'
 import { Constants } from '../../common/Constants'
 import { personVdDta } from '../../models'
 
@@ -15,7 +15,7 @@ export default struct MyPage {
     //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
     this.info = new Tiktok(getContext()).getCurrentUser()
     //重新赋值宽度
-    AppStorage.set('Btn_title_width', AppStorage.get('Screen_width') as number / this.personVd.length)
+    AppStorage.set(Constants.BTN_TITLE_WIDTH, AppStorage.get(Constants.SCREEN_WIDTH) as number / this.personVd.length)
   }
 
   @Styles
@@ -100,7 +100,7 @@ export default struct MyPage {
   currentIndex: number = 0
   /**
    * 按钮标签宽度*/
-  @State
+  @StorageProp(Constants.BTN_TITLE_WIDTH)
   btnTitleWidth: number = 0
   tabController: TabsController = new TabsController()
 
@@ -118,203 +118,195 @@ export default struct MyPage {
   scroll: Scroller = new Scroller()
 
   build() {
-    if (this.info!) {
-      Scroll() {
-
-        //把上下两个模块包在一起
-        Column() {
-          //顶部背景区
+    Scroll() {
+      //把上下两个模块包在一起
+      Column() {
+        //顶部背景区
+        Stack() {
+          //右侧按钮
           Stack() {
-            //右侧按钮
-            Stack() {
-              Row({ space: 20 }) {
-                Row({ space: 5 }) {
+            Row({ space: 20 }) {
+              Row({ space: 5 }) {
+                ImgComp({
+                  imgWidth: 16,
+                  imgSrc: $r("app.media.icon_connect")
+                })
+                Text("新访客1").fontSize(14).fontColor(Color.White)
+              }.btnBg().width(90).justifyContent(FlexAlign.Center)
+              .onClick(() => {
+                tipDialog()
+              })
+
+              //搜索和功能按钮区
+              Row({ space: 10 }) {
+                Row() {
                   ImgComp({
-                    imgWidth: 16,
-                    imgSrc: $r("app.media.icon_connect")
+                    imgWidth: 28,
+                    imgSrc: $r("app.media.icon_search")
                   })
-                  Text("新访客1").fontSize(14).fontColor(Color.White)
-                }.btnBg().width(90).justifyContent(FlexAlign.Center)
+                }.btnBg().justifyContent(FlexAlign.Center)
                 .onClick(() => {
                   tipDialog()
                 })
 
-                //搜索和功能按钮区
-                Row({ space: 10 }) {
-                  Row() {
-                    ImgComp({
-                      imgWidth: 28,
-                      imgSrc: $r("app.media.icon_search")
-                    })
-                  }.btnBg().justifyContent(FlexAlign.Center)
-                  .onClick(() => {
-                    tipDialog()
+                Row() {
+                  ImgComp({
+                    imgWidth: 16,
+                    imgSrc: $r("app.media.icon_Tab")
                   })
-
-                  Row() {
-                    ImgComp({
-                      imgWidth: 16,
-                      imgSrc: $r("app.media.icon_Tab")
-                    })
-                  }.btnBg().justifyContent(FlexAlign.Center)
-                  .onClick(() => {
-                    animateTo({ duration: 200 }, () => {
-                      this.openRightSideBar()
-                    })
+                }.btnBg().justifyContent(FlexAlign.Center)
+                .onClick(() => {
+                  animateTo({ duration: 200 }, () => {
+                    this.openRightSideBar()
                   })
-                }
-
-              }
-              .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 15 })
-            }.width('100%').height('50%').zIndex(3).position({ y: 0 })
-
-            Stack({ alignContent: Alignment.BottomStart }) {
-              Row() {
-                //背景视频
-                Video({
-                  src: 'https://v1.kwaicdn.com/ksc2/NcKwArc6Icb5FtM__mLH7yIXcGMT8VdgqZwh0y8XdnhdMifsiOJoGDui50LTSWSVz0yfU8-eSGb6MLUXQ-XIzqZM3MajJYtZ_9sKEEA2wZkTFsJJ5531HGLO8ReAUWP3ilECPqdhWcxtTWrXpndBfkAH21UwwWPbM10CiLD5PIp2NcsfJeg7C1Afv9jYhcL5.mp4?pkey=AAW0sM4og4cgWE4srPPimT76JzbASCdEZQI0iJhZujR9aT7Ta1JuzhgQqkCNlzYJOXWik1Gm1NCl2NmjWylzhdU2EdQEZw_PCWek54CT_B5TXLJSeBxXwo-iYhxQAe3YNHU&tag=1-1720429371-unknown-0-lx5gpoy1w5-8a45ccb1560e6069&clientCacheKey=3xixmdt8qzd8gqs_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp'
                 })
-                  .layoutWeight(1)
-                  .height('150%')
-                  .vdSty()
               }
 
-              Row() {
-                Row({ space: 20 }) {
-                  Row() {
-                    //头像
-                    ImgComp({
-                      imgWidth: 100,
-                      imgSrc: this.info.avatar,
-                      bordWidth: 3,
-                      bordColor: Color.White,
-                      bordRadius: 50
-                    })
-                      .onClick(() => {
-                        //打开自定义弹窗
-                        this.showDialog = true
-                        this.bgColor = Color.Black
-                      })
-                  }
-
-                  Column({ space: 5 }) {
-                    Text(this.info.username).fontColor(Color.White)
-                    Text(`抖音号:${this.info.tiktokNub}`)
-                      .fontColor(Color.Gray)
-                      .fontSize(16)
-                  }.width('100%').alignItems(HorizontalAlign.Start)
-
-                }.margin({ left: 20 })
-              }
-              .width('100%').height('50%').linearGradient({
-                direction: GradientDirection.Top, //渐变方向
-                colors: [['rgba(7, 7, 7, 0.7)', 0.4], ['rgba(78, 77, 77, 0)', 1]]
-              })
             }
-          }.layoutWeight(3.5).width('100%').margin({ bottom: -10 })
+            .width('100%').height(50).justifyContent(FlexAlign.End).margin({ top: 10, right: 15 })
+          }.width('100%').height('50%').zIndex(3).position({ y: 0 })
 
-          //白色个人内容区
-          Column() {
-            //顶部个人信息
-            Row({ space: 20 }) {
-              ForEach(this.infoTitle, (item: BarClass) => {
-                Row({ space: 5 }) {
-                  Text(item.title).fontWeight(600).fontSize(20)
-                  Text(`${item.rightContent}`).fontSize(16).fontColor(Color.Gray)
-                }.onClick(() => {
-                  tipDialog()
-                })
-              })
-            }.width('100%')
-            .padding(15)
-
-            //个人介绍
+          Stack({ alignContent: Alignment.BottomStart }) {
             Row() {
-              Text(this.personInfo === undefined ? 'I‘m form UK❥(^_-)' : this.personInfo).fontSize(14)
-                .fontColor(Color.Black).textAlign(TextAlign.Start)
-            }.width('100%').padding(10)
+              //背景视频
+              Video({
+                src: 'https://v1.kwaicdn.com/ksc2/NcKwArc6Icb5FtM__mLH7yIXcGMT8VdgqZwh0y8XdnhdMifsiOJoGDui50LTSWSVz0yfU8-eSGb6MLUXQ-XIzqZM3MajJYtZ_9sKEEA2wZkTFsJJ5531HGLO8ReAUWP3ilECPqdhWcxtTWrXpndBfkAH21UwwWPbM10CiLD5PIp2NcsfJeg7C1Afv9jYhcL5.mp4?pkey=AAW0sM4og4cgWE4srPPimT76JzbASCdEZQI0iJhZujR9aT7Ta1JuzhgQqkCNlzYJOXWik1Gm1NCl2NmjWylzhdU2EdQEZw_PCWek54CT_B5TXLJSeBxXwo-iYhxQAe3YNHU&tag=1-1720429371-unknown-0-lx5gpoy1w5-8a45ccb1560e6069&clientCacheKey=3xixmdt8qzd8gqs_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp'
+              })
+                .layoutWeight(1)
+                .height('150%')
+                .vdSty()
+            }
 
-            //功能区
-            List({ space: 30, scroller: this.scroll }) {
-              ForEach(this.personFn, (item: BarClass) => {
-                ListItem() {
-                  iconBtn({ icon: item.icon, title: item.title })
+            Row() {
+              Row({ space: 20 }) {
+                Row() {
+                  //头像
+                  ImgComp({
+                    imgWidth: 100,
+                    imgSrc: this.info.avatar,
+                    bordWidth: 3,
+                    bordColor: Color.White,
+                    bordRadius: 50
+                  })
                     .onClick(() => {
-                      item.click && item.click()
+                      //打开自定义弹窗
+                      this.showDialog = true
+                      this.bgColor = Color.Black
                     })
                 }
+
+                Column({ space: 5 }) {
+                  Text(this.info.username).fontColor(Color.White)
+                  Text(`抖音号:${this.info.tiktokNub}`)
+                    .fontColor(Color.Gray)
+                    .fontSize(16)
+                }.width('100%').alignItems(HorizontalAlign.Start)
+
+              }.margin({ left: 20 })
+            }
+            .width('100%').height('50%').linearGradient({
+              direction: GradientDirection.Top, //渐变方向
+              colors: [['rgba(7, 7, 7, 0.7)', 0.4], ['rgba(78, 77, 77, 0)', 1]]
+            })
+          }
+        }.layoutWeight(3.5).width('100%').margin({ bottom: -10 })
+
+        //白色个人内容区
+        Column() {
+          //顶部个人信息
+          Row({ space: 20 }) {
+            ForEach(this.infoTitle, (item: BarClass) => {
+              Row({ space: 5 }) {
+                Text(item.title).fontWeight(600).fontSize(20)
+                Text(`${item.rightContent}`).fontSize(16).fontColor(Color.Gray)
+              }.onClick(() => {
+                tipDialog()
+              })
+            })
+          }.width('100%')
+          .padding(15)
+
+          //个人介绍
+          Row() {
+            Text(this.personInfo === undefined ? 'I‘m form UK❥(^_-)' : this.personInfo).fontSize(14)
+              .fontColor(Color.Black).textAlign(TextAlign.Start)
+          }.width('100%').padding(10)
+
+          //功能区
+          List({ space: 30, scroller: this.scroll }) {
+            ForEach(this.personFn, (item: BarClass) => {
+              ListItem() {
+                iconBtn({ icon: item.icon, title: item.title })
+                  .onClick(() => {
+                    item.click && item.click()
+                  })
+              }
+            })
+          }
+          .edgeEffect(EdgeEffect.None)
+          .listDirection(Axis.Horizontal)
+          .padding(20)
+          .scrollBar(BarState.Off)
+          .height(100)
+
+          //滑动条
+          scrollbar({ scroller: this.scroll })
+
+          Stack() {
+            Tabs({ barPosition: BarPosition.Start, index: $$this.currentIndex }) {
+              ForEach(this.personVd, (item: BarClass) => {
+                TabContent() {
+                  if (item.id === 1) {
+                    personAreaVdCmt()
+                  } else if (item.id === 2) {
+
+                  } else if (item.id === 3) {
+
+                  } else if (item.id === 4) {
+
+                  } else if (item.id === 5) {
+
+                  }
+                }
+                .tabBar(SubTabBarStyle.of(item.title)
+                  .indicator({
+                    borderRadius: 10,
+                    color: Color.Black,
+                    width: this.btnTitleWidth,
+                    height: 4,
+                    marginTop: 13
+                  })
+                  .labelStyle({
+                    unselectedColor: Color.Grey,
+                    selectedColor: Color.Black
+                  })
+                )
               })
             }
             .edgeEffect(EdgeEffect.None)
-            .listDirection(Axis.Horizontal)
-            .padding(20)
-            .scrollBar(BarState.Off)
-            .height(100)
-
-            //滑动条
-            scrollbar({ scroller: this.scroll })
-
-            Stack() {
-              Tabs({ barPosition: BarPosition.Start, index: $$this.currentIndex }) {
-                ForEach(this.personVd, (item: BarClass) => {
-                  TabContent() {
-                    if (item.id === 1) {
-                      personAreaVdCmt()
-                    } else if (item.id === 2) {
-
-                    } else if (item.id === 3) {
-
-                    } else if (item.id === 4) {
-
-                    } else if (item.id === 5) {
-
-                    }
-                  }
-                  .tabBar(SubTabBarStyle.of(item.title)
-                    .indicator({
-                      borderRadius: 10,
-                      color: Color.Black,
-                      width: AppStorage.get('Btn_title_width') as number,
-                      height: 4,
-                      marginTop: 13
-                    })
-                    .labelStyle({
-                      unselectedColor: Color.Grey,
-                      selectedColor: Color.Black
-                    })
-                  )
-                })
-              }
-              .edgeEffect(EdgeEffect.None)
-            }
           }
-          .layoutWeight(6.5)
-          .width('100%')
-          .border({
-            color: Color.White
-          })
-          .borderRadius({
-            topLeft: 15, topRight: 15
-          })
-          .backgroundColor(Color.White)
         }
-      }
-      .scrollBar(BarState.Off)
-      .height('120%')
-      //修改整个页面的坐标
-      .onClick(() => {
-        animateTo({ duration: 200 }, () => {
-          if (this.IndexX === '-65%') {
-            this.IndexX = '0%'
-          }
+        .layoutWeight(6.5)
+        .width('100%')
+        .border({
+          color: Color.White
         })
-      })
-    } else {
-      Skeleton({
-        showAvatar: true,
-        count: 4
-      })
+        .borderRadius({
+          topLeft: 15, topRight: 15
+        })
+        .backgroundColor(Color.White)
+      }
     }
+    .scrollBar(BarState.Off)
+    .height('120%')
+    //修改整个页面的坐标
+    .onClick(() => {
+      animateTo({ duration: 200 }, () => {
+        if (this.IndexX === '-65%') {
+          this.IndexX = '0%'
+        }
+      })
+    })
   }
 }
 
