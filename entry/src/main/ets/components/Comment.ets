@@ -1,9 +1,10 @@
 import { ImgComp } from '.'
 import { Constants } from '../common'
 import { CURRENT_USER } from '../constants'
-import { commentDataModel } from '../models'
+import { commentDataModel, mediaType } from '../models'
 import { CurrentUser } from '../models/user'
 import { Fn, Store } from '../pages/Index/Index'
+import { tiktok_ChatStory } from '../utils'
 
 /**
  * 评论区内容组件*/
@@ -11,6 +12,8 @@ import { Fn, Store } from '../pages/Index/Index'
 export struct Comment {
   @ObjectLink
   item: commentDataModel
+  @Link
+  videoItem: mediaType
 
   //点赞方法
   changeLike() {
@@ -82,7 +85,9 @@ export struct Comment {
                 }
               })
               .animation({ duration: 200 })
-            Text(this.item.likeNum.toString())//点赞数
+            Text(this.item.likeNum > 9999
+              ? ((this.item.likeNum) / 10000).toFixed(1) + '万'
+              : String(this.item.likeNum))//点赞数
               .fontColor(this.item.likeFlag ? Color.Red : Constants.COLOR_GREY)
               .fontSize(16)
           }
