@@ -17,6 +17,11 @@ export class Constants {
   static readonly COLOR_SiDerPay = 'rgba(227, 227, 227, 0.50)'
 
   static readonly COLOR_DIALOG_BG = 'rgba(0, 0, 0, 0.50)'
+  //统一数值
+  static readonly SCREEN_WIDTH = 'SCREEN_WIDTH'
+  static readonly BTN_TITLE_WIDTH = 'BTN_TITLE_WIDTH'
+  static readonly AREA_HEIGHT = 'AREA_HEIGHT'
+  static readonly BOTTOM_HEIGHT = 'BOTTOM_HEIGHT'
   //统一路由管理
   /**
    * 加载登录页*/
