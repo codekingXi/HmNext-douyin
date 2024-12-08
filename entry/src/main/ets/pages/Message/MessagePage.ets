@@ -17,7 +17,7 @@ export struct MessagePage {
   showDialog: boolean
   @Consume
   IndexX: number | string
-  @StorageProp('Area_height')
+  @StorageProp(Constants.AREA_HEIGHT)
   topArea: number = 0
 
   aboutToAppear(): void {
