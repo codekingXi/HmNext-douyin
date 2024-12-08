@@ -4,12 +4,13 @@ import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
+import { Constants } from '../common'
 
 /**
  * 顶部栏*/
 @Component
 export struct TopBar {
-  @StorageProp('Area_height')
+  @StorageProp(Constants.AREA_HEIGHT)
   topHeight: number = 0
   controller?: VideoController
   /**
@@ -124,7 +125,7 @@ export struct TopBar {
   private tabListData = new DataSource(this.topTabList)
   /**
    * 顶部栏主要内容总宽度*/
-  private BarMainContentWidth: number = AppStorage.get('Screen_width') as number - 100
+  private BarMainContentWidth: number = AppStorage.get(Constants.SCREEN_WIDTH) as number - 100
   /**
    * 顶部列表滚动控制器*/
   private classifyScroller: Scroller = new Scroller() //
@@ -224,7 +225,7 @@ export struct TopBar {
             } else if (item.name === 'SHOP') {
               Shop()
             } else if (item.name === 'FOR YOU') {
-              VideoPage({controller: this.controller})
+              VideoPage({ controller: this.controller })
             }
           }
         })
@@ -240,7 +241,7 @@ export struct TopBar {
         }
       })
       .height('106%')
-      .position({ y: -(AppStorage.get('Area_height') as number) })
+      .position({ y: -this.topHeight })
       .animationDuration(200)
 
       //自定义组件覆盖原来的tabs
@@ -258,7 +259,7 @@ export struct TopBar {
           this.barMainContent()
         }
       })
-        .position({ y: this.topHeight + 10 })
+        .position({ y: this.topHeight })
     }.position({ y: '-2.5%' })
   }
 }
