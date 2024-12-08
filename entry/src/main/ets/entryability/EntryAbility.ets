@@ -3,7 +3,6 @@ import { display, KeyboardAvoidMode, window } from '@kit.ArkUI';
 import { Tiktok } from '../utils/setting';
 import { CURRENT_USER } from '../constants';
 import { Constants } from '../common/Constants';
-import { request } from '../utils/request';
 import dayjs from 'dayjs';
 import { Log } from '@abner/log';
 
@@ -22,13 +21,6 @@ Log.init({
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     Log.info('ability onCreate');
-    request<object>({
-      url: '/api/video/lists'
-    }).then(res => {
-      AlertDialog.show({
-        message: JSON.stringify(res)
-      })
-    })
   }
 
   onDestroy(): void {
@@ -38,25 +30,22 @@ export default class EntryAbility extends UIAbility {
   onWindowStageCreate(windowStage: window.WindowStage){
     // Main window is created, set main page for this ability
     Log.info('ability onWindowStageCreate');
-    /**
-     * 获取声明窗口*/
+    // 获取窗口
     const win = windowStage.getMainWindowSync()
-    /**
-     * 安全区域高度*/
+    //安全区高度
     const areaHeight: number = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
       .topRect.height)
     const bottomHeight:number = px2vp(win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM)
       .bottomRect.height)
-    /**
-     * 屏幕宽度*/
+    //屏幕宽度
     const screenWidth: number = px2vp(display.getDefaultDisplaySync().width)
     //标签按钮宽度
     let btnTitleWidth: number = 0
 
-    AppStorage.setOrCreate("Screen_width", screenWidth)
-    AppStorage.setOrCreate("Btn_title_width", btnTitleWidth)
-    AppStorage.setOrCreate('Area_height', areaHeight)
-    AppStorage.setOrCreate('bottom_height', bottomHeight)
+    AppStorage.setOrCreate(Constants.SCREEN_WIDTH, screenWidth)
+    AppStorage.setOrCreate(Constants.BTN_TITLE_WIDTH, btnTitleWidth)
+    AppStorage.setOrCreate(Constants.AREA_HEIGHT, areaHeight)
+    AppStorage.setOrCreate(Constants.BOTTOM_HEIGHT, bottomHeight)
     win.setWindowLayoutFullScreen(true) //设置窗口全屏
     //获取用户信息
     const info = new Tiktok(this.context).getCurrentUser()
