@@ -13,7 +13,7 @@ import { photoAccessHelper } from '@kit.MediaLibraryKit'
 
 @Component
 export struct bottomNav {
-  @StorageProp('bottom_height')
+  @StorageProp(Constants.BOTTOM_HEIGHT)
   BtmAreaHeight: number = 0
   vdController: VideoController = common.globalVideoController
   /**
