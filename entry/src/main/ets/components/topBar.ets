@@ -259,7 +259,7 @@ export struct TopBar {
           this.barMainContent()
         }
       })
-        .position({ y: this.topHeight })
+        .position({ y: this.topHeight + 10 })
     }.position({ y: '-2.5%' })
   }
 }
