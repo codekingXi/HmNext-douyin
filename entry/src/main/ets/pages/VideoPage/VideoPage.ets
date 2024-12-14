@@ -1,6 +1,6 @@
 import { common } from '../../common'
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from '../../components'
-import { commentDataModel, DataSource as videoData, mediaInfo, mediaType } from '../../models'
+import { commentDataModel, DataSource as videoData, mediaType } from '../../models'
 import { tiktokChatStory } from '../../utils'
 import { util } from '@kit.ArkTS'
 
@@ -75,6 +75,8 @@ struct playVideo {
   @State commentList: commentDataModel[] = []
   @Consume speedColor: string
   @Consume speedSize: number
+  @Consume isShowNav: boolean
+  @Consume showDialog: boolean
 
   /**
    * 更新切换索引的状态*/
@@ -207,7 +209,13 @@ struct playVideo {
         })
         .bindSheet($$this.showCommentDialog, this.Dialog, {
           height: '65%',
-          backgroundColor: '#ffefecec'
+          backgroundColor: '#ffefecec',
+          keyboardAvoidMode: SheetKeyboardAvoidMode.RESIZE_ONLY,
+          shouldDismiss: () => {
+            this.showCommentDialog = false
+            this.isShowNav = !this.isShowNav
+            this.showDialog = !this.showDialog
+          }
         })
         .gesture(GestureGroup(GestureMode.Parallel,
           LongPressGesture()
@@ -242,9 +250,11 @@ struct playVideo {
         describe: this.item.desc
       })
       //侧边功能区组件
-      Sidebar({
-        item: this.item
-      })
+      if (this.isShowNav) {
+        Sidebar({
+          item: this.item
+        })
+      }
     }.onClick(() => {
       //点击控制播放和暂停 默认在播放
       this.playIng ? this.pauseVideo() : this.startVideo()
