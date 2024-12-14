@@ -36,12 +36,6 @@ struct ReplyInput {
     .height(50)
     .animation({ duration: 200, iterations: 1 })
     .justifyContent(FlexAlign.Center)
-    .border({
-      width: {
-        top: .5
-      },
-      color: Color.Gray
-    })
   }
 }
 
