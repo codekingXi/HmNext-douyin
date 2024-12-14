@@ -1,7 +1,7 @@
 import { common } from '../../common'
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from '../../components'
 import { commentDataModel, DataSource as videoData, mediaInfo, mediaType } from '../../models'
-import { tiktok_ChatStory } from '../../utils'
+import { tiktokChatStory } from '../../utils'
 import { util } from '@kit.ArkTS'
 
 
@@ -105,7 +105,7 @@ struct playVideo {
   }
 
   aboutToAppear() {
-    this.commentList = tiktok_ChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
+    this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
   }
 
   //添加评论方法
@@ -125,7 +125,7 @@ struct playVideo {
     //写到ui
     this.commentList.unshift(msg)
     //写入首选项
-    tiktok_ChatStory.addOneTiktokVideoComment(this.item.video.play_addr.uri, msg)
+    tiktokChatStory.addOneTiktokVideoComment(this.item.video.play_addr.uri, msg)
   }
 
   @Builder
@@ -138,7 +138,7 @@ struct playVideo {
     .height('100%')
     .onClick(() => {
       this.commentList.splice(index, 1)
-      tiktok_ChatStory.delOneTiktokVideoComment(this.item.video.play_addr.uri, item.id)
+      tiktokChatStory.delOneTiktokVideoComment(this.item.video.play_addr.uri, item.id)
     })
   }
 
