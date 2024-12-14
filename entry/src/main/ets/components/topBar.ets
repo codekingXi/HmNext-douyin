@@ -2,7 +2,7 @@ import { BarClass, DataSource } from '../models'
 import Shop from '../pages/Shop/ShopPage'
 import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
-import { HeadBar } from '.'
+import { Colm, HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
 import { Constants } from '../common'
 
@@ -203,6 +203,9 @@ export struct TopBar {
     this.controller!.stop()
   }
 
+  @Provide
+  isShowNav: boolean = true
+
   build() {
     Stack() {
       Tabs({ index: $$this.topNavCurrentIndex, controller: this.tabController, barPosition: BarPosition.Start }) {
@@ -257,24 +260,11 @@ export struct TopBar {
         },
         BarMainContent: () => {
           this.barMainContent()
-        }
+        },
+        isShowLeftIcon: this.isShowNav,
+        isShowMainContent: this.isShowNav
       })
         .position({ y: this.topHeight + 10 })
     }.position({ y: '-2.5%' })
-  }
-}
-
-@Component
-struct Colm {
-  @Styles
-  Colum(){
-    .width('100%')
-    .height('100%').backgroundColor(Color.Gray)
-  }
-
-  build() {
-    Column() {
-      Text('敬请期待')
-    }.Colum().justifyContent(FlexAlign.Center)
   }
 }
