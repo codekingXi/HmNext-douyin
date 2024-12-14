@@ -1,6 +1,6 @@
 import { mediaType, sideData } from '../models'
 import { sideDataModel } from '../models/sidebarData'
-import { common, tipDialog } from '../common'
+import { Constants, tipDialog } from '../common'
 import { ImgComp } from '.'
 
 /**
@@ -21,6 +21,12 @@ struct Sidebar {
     this.sideDataList[0].isLike = !this.sideDataList[0].isLike
   }
 
+  @Consume
+  isShowNav: boolean
+  @Consume
+  showDialog: boolean
+  @Consume
+  bgColor: ResourceColor
   //侧边栏图标和数据
   @State
   sideDataList: sideDataModel[] = [
@@ -39,6 +45,9 @@ struct Sidebar {
       Num: this.item.statistics.comment_count,
       click: () => {
         this.showCommentDialog = !this.showCommentDialog
+        this.isShowNav = !this.isShowNav
+        this.bgColor = Constants.COLOR_DIALOG_BG
+        this.showDialog = !this.showDialog
       }
     }),
     new sideDataModel({
