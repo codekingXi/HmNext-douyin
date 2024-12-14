@@ -1,4 +1,7 @@
 export * from './BasicDatSource'
-export * from './TikTok_Chat_Store'
+
+export * from './TikTokChatStore'
+
 export * from './request'
+
 export * from './setting'
