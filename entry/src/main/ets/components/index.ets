@@ -32,3 +32,5 @@ export { VideoDescribe } from './VideoTitleContent'
 export { ImgComp } from './ImgComp'
 
 export { iconContent } from './IconContent'
+
+export { Colm } from './Colm'
