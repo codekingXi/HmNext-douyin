@@ -242,6 +242,7 @@ struct playVideo {
         Column() {
           Image($r("app.media.Content_play")).width(68).height(68).opacity(.7)
         }
+        .height('100%').width('100%')
         .justifyContent(FlexAlign.Center)
       }
       //视频描述
