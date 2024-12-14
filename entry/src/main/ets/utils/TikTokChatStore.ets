@@ -1,7 +1,7 @@
 import { preferences } from "@kit.ArkData"
 import { commentDataModel } from "../models"
 
-class Tiktok_ChatStory {
+class TiktokChatStory {
   context?: Context
   /**
    * 抖音的视频评论聊天仓库前缀名*/
@@ -39,7 +39,7 @@ class Tiktok_ChatStory {
    * @param videoId 视频id
    * @param messageId 评论的id
    * */
-  async delOneTiktokVideoComment(videoId: string, messageId: number | string) {
+  async delOneTiktokVideoComment(videoId: string, messageId: number) {
     const store = this.getVideoStore(videoId)
     const list = this.getOneTiktokVideoAllComment(videoId)
     const index = list.findIndex(item => item.id === messageId)
@@ -52,15 +52,32 @@ class Tiktok_ChatStory {
    * 获取一条视频的所有评论数据
    * @param {String} videoId 视频的id */
   getOneTiktokVideoAllComment(videoId: string) {
-    try {
-      const store = this.getVideoStore(videoId)
-      return JSON.parse(store.getSync(videoId, '[]') as string) as commentDataModel[]
-    } catch (e) {
-      Promise.reject(new Error(e))
-    }
-    //没有数据返回空数组
-    return []
+    const store = this.getVideoStore(videoId)
+    return JSON.parse(store.getSync(videoId, '[]') as string) as commentDataModel[]
+  }
+
+  /**
+   * 评论的点赞数量修改*/
+  async changeOneTiktokVideoCommentLike(videoId: string, messageId: number, like: number) {
+    const store = this.getVideoStore(videoId)
+    const list = this.getOneTiktokVideoAllComment(videoId)
+    const index = list.findIndex(item => item.id === messageId)
+    list[index].likeNum = like
+    await store.delete(videoId)
+    store.putSync(videoId, JSON.stringify(list))
+    await store.flush()
+  }
+  /**
+   * 评论的点赞状态修改*/
+  async changeOneTiktokVideoCommentLikeStatus(videoId: string, messageId: number, likeStatus: boolean) {
+    const store = this.getVideoStore(videoId)
+    const list = this.getOneTiktokVideoAllComment(videoId)
+    const index = list.findIndex(item => item.id === messageId)
+    list[index].likeFlag = likeStatus
+    await store.delete(videoId)
+    store.putSync(videoId, JSON.stringify(list))
+    await store.flush()
   }
 }
 
-export const tiktok_ChatStory = new Tiktok_ChatStory()
+export const tiktokChatStory = new TiktokChatStory()
