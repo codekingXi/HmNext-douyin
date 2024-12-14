@@ -4,7 +4,7 @@ import { CURRENT_USER } from '../constants'
 import { commentDataModel, mediaType } from '../models'
 import { CurrentUser } from '../models/user'
 import { Fn, Store } from '../pages/Index/Index'
-import { tiktok_ChatStory } from '../utils'
+import { tiktokChatStory } from '../utils'
 
 /**
  * 评论区内容组件*/
@@ -24,6 +24,10 @@ export struct Comment {
       this.item.likeNum++
     }
     this.item.likeFlag = !this.item.likeFlag
+    tiktokChatStory.changeOneTiktokVideoCommentLike(this.videoItem.video.play_addr.uri, this.item.id,
+      this.item.likeNum)
+    tiktokChatStory.changeOneTiktokVideoCommentLikeStatus(this.videoItem.video.play_addr.uri, this.item.id,
+      this.item.likeFlag)
   }
 
   @State
