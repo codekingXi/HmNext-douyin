@@ -1,4 +1,4 @@
-import { customDialog, ImgComp, TitleBtn, TopBar } from '.'
+import { Colm, customDialog, ImgComp, TitleBtn, TopBar } from '.'
 import { Constants, tipDialog, common } from '../common'
 import { CURRENT_USER } from '../constants'
 import { BarClass, TabList } from '../models'
@@ -7,7 +7,6 @@ import { Store } from '../pages/Index/Index'
 import { Fn } from '../pages/Index/Index'
 import { MessagePage } from '../pages/Message/MessagePage'
 import { Tiktok } from '../utils/setting'
-import { VideoPage } from '../pages/VideoPage/VideoPage'
 import MyPage from '../pages/My/My'
 import { photoAccessHelper } from '@kit.MediaLibraryKit'
 
@@ -244,7 +243,7 @@ export struct bottomNav {
                 controller: this.vdController
               })
             } else if (item.name === 'Friend') {
-              VideoPage()
+              Colm()
             } else if (item.name === 'Message') {
               MessagePage()
             } else if (item.name === 'My') {
