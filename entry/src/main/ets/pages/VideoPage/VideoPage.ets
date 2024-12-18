@@ -173,6 +173,11 @@ struct playVideo {
           this.addComment(content)
         },
         iptContent: '善语结善缘,恶言伤人心',
+      }).border({
+        width: {
+          top: .5
+        },
+        color: Color.Gray
       })
     }
     .width('100%')
