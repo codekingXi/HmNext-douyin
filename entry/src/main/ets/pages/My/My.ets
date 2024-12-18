@@ -1,10 +1,9 @@
-import { BarClass, DataSource, UserInfoModel, mediaInfo } from '../../models'
+import { BarClass, UserInfoModel } from '../../models'
 import { router } from '@kit.ArkUI'
 import { Tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common'
-import { iconBtn, ImgComp, scrollbar } from '../../components'
+import { iconBtn, ImgComp, scrollbar, VideoGrid } from '../../components'
 import { Constants } from '../../common/Constants'
-import { personVdDta } from '../../models'
 
 @Component
 export default struct MyPage {
@@ -174,7 +173,10 @@ export default struct MyPage {
               })
                 .layoutWeight(1)
                 .height('150%')
-                .vdSty()
+                .muted(true)
+                .loop(true)
+                .autoPlay(true)
+                .controls(false)
             }
 
             Row() {
@@ -257,15 +259,15 @@ export default struct MyPage {
               ForEach(this.personVd, (item: BarClass) => {
                 TabContent() {
                   if (item.id === 1) {
-                    personAreaVdCmt()
+                    VideoGrid()
                   } else if (item.id === 2) {
-
+                    VideoGrid()
                   } else if (item.id === 3) {
-
+                    VideoGrid()
                   } else if (item.id === 4) {
-
+                    VideoGrid()
                   } else if (item.id === 5) {
-
+                    VideoGrid()
                   }
                 }
                 .tabBar(SubTabBarStyle.of(item.title)
@@ -308,48 +310,4 @@ export default struct MyPage {
       })
     })
   }
-}
-
-/**
- * 个人视频区组件*/
-@Component
-struct personAreaVdCmt {
-  private videoData = new DataSource<mediaInfo>(personVdDta) //简化代码不写完整格式
-
-  build() {
-    Column() {
-      WaterFlow() {
-        LazyForEach(this.videoData, (item: mediaInfo) => {
-          FlowItem() {
-            Video({
-              src: item.src
-            }).vdSty()
-          }
-          .height(150)
-          .border({
-            color: Color.White,
-            width: .5
-          })
-          .onClick(() => {
-            router.pushUrl({
-              url: Constants.LOADING_VdDETAIL, //视频详情页
-              params: item
-            })
-          })
-        })
-      }.columnsTemplate('1fr 1fr 1fr')
-      .scrollBar(BarState.Off)
-    }
-
-  }
-}
-
-/**
- * 视频样式*/
-@Extend(Video)
-function vdSty() {
-  .muted(true)
-  .loop(true)
-  .autoPlay(true)
-  .controls(false)
 }
