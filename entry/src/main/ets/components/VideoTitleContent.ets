@@ -11,7 +11,7 @@ export struct VideoDescribe {
       Text('@' + this.title)
         .fontSize(24)
         .fontColor(Color.White)
-      Text(this.describe)// .maxLines(2)
+      Text(this.describe)
         .textOverflow({ overflow: TextOverflow.MARQUEE })
         .fontSize(20)
         .fontColor('#ffd7d7d7')
