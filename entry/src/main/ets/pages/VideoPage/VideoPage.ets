@@ -106,14 +106,10 @@ struct playVideo {
     this.videoSpeed = 1
   }
 
-  aboutToAppear() {
-    this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
-  }
-
   //添加评论方法
   addComment(content: string) {
     const msg = new commentDataModel({
-      id: Number(util.generateRandomUUID()),
+      id: util.generateRandomUUID(),
       avatar: 'https://picx.zhimg.com/027729d02bdf060e24973c3726fea9da_l.jpg?source=06d4cd63',
       author: 'smallMiSu7',
       content,
@@ -140,7 +136,7 @@ struct playVideo {
     .height('100%')
     .onClick(() => {
       this.commentList.splice(index, 1)
-      tiktokChatStory.delOneTiktokVideoComment(this.item.video.play_addr.uri, item.id)
+      tiktokChatStory.delOneTiktokVideoComment(this.item.video.play_addr.uri,item.id as number)
     })
   }
 
@@ -199,6 +195,11 @@ struct playVideo {
     })
   }
 
+  aboutToAppear() {
+    //获取评论数据
+    this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
+  }
+
   build() {
     Stack({ alignContent: Alignment.BottomStart }) {
       Video({
@@ -233,16 +234,6 @@ struct playVideo {
               this.stopSpeedAnimation()
             })
         ))
-        .width('100%')
-        .height('100%')
-        .autoPlay(this.index === this.activeIndex)
-        .objectFit(ImageFit.Contain)//推荐使用压缩的方式
-        .muted(this.activeIndex === this.index ? false : true)//轮到播放就取消静音
-        .loop(true)
-        .controls(false)//隐藏控制条
-        .onAppear(() => {
-          this.updateActiveIndex()
-        })
       if (!this.playIng) {
         Column() {
           Image($r("app.media.Content_play")).width(68).height(68).opacity(.7)
