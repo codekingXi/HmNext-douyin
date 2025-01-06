@@ -24,9 +24,9 @@ export struct Comment {
       this.item.likeNum++
     }
     this.item.likeFlag = !this.item.likeFlag
-    tiktokChatStory.changeOneTiktokVideoCommentLike(this.videoItem.video.play_addr.uri, this.item.id,
+    tiktokChatStory.changeOneTiktokVideoCommentLike(this.videoItem.video.play_addr.uri, this.item.id as number,
       this.item.likeNum)
-    tiktokChatStory.changeOneTiktokVideoCommentLikeStatus(this.videoItem.video.play_addr.uri, this.item.id,
+    tiktokChatStory.changeOneTiktokVideoCommentLikeStatus(this.videoItem.video.play_addr.uri, this.item.id as number,
       this.item.likeFlag)
   }
 
@@ -78,7 +78,7 @@ export struct Comment {
               imgSrc: $r('app.media.ic_public_love'),
               isFillColor: this.item.likeFlag,
               color_1: Color.Red,
-              color_2: Constants.COLOR_GREY//爱心
+              color_2: Constants.COLOR_GREY
             })
               .scale({ x: this.scaleX, y: this.scaleY })
               .onClick(() => {
