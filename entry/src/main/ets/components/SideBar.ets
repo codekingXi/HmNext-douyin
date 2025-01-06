@@ -115,6 +115,7 @@ struct sideIcon {
         .onClick(() => {
           this.change()
         })
+        .animation({ duration: 200 })
       Text(this.item.Num! > 9999
         ? ((this.item.Num!) / 10000).toFixed(1) + '万'
         : this.item.Num!.toString()).iconSty()
