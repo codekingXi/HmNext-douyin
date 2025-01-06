@@ -136,7 +136,7 @@ struct playVideo {
     .height('100%')
     .onClick(() => {
       this.commentList.splice(index, 1)
-      tiktokChatStory.delOneTiktokVideoComment(this.item.video.play_addr.uri,item.id as number)
+      tiktokChatStory.delOneTiktokVideoComment(this.item.video.play_addr.uri, item.id as number)
     })
   }
 
@@ -207,6 +207,7 @@ struct playVideo {
         controller: this.videoController,
         currentProgressRate: this.videoSpeed
       })
+        .controls(false)
         .onStart(() => {
           this.playIng = true
         })
