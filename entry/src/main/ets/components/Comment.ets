@@ -67,7 +67,7 @@ export struct Comment {
           .fontSize(22)
         Row({ space: 10 }) {
           Row() {
-            Text(`${this.item.time}-${this.item.area}`)//事件地区
+            Text(`${this.item.time} • ${this.item.area}`)//事件地区
               .fontColor(Constants.COLOR_GREY)
               .fontSize(18)
           }
