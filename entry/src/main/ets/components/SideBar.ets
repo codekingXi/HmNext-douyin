@@ -1,7 +1,7 @@
 import { mediaType, sideData } from '../models'
 import { sideDataModel } from '../models/sidebarData'
 import { Constants, tipDialog } from '../common'
-import { ImgComp } from '.'
+import { ImgComp, LikeTextCount } from '.'
 
 /**
  * 视频功能侧边栏*/
@@ -116,15 +116,7 @@ struct sideIcon {
           this.change()
         })
         .animation({ duration: 200 })
-      Text(this.item.Num! > 9999
-        ? ((this.item.Num!) / 10000).toFixed(1) + '万'
-        : this.item.Num!.toString()).iconSty()
+      LikeTextCount({ count: this.item.Num,isWhite: true })
     }
   }
-}
-
-@Extend(Text)
-function iconSty() {
-  .fontColor(Color.White)
-  .fontSize(16)
 }

@@ -1,4 +1,4 @@
-import { ImgComp } from '.'
+import { ImgComp, LikeTextCount } from '.'
 import { Constants } from '../common'
 import { CURRENT_USER } from '../constants'
 import { commentDataModel, mediaType } from '../models'
@@ -89,11 +89,7 @@ export struct Comment {
                 }
               })
               .animation({ duration: 200 })
-            Text(this.item.likeNum > 9999
-              ? ((this.item.likeNum) / 10000).toFixed(1) + '万'
-              : String(this.item.likeNum))//点赞数
-              .fontColor(this.item.likeFlag ? Color.Red : Constants.COLOR_GREY)
-              .fontSize(16)
+            LikeTextCount({ count: this.item.likeNum, isChangeColor: this.item.likeFlag, isWhite: false })
           }
         }
         .width('100%')
