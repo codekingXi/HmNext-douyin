@@ -33,5 +33,8 @@ export { ImgComp } from './ImgComp'
 
 export { iconContent } from './IconContent'
 
+export { LikeTextCount } from './LikeTextCount'
+
 export { Colm } from './Colm'
+
 export { VideoGrid } from './VideoGrid'
