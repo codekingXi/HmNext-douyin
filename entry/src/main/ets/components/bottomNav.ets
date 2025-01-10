@@ -34,7 +34,6 @@ export struct bottomNav {
   @State
   showUploadDialog: boolean = false
   //底部tab的数据
-  @State
   btmTabList: BarClass[] = [
     {
       title: '首页',
@@ -238,18 +237,18 @@ export struct bottomNav {
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
-        ForEach(this.btmTabList, (item: BarClass, index: number) => {
+        ForEach(this.btmTabList, (item: BarClass) => {
           TabContent() {
-            if (index === 0) {
+            if (item.name === BtnType.Home) {
               TopBar({
                 topNavCurrentIndex: this.topNavCurrentIndex,
                 controller: this.vdController
               })
-            } else if (index === 1) {
+            } else if (item.name === BtnType.Friend) {
               Colm()
-            } else if (index === 2) {
+            } else if (item.name === BtnType.Message) {
               MessagePage()
-            } else {
+            } else if (item.name === BtnType.My) {
               MyPage()
             }
           }
