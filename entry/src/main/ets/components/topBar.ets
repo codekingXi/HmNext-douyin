@@ -75,9 +75,10 @@ export struct TopBar {
     Column({ space: 5 }) {
       Text(item.title)
         .textAlign(TextAlign.Center)
-        .fontColor(this.topNavCurrentIndex === index ? '#ff00ceff' : '#ff5f5f5f')
+        .fontColor(this.topNavCurrentIndex === index ? Color.White : '#ffeeeeee')
         .fontWeight(600)
         .fontSize(20)
+        .textShadow({ radius: this.topNavCurrentIndex === index ? 0 : 5, offsetY: 5, color: '#ff6b6b6b' })
       Divider()
         .strokeWidth(3)
         .lineCap(LineCapStyle.Butt)
