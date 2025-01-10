@@ -6,6 +6,18 @@ import { Colm, HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
 import { Constants } from '../common'
 
+enum BtnName {
+  EXPERIMENT = '经验',
+  HOTPOT = '热点',
+  LIVE = '直播',
+  SELECTED = '精选',
+  LOT_OF_BUY = '团购',
+  AREA = '上海',
+  CONCERN = '关注',
+  SHOP = '商场',
+  FOR_YOU = '推荐'
+}
+
 /**
  * 顶部栏*/
 @Component
@@ -18,49 +30,40 @@ export struct TopBar {
   @State
   topTabList: BarClass[] = [
     {
-      id: 0,
       title: "经验",
-      name: "EXPERIMENT"
+      name: BtnName.EXPERIMENT
     },
     {
-      id: 1,
       title: "热点",
-      name: "HOTPOT"
+      name: BtnName.HOTPOT
     },
     {
-      id: 2,
       title: "直播",
-      name: "LIVE"
+      name: BtnName.LIVE
     },
     {
-      id: 3,
       title: "精选",
-      name: 'SELECTED'
+      name: BtnName.SELECTED
     },
     {
-      id: 4,
-      title: "团购",
-      name: "LOT OF BUY"
+      title: '团购',
+      name: BtnName.LOT_OF_BUY
     },
     {
-      id: 5,
       title: "上海",
-      name: "AREA"
+      name: BtnName.AREA
     },
     {
-      id: 6,
       title: "关注",
-      name: "CONCERN"
+      name: BtnName.CONCERN
     },
     {
-      id: 7,
       title: "商场",
-      name: "SHOP"
+      name: BtnName.SHOP
     },
     {
-      id: 8,
       title: "推荐",
-      name: "FOR YOU"
+      name: BtnName.FOR_YOU
     }]
   tabController: TabsController = new TabsController()
   @Consume
@@ -88,7 +91,7 @@ export struct TopBar {
     }
     .onClick(() => {
       //通过name找到索引
-      const index = this.topTabList.findIndex(obj => obj.id === item.id)
+      const index = this.topTabList.findIndex(obj => obj.name === item.name)
       this.tabController.changeIndex(index) //切换索引值
       //如果不是推荐页暂停播放
       if (index !== this.topTabList.length - 1) {
@@ -212,23 +215,23 @@ export struct TopBar {
       Tabs({ index: $$this.topNavCurrentIndex, controller: this.tabController, barPosition: BarPosition.Start }) {
         ForEach(this.topTabList, (item: BarClass) => {
           TabContent() {
-            if (item.name === 'EXPERIMENT') {
+            if (item.name === BtnName.EXPERIMENT) {
               Colm()
-            } else if (item.name === 'HOTPOT') {
+            } else if (item.name === BtnName.HOTPOT) {
               Colm()
-            } else if (item.name === 'LIVE') {
+            } else if (item.name === BtnName.LIVE) {
               Colm()
-            } else if (item.name === 'SELECTED') {
+            } else if (item.name === BtnName.SELECTED) {
               Colm()
-            } else if (item.name === 'LOT OF BUY') {
+            } else if (item.name === BtnName.LOT_OF_BUY) {
               Shop()
-            } else if (item.name === 'AREA') {
+            } else if (item.name === BtnName.AREA) {
               Colm()
-            } else if (item.name === 'CONCERN') {
+            } else if (item.name === BtnName.CONCERN) {
               Colm()
-            } else if (item.name === 'SHOP') {
+            } else if (item.name === BtnName.SHOP) {
               Shop()
-            } else if (item.name === 'FOR YOU') {
+            } else if (item.name === BtnName.FOR_YOU) {
               VideoPage({ controller: this.controller })
             }
           }
