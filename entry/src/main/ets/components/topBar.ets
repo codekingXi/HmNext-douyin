@@ -27,7 +27,6 @@ export struct TopBar {
   controller?: VideoController
   /**
    * 顶部栏信息*/
-  @State
   topTabList: BarClass[] = [
     {
       title: "经验",
