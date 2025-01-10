@@ -29,7 +29,7 @@ const showToast =
 class commonFn {
   globalVideoController: VideoController = new VideoController()
 
-  getJSONFIleData(path: string) {
+  getJsonFileData(path: string) {
     return new util.TextDecoder().decodeToString(getContext().resourceManager.getRawFileContentSync(path))
   }
 
