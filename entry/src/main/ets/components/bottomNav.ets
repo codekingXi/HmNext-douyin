@@ -1,14 +1,21 @@
 import { Colm, customDialog, ImgComp, TitleBtn, TopBar } from '.'
 import { Constants, tipDialog, common } from '../common'
-import { CURRENT_USER } from '../constants'
 import { BarClass, TabList } from '../models'
-import { CurrentUser, UserInfo, UserInfoModel } from '../models/user'
-import { Store } from '../pages/Index/Index'
+import { UserInfo, UserInfoModel } from '../models/user'
+import { getUserInfo } from '../pages/Index/Index'
 import { Fn } from '../pages/Index/Index'
 import { MessagePage } from '../pages/Message/MessagePage'
 import { Tiktok } from '../utils/setting'
 import MyPage from '../pages/My/My'
 import { photoAccessHelper } from '@kit.MediaLibraryKit'
+
+enum BtnType {
+  Home = 'Home',
+  Friend = 'Friend',
+  Upload = 'Upload',
+  Message = 'Message',
+  My = 'My'
+}
 
 @Component
 export struct bottomNav {
@@ -31,40 +38,35 @@ export struct bottomNav {
   btmTabList: BarClass[] = [
     {
       title: '首页',
-      name: "Home",
-      id: 1
+      name: BtnType.Home,
     },
     {
       title: '朋友',
-      name: "Friend",
-      id: 2,
+      name: BtnType.Friend,
       click: () => {
         Fn.redirect()
       }
     },
     {
       icon: $r('app.media.ic_uploading'),
-      name: "Upload",
-      id: 3,
+      name: BtnType.Upload,
       click: () => {
         Fn.redirect()
-        if (Store.getSync(CURRENT_USER, CurrentUser)) {
+        if (getUserInfo) {
           this.showUploadDialog = true
         }
       }
     },
     {
       title: '信息',
-      name: "Message",
-      id: 4,
+      name: BtnType.Message,
       click: () => {
         Fn.redirect()
       }
     },
     {
       title: '我',
-      name: "My",
-      id: 5,
+      name: BtnType.My,
       click: () => {
         Fn.redirect()
       }
@@ -193,7 +195,7 @@ export struct bottomNav {
   @Builder
   bottomBar(item: BarClass, index: number) {
     Column() {
-      if (item.id === 3) {
+      if (item.name === BtnType.Upload) {
         ImgComp({
           imgWidth: 50,
           imgSrc: item.icon
@@ -207,20 +209,21 @@ export struct bottomNav {
     .onClick(() => {
       //通过获取索引值实现点击切换tab
       item.click && item.click()
-      if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
-        if (item.id !== 3) {
+      //如果有用户信息才执行点击事件
+      if (getUserInfo) {
+        if (item.name !== BtnType.Upload) {
           const index = this.btmTabList.findIndex(obj => obj.name === item.name)
           this.tabController.changeIndex(index)
-          if (item.id !== 1) {
+          if (item.name !== BtnType.Home) {
             this.stopVideo()
           }
           //如果底部栏索引是首页且顶部栏索引是推荐页开启播放器
-          if (item.id === 1 && this.topNavCurrentIndex === this.topTabList.length - 1) {
+          if (item.name === BtnType.Home && this.topNavCurrentIndex === this.topTabList.length - 1) {
             this.startVideo()
           }
         }
         //如果是功能按钮停止播放
-        if (item.id === 3) {
+        if (item.name === BtnType.Upload) {
           this.stopVideo()
         }
       }
@@ -235,18 +238,18 @@ export struct bottomNav {
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Tabs({ index: $$this.currentIndex, controller: this.tabController, barPosition: BarPosition.End }) {
-        ForEach(this.btmTabList, (item: BarClass) => {
+        ForEach(this.btmTabList, (item: BarClass, index: number) => {
           TabContent() {
-            if (item.name === 'Home') {
+            if (index === 0) {
               TopBar({
                 topNavCurrentIndex: this.topNavCurrentIndex,
                 controller: this.vdController
               })
-            } else if (item.name === 'Friend') {
+            } else if (index === 1) {
               Colm()
-            } else if (item.name === 'Message') {
+            } else if (index === 2) {
               MessagePage()
-            } else if (item.name === 'My') {
+            } else {
               MyPage()
             }
           }
@@ -254,6 +257,7 @@ export struct bottomNav {
       }
       .animationDuration(0)
       .scrollable(false)
+
 
       Row({ space: 20 }) {
         if (!this.isShowSpeed) {
