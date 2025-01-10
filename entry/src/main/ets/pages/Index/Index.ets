@@ -8,15 +8,21 @@ import { tipDialog } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
 import { Constants } from '../../common/Constants'
 
+/**
+ * 声明仓库*/
 export const Store = new Tiktok(getContext()).getStore()
+
+/**
+ * 获取用户信息*/
+export const getUserInfo = Store.getSync(CURRENT_USER, CurrentUser)
 
 /**
  * 功能*/
 export class Fn {
   /**路由重定向*/
   static redirect() {
-    //如果不是空字符串跳转到登录页 转为false(已登录状态) 因为首选项的用户数据开始是空对象才会启动跳转
-    if (!Store.getSync(CURRENT_USER, CurrentUser)) {
+    //如果不是空字符串跳转到登录页
+    if (!getUserInfo) {
       AlertDialog.show({
         title: '登录状态监测',
         message: '请先登录!',
@@ -57,9 +63,6 @@ struct Index {
 
   @Provide
   IndexX: number | string = '' //整个index页面的x坐标
-  @State
-  sidePosition: boolean = false
-  //因为有改变页面元素的事件所以不能和接口放在一个文件
   //右侧边栏的数据
   @State
   rightItemData: BarClass[] = [
