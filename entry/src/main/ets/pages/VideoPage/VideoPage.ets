@@ -19,7 +19,7 @@ export struct VideoPage {
   videoList = new videoData<mediaType>(this.getVideoData())
 
   getVideoData() {
-    const data = common.getJSONFIleData('videos.json')
+    const data = common.getJsonFileData('videos.json')
     return JSON.parse(data) as mediaType[]
   }
 
