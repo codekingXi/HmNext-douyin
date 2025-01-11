@@ -1,10 +1,10 @@
 import { BarClass, DataSource } from '../models'
 import Shop from '../pages/Shop/ShopPage'
-import { VideoPage } from '../pages/VideoPage/VideoPage'
 import { router } from '@kit.ArkUI'
 import { Colm, HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
 import { Constants } from '../common'
+import RecommendPage from '../pages/VideoPage/RecommendPage'
 
 enum BtnName {
   EXPERIMENT = '经验',
@@ -231,7 +231,7 @@ export struct TopBar {
             } else if (item.name === BtnName.SHOP) {
               Shop()
             } else if (item.name === BtnName.FOR_YOU) {
-              VideoPage({ controller: this.controller })
+              RecommendPage({ controller: this.controller })
             }
           }
         })
