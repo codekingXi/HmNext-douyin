@@ -1,50 +1,12 @@
-import { common } from '../../common'
-import { Comment, ReplyInput, Sidebar, VideoDescribe } from '../../components'
-import { commentDataModel, DataSource as videoData, mediaType } from '../../models'
-import { tiktokChatStory } from '../../utils'
-import { util } from '@kit.ArkTS'
+import { commentDataModel, mediaType } from "../models"
+import { util } from "@kit.ArkTS"
+import { tiktokChatStory } from "../utils"
+import { Comment, ReplyInput, Sidebar, VideoDescribe } from "."
+import { common } from "../common"
 
-
-/**视频页*/
-@Entry
+@Reusable
 @Component
-export struct VideoPage {
-  /**
-   * 索引*/
-  @Provide
-  activeIndex: number = 0
-  controller?: VideoController
-  /**
-   * 懒加载视频数据列表*/
-  videoList = new videoData<mediaType>(this.getVideoData())
-
-  getVideoData() {
-    const data = common.getJsonFileData('videos.json')
-    return JSON.parse(data) as mediaType[]
-  }
-
-  build() {
-    Swiper() {
-      LazyForEach(this.videoList, (item: mediaType, index: number) => {
-        playVideo({
-          item,
-          index,
-          videoController: this.controller
-        })
-      })
-    }
-    .index($$this.activeIndex)
-    //关闭指示器
-    .indicator(false)
-    .duration(200)
-    .loop(false)
-    //允许滚动
-    .vertical(true)
-  }
-}
-
-@Component
-struct playVideo {
+export struct VideoComp {
   /**
    * 接收传入的视频索引*/
   @Require
