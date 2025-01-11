@@ -1,7 +1,7 @@
 {
   "src": [
     "pages/Index/Index",
-    "pages/VideoPage/VideoPage",
+    "pages/VideoPage/RecommendPage",
     "pages/Login/LoginPage",
     "pages/Setting/SettingPage",
     "pages/Shop/ShopPage",
