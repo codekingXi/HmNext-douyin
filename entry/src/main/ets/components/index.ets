@@ -37,4 +37,6 @@ export { LikeTextCount } from './LikeTextCount'
 
 export { Colm } from './Colm'
 
+export { VideoComp } from './VideoComp'
+
 export { VideoGrid } from './VideoGrid'
