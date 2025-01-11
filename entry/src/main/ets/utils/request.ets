@@ -9,7 +9,7 @@ export async function getRequestMessage(content: string) {
   const req = http.createHttp() //创建请求
   try {
     const res =
-      await req.request(`https://api.ownthink.com/bot?appid=xiaosi&userid=user&spoken=${encodeURIComponent(content)}`)
+      await req.request(`https://api.ownthink.com/bot?userid=${Date.now()}&spoken=${encodeURIComponent(content)}`)
     return JSON.parse(res.result as string) as ChatResponse
   } catch (e) {
     return Promise.reject(e)
