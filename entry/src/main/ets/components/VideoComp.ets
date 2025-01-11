@@ -32,7 +32,8 @@ export struct VideoComp {
   videoSpeed: number = 1 //视频倍速
   @Provide
   showCommentDialog: boolean = false
-  videoController = common.globalVideoController
+  //基础版视频播控器
+  videoController = new VideoController() || common.globalVideoController
   //评论的数据
   @State commentList: commentDataModel[] = []
   @Consume speedColor: string
@@ -166,6 +167,8 @@ export struct VideoComp {
         controller: this.videoController,
         currentProgressRate: this.videoSpeed
       })
+        .autoPlay(this.activeIndex === this.index)
+        .loop(true)
         .objectFit(ImageFit.Contain)
         .controls(false)
         .onStart(() => {
