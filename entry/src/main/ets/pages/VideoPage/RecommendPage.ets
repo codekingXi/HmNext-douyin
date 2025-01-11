@@ -13,7 +13,6 @@ struct RecommendPage {
    * 索引*/
   @Provide
   activeIndex: number = 0
-  controller?: VideoController
   /**
    * 懒加载视频数据列表*/
   videoList = new videoData<mediaType>(this.getVideoData())
@@ -28,8 +27,7 @@ struct RecommendPage {
       LazyForEach(this.videoList, (item: mediaType, index: number) => {
         VideoComp({
           item,
-          index,
-          videoController: this.controller
+          index
         })
       })
     }

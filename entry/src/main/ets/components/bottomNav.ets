@@ -241,8 +241,7 @@ export struct bottomNav {
           TabContent() {
             if (item.name === BtnType.Home) {
               TopBar({
-                topNavCurrentIndex: this.topNavCurrentIndex,
-                controller: this.vdController
+                topNavCurrentIndex: this.topNavCurrentIndex
               })
             } else if (item.name === BtnType.Friend) {
               Colm()
