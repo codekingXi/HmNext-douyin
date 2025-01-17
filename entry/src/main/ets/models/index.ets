@@ -1,5 +1,5 @@
 //统一导出
-export { mediaInfo, mediaInfoModel, mediaList } from './mediaData'
+export { mediaInfo } from './mediaData'
 
 export { BarClass, TabList } from './barData'
 
