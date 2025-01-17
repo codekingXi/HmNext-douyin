@@ -442,19 +442,9 @@ struct Index {
    * 常用小程序*/
   @Builder
   commonlyUsedApplets() {
-    Grid() {
-      ForEach(this.commonlyUsedAppletsItemData, (item: BarClass) => {
-        GridItem() {
-          iconBtn({
-            icon: item.icon,
-            title: item.title
-          })
-            .onClick(() => {
-              item.click && item.click()
-            })
-        }.margin({ top: 15, bottom: 10 })
-      })
-    }.columnsTemplate('1fr 1fr 1fr')
+    iconContent({
+      itemData: this.commonlyUsedAppletsItemData
+    })
   }
 
   /**
