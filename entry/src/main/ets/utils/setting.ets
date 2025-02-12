@@ -2,6 +2,7 @@ import { TIKTOK_CONNECT, CURRENT_USER, UserRecord_KEY, STORY } from '../constant
 import { preferences } from '@kit.ArkData'
 import { CurrentUser, defaultUserInfo, UserInfo, UserInfoModel } from '../models/user'
 import { MessageInfoModel } from '../models/message'
+import { getUserInfo } from '../pages/Index/Index'
 
 /**
  * 首选项仓库
@@ -38,7 +39,7 @@ export class Tiktok {
   getCurrentUser() {
     const Store = this.getStore()
     //如果首选项的用户数据是空字符串返回相关数据
-    return Store.getSync(CURRENT_USER, CurrentUser) ?
+    return getUserInfo ?
       JSON.parse(Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser)) as string) as UserInfoModel :
       //首次进入程序首选项没有任何数据返回一个空对象 防止出现无法进入程序等报错
       new UserInfoModel({} as UserInfo)
