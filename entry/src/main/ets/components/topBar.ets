@@ -3,7 +3,7 @@ import Shop from '../pages/Shop/ShopPage'
 import { router } from '@kit.ArkUI'
 import { Colm, HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
-import { common, Constants } from '../common'
+import { Constants } from '../common'
 import RecommendPage from '../pages/VideoPage/RecommendPage'
 
 enum BtnName {
@@ -24,7 +24,7 @@ enum BtnName {
 export struct TopBar {
   @StorageProp(Constants.AREA_HEIGHT)
   topHeight: number = 0
-  controller = common.globalVideoController
+  controller = new VideoController()
   /**
    * 顶部栏信息*/
   topTabList: BarClass[] = [

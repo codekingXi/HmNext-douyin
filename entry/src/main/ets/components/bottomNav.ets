@@ -1,5 +1,5 @@
 import { Colm, customDialog, ImgComp, TitleBtn, TopBar } from '.'
-import { Constants, tipDialog, common } from '../common'
+import { Constants, tipDialog } from '../common'
 import { BarClass, TabList } from '../models'
 import { UserInfo, UserInfoModel } from '../models/user'
 import { getUserInfo } from '../pages/Index/Index'
@@ -21,7 +21,7 @@ enum BtnType {
 export struct bottomNav {
   @StorageProp(Constants.BOTTOM_HEIGHT)
   BtmAreaHeight: number = 0
-  vdController: VideoController = common.globalVideoController
+  vdController: VideoController = new VideoController()
   /**
    * 顶部栏信息*/
   topTabList: BarClass[] = TabList
