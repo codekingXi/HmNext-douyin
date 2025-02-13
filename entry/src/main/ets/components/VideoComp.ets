@@ -33,7 +33,7 @@ export struct VideoComp {
   @Provide
   showCommentDialog: boolean = false
   //基础版视频播控器
-  videoController = new VideoController() || common.globalVideoController
+  videoController = new VideoController()
   //评论的数据
   @State commentList: commentDataModel[] = []
   @Consume speedColor: string
@@ -158,6 +158,10 @@ export struct VideoComp {
   aboutToAppear() {
     //获取评论数据
     this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
+  }
+
+  aboutToDisappear() {
+    this.videoController.pause()
   }
 
   build() {
