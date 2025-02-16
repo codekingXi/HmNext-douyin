@@ -2,10 +2,9 @@ import { Colm, customDialog, ImgComp, TitleBtn, TopBar } from '.'
 import { Constants, tipDialog } from '../common'
 import { BarClass, TabList } from '../models'
 import { UserInfo, UserInfoModel } from '../models/user'
-import { getUserInfo } from '../pages/Index/Index'
 import { Fn } from '../pages/Index/Index'
 import { MessagePage } from '../pages/Message/MessagePage'
-import { Tiktok } from '../utils/setting'
+import { tiktok, Tiktok } from '../utils/setting'
 import MyPage from '../pages/My/My'
 import { photoAccessHelper } from '@kit.MediaLibraryKit'
 
@@ -51,7 +50,7 @@ export struct bottomNav {
       name: BtnType.Upload,
       click: () => {
         Fn.redirect()
-        if (getUserInfo) {
+        if (tiktok.getUserInfo()) {
           this.showUploadDialog = true
         }
       }
@@ -209,7 +208,7 @@ export struct bottomNav {
       //通过获取索引值实现点击切换tab
       item.click && item.click()
       //如果有用户信息才执行点击事件
-      if (getUserInfo) {
+      if (tiktok.getUserInfo()) {
         if (item.name !== BtnType.Upload) {
           const index = this.btmTabList.findIndex(obj => obj.name === item.name)
           this.tabController.changeIndex(index)

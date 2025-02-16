@@ -1,9 +1,7 @@
 import { BarClass } from '../../models'
-import { bottomNav, Card, CardItem, iconBtn, iconContent, SideBarCom } from '../../components'
+import { bottomNav, Card, CardItem, iconContent, SideBarCom } from '../../components'
 import { router } from '@kit.ArkUI'
-import { CURRENT_USER } from '../../constants'
-import { Tiktok } from '../../utils/setting'
-import { CurrentUser } from '../../models/user'
+import { tiktok, Tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
 import { Constants } from '../../common/Constants'
@@ -13,16 +11,12 @@ import { Constants } from '../../common/Constants'
 export const Store = new Tiktok(getContext()).getStore()
 
 /**
- * 获取用户信息*/
-export const getUserInfo = Store.getSync(CURRENT_USER, CurrentUser)
-
-/**
  * 功能*/
 export class Fn {
   /**路由重定向*/
   static redirect() {
     //如果不是空字符串跳转到登录页
-    if (!getUserInfo) {
+    if (!tiktok.getUserInfo()) {
       AlertDialog.show({
         title: '登录状态监测',
         message: '请先登录!',
@@ -550,4 +544,5 @@ struct Index {
     .translate({ x: this.IndexX })
   }
 }
+
 
