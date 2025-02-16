@@ -2,7 +2,7 @@ import { commentDataModel, mediaType } from "../models"
 import { util } from "@kit.ArkTS"
 import { tiktokChatStory } from "../utils"
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from "."
-import { common } from "../common"
+import { common, Constants } from "../common"
 
 @Reusable
 @Component
@@ -158,10 +158,15 @@ export struct VideoComp {
   aboutToAppear() {
     //获取评论数据
     this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
+    this.getMyPageVideoUrl()
   }
 
   aboutToDisappear() {
-    this.videoController.pause()
+    this.stopVideo()
+  }
+
+  getMyPageVideoUrl() {
+    AppStorage.setOrCreate(Constants.GET_VIDEO_IMG_URL, this.item.video.play_addr.url_list[0])
   }
 
   build() {
