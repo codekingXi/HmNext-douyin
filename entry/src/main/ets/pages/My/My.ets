@@ -1,6 +1,6 @@
 import { BarClass, UserInfoModel } from '../../models'
 import { router } from '@kit.ArkUI'
-import { Tiktok } from '../../utils/setting'
+import { tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common'
 import { iconBtn, ImgComp, scrollbar, VideoGrid } from '../../components'
 import { Constants } from '../../common/Constants'
@@ -12,10 +12,14 @@ export default struct MyPage {
 
   aboutToAppear(): void {
     //因为首选项仓库中进行了判断返回不同数据 这里需要重新获取用户信息数据
-    this.info = new Tiktok(getContext()).getCurrentUser()
+    this.info = tiktok.getCurrentUser()
     //重新赋值宽度
     AppStorage.set(Constants.BTN_TITLE_WIDTH, AppStorage.get(Constants.SCREEN_WIDTH) as number / this.personVd.length)
   }
+
+  //背景视频地址
+  @StorageProp(Constants.GET_VIDEO_IMG_URL)
+  videoBgUrl: string = ''
 
   @Styles
   btnBg(){
@@ -169,7 +173,7 @@ export default struct MyPage {
             Row() {
               //背景视频
               Video({
-                src: 'https://v1.kwaicdn.com/ksc2/NcKwArc6Icb5FtM__mLH7yIXcGMT8VdgqZwh0y8XdnhdMifsiOJoGDui50LTSWSVz0yfU8-eSGb6MLUXQ-XIzqZM3MajJYtZ_9sKEEA2wZkTFsJJ5531HGLO8ReAUWP3ilECPqdhWcxtTWrXpndBfkAH21UwwWPbM10CiLD5PIp2NcsfJeg7C1Afv9jYhcL5.mp4?pkey=AAW0sM4og4cgWE4srPPimT76JzbASCdEZQI0iJhZujR9aT7Ta1JuzhgQqkCNlzYJOXWik1Gm1NCl2NmjWylzhdU2EdQEZw_PCWek54CT_B5TXLJSeBxXwo-iYhxQAe3YNHU&tag=1-1720429371-unknown-0-lx5gpoy1w5-8a45ccb1560e6069&clientCacheKey=3xixmdt8qzd8gqs_b.mp4&di=JAiEaV6QAS9IaFXypFEO_Q==&bp=10004&tt=b&ss=vp'
+                src: this.videoBgUrl
               })
                 .layoutWeight(1)
                 .height('150%')
@@ -185,10 +189,12 @@ export default struct MyPage {
                   //头像
                   ImgComp({
                     imgWidth: 100,
+                    imgHeight: 100,
                     imgSrc: this.info.avatar,
                     bordWidth: 3,
                     bordColor: Color.White,
-                    bordRadius: 50
+                    bordRadius: 50,
+                    ImageFitType: ImageFit.Cover
                   })
                     .onClick(() => {
                       //打开自定义弹窗
