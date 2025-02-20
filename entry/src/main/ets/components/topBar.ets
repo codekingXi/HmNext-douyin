@@ -1,22 +1,12 @@
-import { BarClass, DataSource } from '../models'
+import { BarClass, DataSource, TabList } from '../models'
 import Shop from '../pages/Shop/ShopPage'
 import { router } from '@kit.ArkUI'
 import { Colm, HeadBar } from '.'
 import { ListIndexPosition } from '../models/Type'
 import { Constants } from '../common'
 import RecommendPage from '../pages/VideoPage/RecommendPage'
-
-enum BtnName {
-  EXPERIMENT = '经验',
-  HOTPOT = '热点',
-  LIVE = '直播',
-  SELECTED = '精选',
-  LOT_OF_BUY = '团购',
-  AREA = '上海',
-  CONCERN = '关注',
-  SHOP = '商场',
-  FOR_YOU = '推荐'
-}
+import { TikTokEmitter } from '../utils/TIkTokEmitter'
+import { BtnName } from '../GlobalEnum'
 
 /**
  * 顶部栏*/
@@ -24,46 +14,10 @@ enum BtnName {
 export struct TopBar {
   @StorageProp(Constants.AREA_HEIGHT)
   topHeight: number = 0
-  controller = new VideoController()
   /**
    * 顶部栏信息*/
-  topTabList: BarClass[] = [
-    {
-      title: "经验",
-      name: BtnName.EXPERIMENT
-    },
-    {
-      title: "热点",
-      name: BtnName.HOTPOT
-    },
-    {
-      title: "直播",
-      name: BtnName.LIVE
-    },
-    {
-      title: "精选",
-      name: BtnName.SELECTED
-    },
-    {
-      title: '团购',
-      name: BtnName.LOT_OF_BUY
-    },
-    {
-      title: "上海",
-      name: BtnName.AREA
-    },
-    {
-      title: "关注",
-      name: BtnName.CONCERN
-    },
-    {
-      title: "商场",
-      name: BtnName.SHOP
-    },
-    {
-      title: "推荐",
-      name: BtnName.FOR_YOU
-    }]
+  @State
+  topTabList: BarClass[] = TabList
   tabController: TabsController = new TabsController()
   @Consume
   IndexX: number | string
@@ -94,7 +48,7 @@ export struct TopBar {
       this.tabController.changeIndex(index) //切换索引值
       //如果不是推荐页暂停播放
       if (index !== this.topTabList.length - 1) {
-        this.stopVideo()
+        this.pauseVideo()
       } else {
         this.startVideo()
       }
@@ -197,13 +151,13 @@ export struct TopBar {
   /**
    * 播放视频*/
   startVideo() {
-    this.controller!.start()
+    TikTokEmitter.Emitter_PlayerVideo()
   }
 
   /**
-   * 停止视频*/
-  stopVideo() {
-    this.controller!.stop()
+   * 暂停视频*/
+  pauseVideo() {
+    TikTokEmitter.Emitter_PauseVideo()
   }
 
   @Provide
@@ -237,9 +191,9 @@ export struct TopBar {
         })
       }
       .onChange(() => {
-        //如果不是推荐页 停止视频
+        //如果不是推荐页 暂停视频
         if (this.topNavCurrentIndex !== this.topTabList.length - 1) {
-          this.stopVideo()
+          this.pauseVideo()
         }
         //是推荐页 播放视频
         if (this.topNavCurrentIndex === this.topTabList.length - 1) {
@@ -256,9 +210,10 @@ export struct TopBar {
         RightIcon: $r('app.media.icon_search'),
         LeftIconClick: () => {
           this.openLeftSideBar()
-          this.stopVideo()
+          this.pauseVideo()
         },
         RightIconClick: () => {
+          this.pauseVideo()
           this.clickSearch()
         },
         BarMainContent: () => {

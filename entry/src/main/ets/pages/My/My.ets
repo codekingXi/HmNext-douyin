@@ -1,4 +1,4 @@
-import { BarClass, UserInfoModel } from '../../models'
+import { BarClass, MyPageOwnInfo, UserInfoModel } from '../../models'
 import { router } from '@kit.ArkUI'
 import { tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common'
@@ -45,7 +45,7 @@ export default struct MyPage {
   ]
   /**
    * 我的界面功能区*/
-  private personFn: BarClass[] = [
+  private MyOwnInfo: BarClass[] = [
     {
       icon: $r('app.media.icon_shopCar'), title: '抖音商城', click: () => {
       router.pushUrl({
@@ -88,13 +88,7 @@ export default struct MyPage {
   ]
   /**
    * 我的界面个人作品区*/
-  private personVd: BarClass[] = [
-    { title: '作品', id: 1 },
-    { title: '私密', id: 2 },
-    { title: '推荐', id: 3 },
-    { title: '收藏', id: 4 },
-    { title: '喜欢', id: 5 }
-  ]
+  private personVd: BarClass[] = MyPageOwnInfo
   @Consume
   IndexX: number | string
   @State
@@ -242,7 +236,7 @@ export default struct MyPage {
 
           //功能区
           List({ space: 30, scroller: this.scroll }) {
-            ForEach(this.personFn, (item: BarClass) => {
+            ForEach(this.MyOwnInfo, (item: BarClass) => {
               ListItem() {
                 iconBtn({ icon: item.icon, title: item.title })
                   .onClick(() => {

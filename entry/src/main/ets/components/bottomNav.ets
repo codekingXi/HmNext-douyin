@@ -7,20 +7,14 @@ import { MessagePage } from '../pages/Message/MessagePage'
 import { tiktok, Tiktok } from '../utils/setting'
 import MyPage from '../pages/My/My'
 import { photoAccessHelper } from '@kit.MediaLibraryKit'
+import { TikTokEmitter } from '../utils/TIkTokEmitter'
+import { BtnType } from '../GlobalEnum'
 
-enum BtnType {
-  Home = 'Home',
-  Friend = 'Friend',
-  Upload = 'Upload',
-  Message = 'Message',
-  My = 'My'
-}
 
 @Component
 export struct bottomNav {
   @StorageProp(Constants.BOTTOM_HEIGHT)
   BtmAreaHeight: number = 0
-  vdController: VideoController = new VideoController()
   /**
    * 顶部栏信息*/
   topTabList: BarClass[] = TabList
@@ -108,18 +102,6 @@ export struct bottomNav {
       const token = this.info
       await new Tiktok(getContext()).setCurrentUser(JSON.stringify(token)) //写入首选项
     }
-  }
-
-  /**
-   * 播放视频*/
-  startVideo() {
-    this.vdController.start()
-  }
-
-  /**
-   * 停止视频*/
-  stopVideo() {
-    this.vdController.stop()
   }
 
   // 上传视频等用的弹窗
@@ -213,16 +195,16 @@ export struct bottomNav {
           const index = this.btmTabList.findIndex(obj => obj.name === item.name)
           this.tabController.changeIndex(index)
           if (item.name !== BtnType.Home) {
-            this.stopVideo()
+            TikTokEmitter.Emitter_PauseVideo()
           }
           //如果底部栏索引是首页且顶部栏索引是推荐页开启播放器
           if (item.name === BtnType.Home && this.topNavCurrentIndex === this.topTabList.length - 1) {
-            this.startVideo()
+            TikTokEmitter.Emitter_PlayerVideo()
           }
         }
         //如果是功能按钮停止播放
         if (item.name === BtnType.Upload) {
-          this.stopVideo()
+          TikTokEmitter.Emitter_PauseVideo()
         }
       }
     })
@@ -305,7 +287,7 @@ export struct bottomNav {
               if (this.bgColor !== Color.Black) {
                 this.showDialog = !this.showDialog
                 this.IndexX = '0%' //修改整个Index界面的x坐标
-                this.startVideo()
+                TikTokEmitter.Emitter_PlayerVideo()
               }
             })
           })

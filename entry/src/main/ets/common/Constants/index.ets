@@ -15,7 +15,6 @@ export class Constants {
   /**
    * 侧边栏钱包背景色*/
   static readonly COLOR_SiDerPay = 'rgba(227, 227, 227, 0.50)'
-
   static readonly COLOR_DIALOG_BG = 'rgba(0, 0, 0, 0.50)'
   //统一数值
   static readonly SCREEN_WIDTH = 'SCREEN_WIDTH'
@@ -45,6 +44,12 @@ export class Constants {
    * 加载视频详情页*/
   static readonly LOADING_VdDETAIL = "pages/My/VdDetail"
   /**
-   * 我的页面 视频背景图片地址 Key*/
+   * 我的页面 视频背景图片地址*/
   static readonly GET_VIDEO_IMG_URL = "get_Video_Img_Url"
+  /**
+   * 全局视频暂停*/
+  static readonly GLOBAL_VIDEO_CONTROLLER_PAUSE = "globalVideoControllerPause"
+  /**
+   * 全局视频播放*/
+  static readonly GLOBAL_VIDEO_CONTROLLER_PLAYER = "globalVideoControllerPayer"
 }

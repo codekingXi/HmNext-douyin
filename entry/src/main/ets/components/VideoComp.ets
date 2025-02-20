@@ -3,6 +3,7 @@ import { util } from "@kit.ArkTS"
 import { tiktokChatStory } from "../utils"
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from "."
 import { common, Constants } from "../common"
+import { emitter } from "@kit.BasicServicesKit"
 
 @Reusable
 @Component
@@ -32,7 +33,7 @@ export struct VideoComp {
   videoSpeed: number = 1 //视频倍速
   @Provide
   showCommentDialog: boolean = false
-  //基础版视频播控器
+  //视频播控器
   videoController = new VideoController()
   //评论的数据
   @State commentList: commentDataModel[] = []
@@ -159,14 +160,34 @@ export struct VideoComp {
     //获取评论数据
     this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
     this.getMyPageVideoUrl()
+    this.onVideoPlayer()
+    this.onVideoPause()
   }
 
-  aboutToDisappear() {
-    this.stopVideo()
+  aboutToDisappear(): void {
+    //销毁事件 减少资源浪费
+    emitter.off(Constants.GLOBAL_VIDEO_CONTROLLER_PLAYER)
+    emitter.off(Constants.GLOBAL_VIDEO_CONTROLLER_PAUSE)
   }
 
   getMyPageVideoUrl() {
     AppStorage.setOrCreate(Constants.GET_VIDEO_IMG_URL, this.item.video.play_addr.url_list[0])
+  }
+
+  /**
+   * 在视频播放时触发*/
+  onVideoPlayer() {
+    emitter.on(Constants.GLOBAL_VIDEO_CONTROLLER_PLAYER, () => {
+      this.startVideo()
+    })
+  }
+
+  /**
+   * 在视频暂停时触发*/
+  onVideoPause() {
+    emitter.on(Constants.GLOBAL_VIDEO_CONTROLLER_PAUSE, () => {
+      this.pauseVideo()
+    })
   }
 
   build() {
@@ -207,6 +228,7 @@ export struct VideoComp {
               this.stopSpeedAnimation()
             })
         ))
+      //播放暂停按钮
       if (!this.playIng) {
         Column() {
           Image($r("app.media.Content_play")).width(68).height(68).opacity(.7)

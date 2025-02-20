@@ -512,7 +512,6 @@ struct Index {
     Column() {
       //底部导航栏
       bottomNav()
-      //封装好的侧边栏放在一个位置 方便改内容
       //左侧边栏
       SideBarCom({
         sidePositionX: '-70%',
