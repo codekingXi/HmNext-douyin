@@ -27,19 +27,25 @@ export struct VideoComp {
    * 视频播放状态*/
   @State
   playIng: boolean = true
+  /** 是否显示倍速 */
   @Consume
   isShowSpeed: boolean
   @State
   videoSpeed: number = 1 //视频倍速
+  /** 是否显示评论弹窗 */
   @Provide
   showCommentDialog: boolean = false
   //视频播控器
   videoController = new VideoController()
   //评论的数据
   @State commentList: commentDataModel[] = []
+  /** 倍速颜色 */
   @Consume speedColor: string
+  /** 倍速字体大小 */
   @Consume speedSize: number
+  /**是否显示右侧导航*/
   @Consume isShowNav: boolean
+  /**是否显示遮罩层*/
   @Consume showDialog: boolean
 
   /**
@@ -104,6 +110,8 @@ export struct VideoComp {
     })
   }
 
+  /**
+   * 评论弹窗*/
   @Builder
   Dialog() {
     Column() {
