@@ -178,7 +178,8 @@ export struct VideoComp {
    * 在视频播放时触发*/
   onVideoPlayer() {
     emitter.on(Constants.GLOBAL_VIDEO_CONTROLLER_PLAYER, () => {
-      this.startVideo()
+      //调用观察索引变化的方法 确保播放的视频索引和当前索引一致
+      this.updateActiveIndex()
     })
   }
 
