@@ -77,7 +77,7 @@ export struct bottomNav {
   @Consume
   showDialog: boolean
   @Provide
-  bgColor: ResourceColor = '' //修改渐变背景色只能通过#00000000的方式
+  dialogBgColor: ResourceColor = '' //修改渐变背景色只能通过#00000000的方式
   @Provide
   info: UserInfoModel = new Tiktok(getContext()).getCurrentUser()
   @Consume
@@ -276,7 +276,7 @@ export struct bottomNav {
       if (this.showDialog) {
         customDialog({
           imgAvatar: () => {
-            if (this.bgColor === Color.Black) {
+            if (this.dialogBgColor === Color.Black) {
               this.imgAvatar()
             }
           }
@@ -284,7 +284,7 @@ export struct bottomNav {
           .onClick(() => {
             animateTo({ duration: 200 }, () => {
               //通过判断色值区别弹窗是哪个页面的再进行相应改变
-              if (this.bgColor !== Color.Black) {
+              if (this.dialogBgColor !== Color.Black) {
                 this.showDialog = !this.showDialog
                 this.IndexX = '0%' //修改整个Index界面的x坐标
                 TikTokEmitter.Emitter_VideoCrl(true)

@@ -24,7 +24,7 @@ export struct TopBar {
   @Consume
   showDialog: boolean
   @Consume
-  bgColor: string
+  dialogBgColor: string
 
   @Builder
   titleCommon(item: BarClass, index: number) {
@@ -60,7 +60,7 @@ export struct TopBar {
   openLeftSideBar() {
     animateTo({ duration: 200 }, () => {
       this.showDialog = !this.showDialog
-      this.bgColor = '#80000000'
+      this.dialogBgColor = '#80000000'
       //更改坐标轴
       this.IndexX = '70%'
     })

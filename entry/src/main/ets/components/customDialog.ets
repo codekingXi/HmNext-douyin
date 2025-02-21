@@ -5,7 +5,7 @@
 export struct customDialog {
   controller: CustomDialogController
   @Consume
-  bgColor: ResourceColor
+  dialogBgColor: ResourceColor
   @BuilderParam
   imgAvatar: () => void //头像
 
@@ -15,6 +15,6 @@ export struct customDialog {
         this.imgAvatar()
       }
     }
-    .width('100%').height('100%').backgroundColor(this.bgColor)
+    .width('100%').height('100%').backgroundColor(this.dialogBgColor)
   }
 }
