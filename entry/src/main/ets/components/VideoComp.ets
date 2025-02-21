@@ -57,6 +57,9 @@ export struct VideoComp {
   /**
    * 模态弹层高度*/
   @State dialogHeight: number = 0
+  /**
+   * 视频缩放值*/
+  @Provide scaleSize: number = 1
 
   /**
    * 更新切换索引的状态*/
@@ -222,6 +225,7 @@ export struct VideoComp {
         .onAppear(() => {
           this.videoHeight = this.windowHeight - this.dialogHeight
         })
+        .scale({ x: this.scaleSize,y: this.scaleSize })
         .margin({
           bottom: this.showCommentDialog ? this.dialogHeight - 100 : null
         })

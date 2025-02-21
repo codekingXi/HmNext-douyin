@@ -12,6 +12,7 @@ struct ReplyInput {
   iptContent: string = ''
   /**是否显示遮罩层*/
   @Consume showDialog: boolean
+  @Consume scaleSize: number
 
   build() {
     Row() {
@@ -23,6 +24,7 @@ struct ReplyInput {
         .onFocus(() => {
           //显示遮罩层
           this.showDialog = true
+          this.scaleSize = 1.1
         })
         .onSubmit(() => {
           if (this.content) {
