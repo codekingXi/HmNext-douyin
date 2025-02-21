@@ -14,3 +14,5 @@ export { DataSource } from './DataSource'
 export { cities } from './cityNames'
 
 export { mediaType } from './mediaType'
+
+export * from './Type'

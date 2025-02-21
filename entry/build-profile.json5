@@ -1,12 +1,5 @@
 {
   "apiType": "stageMode",
-  "buildOption": {
-    "arkOptions": {
-      "types": [
-        "./src/main/ets/models/Type"
-      ]
-    }
-  },
   "buildOptionSet": [
     {
       "name": "release",

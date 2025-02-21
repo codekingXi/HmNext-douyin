@@ -5,7 +5,7 @@
  * @property {number} start - 可视区域起点索引。
  * @property {number} end - 可视区域终点索引。
  */
-export declare interface ListIndexPosition {
+export interface ListIndexPosition {
   start: number,
   end: number,
 }
