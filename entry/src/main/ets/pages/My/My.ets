@@ -34,7 +34,7 @@ export default struct MyPage {
   @Consume
   showDialog: boolean
   @Consume
-  bgColor: ResourceColor
+  dialogBgColor: ResourceColor
   /**
    * 我的界面顶部信息title*/
   private infoTitle: BarClass[] = [
@@ -105,7 +105,7 @@ export default struct MyPage {
    * 打开右侧边栏*/
   openRightSideBar() {
     this.showDialog = true
-    this.bgColor = Constants.COLOR_OpacityBlack
+    this.dialogBgColor = Constants.COLOR_OpacityBlack
     this.IndexX = '-65%'
   }
 
@@ -193,7 +193,7 @@ export default struct MyPage {
                     .onClick(() => {
                       //打开自定义弹窗
                       this.showDialog = true
-                      this.bgColor = Color.Black
+                      this.dialogBgColor = Color.Black
                     })
                 }
 
