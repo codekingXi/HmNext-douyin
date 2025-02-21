@@ -12,7 +12,7 @@ export struct MessagePage {
   @State
   userList: UserInfo[] = [] //渲染默认用户列表
   @Consume
-  bgColor: string
+  dialogBgColor: string
   @Consume
   showDialog: boolean
   @Consume
@@ -49,7 +49,7 @@ export struct MessagePage {
   openLeftSideBar() {
     animateTo({ duration: 200 }, () => {
       this.showDialog = !this.showDialog
-      this.bgColor = '#80000000'
+      this.dialogBgColor = '#80000000'
       //更改坐标轴
       this.IndexX = '70%'
     })
