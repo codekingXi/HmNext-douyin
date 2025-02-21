@@ -10,6 +10,8 @@ struct ReplyInput {
   publishComment: (content: string) => void = () => {
   }
   iptContent: string = ''
+  /**是否显示遮罩层*/
+  @Consume showDialog: boolean
 
   build() {
     Row() {
@@ -18,6 +20,10 @@ struct ReplyInput {
         .width('90%')
         .height(45)
         .borderRadius(40)
+        .onFocus(() => {
+          //显示遮罩层
+          this.showDialog = true
+        })
         .onSubmit(() => {
           if (this.content) {
             this.publishComment(this.content)

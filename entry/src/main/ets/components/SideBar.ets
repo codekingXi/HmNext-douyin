@@ -24,9 +24,7 @@ struct Sidebar {
   @Consume
   isShowNav: boolean
   @Consume
-  showDialog: boolean
-  @Consume
-  bgColor: ResourceColor
+  dialogBgColor: ResourceColor
   //侧边栏图标和数据
   @State
   sideDataList: sideDataModel[] = [
@@ -44,10 +42,9 @@ struct Sidebar {
       imgUrl: $r('app.media.chat'),
       Num: this.item.statistics.comment_count,
       click: () => {
-        this.showCommentDialog = !this.showCommentDialog
-        this.isShowNav = !this.isShowNav
-        this.bgColor = Constants.COLOR_DIALOG_BG
-        this.showDialog = !this.showDialog
+        this.showCommentDialog = true //打开评论弹窗
+        this.isShowNav = false //隐藏顶部栏
+        this.dialogBgColor = Constants.COLOR_DIALOG_BG //修改弹层背景色
       }
     }),
     new sideDataModel({
@@ -116,7 +113,7 @@ struct sideIcon {
           this.change()
         })
         .animation({ duration: 200 })
-      LikeTextCount({ count: this.item.Num,isWhite: true })
+      LikeTextCount({ count: this.item.Num, isWhite: true })
     }
   }
 }

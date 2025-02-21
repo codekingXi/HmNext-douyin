@@ -4,6 +4,7 @@ import { tiktokChatStory } from "../utils"
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from "."
 import { common, Constants } from "../common"
 import { emitter } from "@kit.BasicServicesKit"
+import { display } from "@kit.ArkUI"
 
 @Reusable
 @Component
@@ -47,6 +48,15 @@ export struct VideoComp {
   @Consume isShowNav: boolean
   /**是否显示遮罩层*/
   @Consume showDialog: boolean
+  /**
+   * 视频高度*/
+  @State videoHeight: number = 0
+  /**
+   * 窗口高度*/
+  @State windowHeight: number = 0
+  /**
+   * 模态弹层高度*/
+  @State dialogHeight: number = 0
 
   /**
    * 更新切换索引的状态*/
@@ -147,7 +157,9 @@ export struct VideoComp {
         },
         color: Color.Gray
       })
-    }
+    }.onAreaChange((_oldValue, newValue) => {
+      this.dialogHeight = newValue.height as number
+    })
   }
 
   startSpeedAnimation() {
@@ -165,6 +177,7 @@ export struct VideoComp {
   }
 
   aboutToAppear() {
+    this.windowHeight = px2vp(display.getDefaultDisplaySync().height)
     //获取评论数据
     this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
     this.getMyPageVideoUrl()
@@ -206,9 +219,19 @@ export struct VideoComp {
         controller: this.videoController,
         currentProgressRate: this.videoSpeed
       })
+        .onAppear(() => {
+          this.videoHeight = this.windowHeight - this.dialogHeight
+        })
+        .margin({
+          bottom: this.showCommentDialog ? this.dialogHeight - 100 : null
+        })
+        .animation({ duration: 200 })
+        .onAreaChange((_oldValue, newValue) => {
+          this.videoHeight = newValue.height as number
+        })
         .autoPlay(this.activeIndex === this.index)
         .loop(true)
-        .objectFit(ImageFit.Contain)
+        .objectFit(this.showCommentDialog ? ImageFit.Cover : ImageFit.Contain)
         .controls(false)
         .onStart(() => {
           this.playIng = true
@@ -223,7 +246,7 @@ export struct VideoComp {
           shouldDismiss: () => {
             this.showCommentDialog = false
             this.isShowNav = !this.isShowNav
-            this.showDialog = !this.showDialog
+            this.showDialog = false
           }
         })
         .gesture(GestureGroup(GestureMode.Parallel,
