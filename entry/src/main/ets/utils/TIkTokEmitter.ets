@@ -5,9 +5,11 @@ import { Constants } from '../common'
  * 事件库*/
 export class TikTokEmitter {
   /**
-   * 发送播放事件*/
-  static Emitter_PlayerVideo = () => emitter.emit(Constants.GLOBAL_VIDEO_CONTROLLER_PLAYER)
-  /**
-   * 发送暂停时间*/
-  static Emitter_PauseVideo = () => emitter.emit(Constants.GLOBAL_VIDEO_CONTROLLER_PAUSE)
+   * 发送播放事件
+   * @param {Boolean} value true 播放 false 暂停
+   * */
+  static Emitter_VideoCrl = (value: boolean) => {
+    return value ? emitter.emit(Constants.GLOBAL_VIDEO_CONTROLLER_PLAYER) :
+    emitter.emit(Constants.GLOBAL_VIDEO_CONTROLLER_PAUSE)
+  }
 }

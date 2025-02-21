@@ -151,13 +151,13 @@ export struct TopBar {
   /**
    * 播放视频*/
   startVideo() {
-    TikTokEmitter.Emitter_PlayerVideo()
+    TikTokEmitter.Emitter_VideoCrl(true)
   }
 
   /**
    * 暂停视频*/
   pauseVideo() {
-    TikTokEmitter.Emitter_PauseVideo()
+    TikTokEmitter.Emitter_VideoCrl(false)
   }
 
   @Provide

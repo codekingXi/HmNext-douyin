@@ -195,16 +195,16 @@ export struct bottomNav {
           const index = this.btmTabList.findIndex(obj => obj.name === item.name)
           this.tabController.changeIndex(index)
           if (item.name !== BtnType.Home) {
-            TikTokEmitter.Emitter_PauseVideo()
+            TikTokEmitter.Emitter_VideoCrl(false)
           }
           //如果底部栏索引是首页且顶部栏索引是推荐页开启播放器
           if (item.name === BtnType.Home && this.topNavCurrentIndex === this.topTabList.length - 1) {
-            TikTokEmitter.Emitter_PlayerVideo()
+            TikTokEmitter.Emitter_VideoCrl(true)
           }
         }
         //如果是功能按钮停止播放
         if (item.name === BtnType.Upload) {
-          TikTokEmitter.Emitter_PauseVideo()
+          TikTokEmitter.Emitter_VideoCrl(false)
         }
       }
     })
@@ -287,7 +287,7 @@ export struct bottomNav {
               if (this.bgColor !== Color.Black) {
                 this.showDialog = !this.showDialog
                 this.IndexX = '0%' //修改整个Index界面的x坐标
-                TikTokEmitter.Emitter_PlayerVideo()
+                TikTokEmitter.Emitter_VideoCrl(true)
               }
             })
           })
