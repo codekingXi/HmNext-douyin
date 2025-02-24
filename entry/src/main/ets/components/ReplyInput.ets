@@ -1,4 +1,4 @@
-import { Fn } from '../pages/Index/Index'
+import { common } from "../common"
 
 /**
  * 发布评论组件*/
@@ -34,7 +34,7 @@ struct ReplyInput {
         })
         .onClick(() => {
           if (this.iptContent === '善语结善缘,恶言伤人心') {
-            Fn.redirect()
+            common.redirect()
           }
         })
     }

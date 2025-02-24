@@ -1,9 +1,10 @@
 /*
  * 公共方法类库*/
-import { promptAction } from '@kit.ArkUI'
+import { promptAction, router } from '@kit.ArkUI'
 import { cities } from '../../models'
 import { Constants } from '../Constants'
 import { util } from '@kit.ArkTS'
+import { tiktok } from '../../utils'
 
 
 /**
@@ -22,11 +23,30 @@ const showToast =
       duration: time ? time : 1500,
       backgroundBlurStyle: BlurStyle.NONE,
       alignment,
-      offset:offset?offset:{dx:null,dy:200}
+      offset: offset ? offset : { dx: null, dy: 200 }
     })
   }
 
 class commonFn {
+  /**路由重定向*/
+  redirect() {
+    //如果不是空字符串跳转到登录页
+    if (!tiktok.getUserInfo()) {
+      AlertDialog.show({
+        title: '登录状态监测',
+        message: '请先登录!',
+        alignment: DialogAlignment.Center,
+        confirm: {
+          value: '确定',
+          action: () => {
+            router.pushUrl({
+              url: Constants.LOADING_LOGIN
+            })
+          }
+        }
+      })
+    }
+  }
 
   getJsonFileData(path: string) {
     return new util.TextDecoder().decodeToString(getContext().resourceManager.getRawFileContentSync(path))

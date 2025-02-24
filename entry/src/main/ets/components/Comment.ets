@@ -1,10 +1,7 @@
 import { ImgComp, LikeTextCount } from '.'
-import { Constants } from '../common'
-import { CURRENT_USER } from '../constants'
+import { common, Constants } from '../common'
 import { commentDataModel, mediaType } from '../models'
-import { CurrentUser } from '../models/user'
-import { Fn, Store } from '../pages/Index/Index'
-import { tiktokChatStory } from '../utils'
+import { tiktok, tiktokChatStory } from '../utils'
 
 /**
  * 评论区内容组件*/
@@ -82,9 +79,9 @@ export struct Comment {
             })
               .scale({ x: this.scaleX, y: this.scaleY })
               .onClick(() => {
-                Fn.redirect()
+                common.redirect()
                 //如果有账号信息
-                if (Store.getSync(CURRENT_USER, JSON.stringify(CurrentUser))) {
+                if (tiktok.getUserInfo()){
                   this.change()
                 }
               })

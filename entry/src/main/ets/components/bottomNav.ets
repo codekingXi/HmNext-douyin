@@ -1,8 +1,7 @@
 import { Colm, customDialog, ImgComp, TitleBtn, TopBar } from '.'
-import { Constants, tipDialog } from '../common'
+import { common, Constants, tipDialog } from '../common'
 import { BarClass, TabList } from '../models'
 import { UserInfo, UserInfoModel } from '../models/user'
-import { Fn } from '../pages/Index/Index'
 import { MessagePage } from '../pages/Message/MessagePage'
 import { tiktok, Tiktok } from '../utils/setting'
 import MyPage from '../pages/My/My'
@@ -36,14 +35,14 @@ export struct bottomNav {
       title: '朋友',
       name: BtnType.Friend,
       click: () => {
-        Fn.redirect()
+        common.redirect()
       }
     },
     {
       icon: $r('app.media.ic_uploading'),
       name: BtnType.Upload,
       click: () => {
-        Fn.redirect()
+        common.redirect()
         if (tiktok.getUserInfo()) {
           this.showUploadDialog = true
         }
@@ -53,14 +52,14 @@ export struct bottomNav {
       title: '信息',
       name: BtnType.Message,
       click: () => {
-        Fn.redirect()
+        common.redirect()
       }
     },
     {
       title: '我',
       name: BtnType.My,
       click: () => {
-        Fn.redirect()
+        common.redirect()
       }
     }
   ]

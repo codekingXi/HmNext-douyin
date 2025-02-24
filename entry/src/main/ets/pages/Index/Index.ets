@@ -1,38 +1,9 @@
 import { BarClass } from '../../models'
 import { bottomNav, Card, CardItem, iconContent, SideBarCom } from '../../components'
 import { router } from '@kit.ArkUI'
-import { tiktok, Tiktok } from '../../utils/setting'
 import { tipDialog } from '../../common/Function/commonFn'
 import { common } from '@kit.AbilityKit'
 import { Constants } from '../../common/Constants'
-
-/**
- * 声明仓库*/
-export const Store = new Tiktok(getContext()).getStore()
-
-/**
- * 功能*/
-export class Fn {
-  /**路由重定向*/
-  static redirect() {
-    //如果不是空字符串跳转到登录页
-    if (!tiktok.getUserInfo()) {
-      AlertDialog.show({
-        title: '登录状态监测',
-        message: '请先登录!',
-        alignment: DialogAlignment.Center,
-        confirm: {
-          value: '确定',
-          action: () => {
-            router.pushUrl({
-              url: Constants.LOADING_LOGIN
-            })
-          }
-        }
-      })
-    }
-  }
-}
 
 @Entry
 @Component
