@@ -1,5 +1,4 @@
-/**
- * 因技术原因，暂时只能查看单独视频详情，无法上下切换，因此没有用轮播结构*/
+
 
 import { Sidebar } from '../../components/SideBar'
 import { router } from '@kit.ArkUI'
