@@ -16,3 +16,5 @@ export { cities } from './cityNames'
 export { mediaType } from './mediaType'
 
 export * from './Type'
+
+export * from './shopData'
