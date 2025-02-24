@@ -124,7 +124,7 @@ struct ShopPage {
           this.isRefreshing = false
           rs(true)
         })
-        tipDialog('刷新完成,都是重复数据', 1500, Alignment.Top)
+        tipDialog('刷新完成,该页面都是重复数据', 1500, Alignment.Top)
       }, 500)
     })
   }
