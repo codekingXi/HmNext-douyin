@@ -199,54 +199,7 @@ struct Index {
   /**
    * 常用小程序数据源*/
   @State
-  commonlyUsedAppletsItemData: BarClass[] = [
-  //   {
-  //     icon: $r('app.media.icon_wallet'),
-  //     title: '我的钱包',
-  //     click: () => {
-  //       commonFn.tipDialog()
-  //     }
-  //   },
-  //   {
-  //     icon: $r('app.media.icon_leftsider_coupons'),
-  //     title: '优惠卷',
-  //     click: () => {
-  //       commonFn.tipDialog()
-  //     }
-  //   },
-  //   {
-  //     icon: $r('app.media.icon_applet'),
-  //     title: '小程序',
-  //     click: () => {
-  //       commonFn.tipDialog()
-  //     }
-  //   },
-  //   {
-  //     icon: $r('app.media.icon_time'),
-  //     title: '观看历史',
-  //     click: () => {
-  //       commonFn.tipDialog()
-  //     }
-  //   }, {
-  //   icon: $r('app.media.icon_leftSider_contentLove'),
-  //   title: '内容偏好',
-  //   click: () => {
-  //     commonFn.tipDialog()
-  //   }
-  // }, {
-  //   icon: $r('app.media.icon_clouddownload'),
-  //   title: '离线模式',
-  //   click: () => {
-  //     commonFn.tipDialog()
-  //   }
-  // }, {
-  //   icon: $r('app.media.icon_waitplay'),
-  //   title: '稍后再看',
-  //   click: () => {
-  //     commonFn.tipDialog()
-  //   }
-  // },
-  ]
+  commonlyUsedAppletsItemData: BarClass[] = []
   /**
    * 常用功能数据源*/
   @State
