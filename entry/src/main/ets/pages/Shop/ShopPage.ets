@@ -14,7 +14,7 @@ struct ShopPage {
   loadMore() {
     return new Promise<boolean>((resolve) => {
       setTimeout(() => {
-        this.shopDataInfo.pushArrayData(shopData, 0, shopData.length)
+        this.shopDataInfo.pushArrayData(shopData, 0, 6)
         resolve(true)
       }, 1000)
     })
@@ -118,12 +118,8 @@ struct ShopPage {
     }.width('100%')
     .height('100%').backgroundColor('#ffe2e2e2')
     .onRefreshing(() => {
-      setTimeout(async () => {
-        await new Promise<boolean>(rs => {
-          this.shopDataInfo = this.shopDataInfo
-          this.isRefreshing = false
-          rs(true)
-        })
+      setTimeout(() => {
+        this.isRefreshing = false
         tipDialog('刷新完成,该页面都是重复数据', 1500, Alignment.Top)
       }, 500)
     })
