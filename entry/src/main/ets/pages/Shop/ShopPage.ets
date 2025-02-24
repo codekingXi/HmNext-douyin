@@ -1,22 +1,20 @@
-import goods from '../../common/data/goods.json'
-import { promptAction } from '@kit.ArkUI'
 import { tipDialog } from '../../common/Function/commonFn'
-import { DataSource } from '../../models'
+import { DataSource, shopData, shopType } from '../../models'
 import { ImgComp } from '../../components'
 
 /**
  * 商品页*/
 @Entry
 @Component
-export default struct ShopPage {
+struct ShopPage {
   @State
   loading: boolean = false //加载的激活条件
 
   //加载更多数据
   loadMore() {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<boolean>((resolve) => {
       setTimeout(() => {
-        //goods.pushData(...goods.push(0,9)) //es6的方法
+        this.shopDataInfo.pushArrayData(shopData, 0, shopData.length)
         resolve(true)
       }, 1000)
     })
@@ -34,25 +32,25 @@ export default struct ShopPage {
 
   //商品结构
   @Builder
-  waterFlowItem(index: number) {
+  waterFlowItem(item: shopType, index: number) {
     Column({ space: 10 }) {
       ImgComp({
-        imgWidth:'100%',
-        imgSrc:`/common/images/goods/${goods[index].cover}`
+        imgWidth: '100%',
+        imgSrc: item.cover
       })
         .height(index % 2 ? 180 : 200)
         .borderRadius({
           topLeft: 15, topRight: 15
         })
       Column() {
-        Text(goods[index].name)
+        Text(item.name)
         Row({ space: 5 }) {
           //价格
-          Text(`￥${goods[index].price.toString()}`)
+          Text(`￥${item.price.toString()}`)
             .fontColor(Color.Red).fontSize(16)
             .fontWeight(600)
           //已售
-          Text(`已售${goods[index].sold.toString()}`)
+          Text(`已售${item.sold.toString()}`)
             .fontColor('#ff696868').fontSize(14)
         }
         .width('100%')
@@ -67,10 +65,21 @@ export default struct ShopPage {
     })
   }
 
-  private shopData = new DataSource(goods)
+  private shopDataInfo = new DataSource(shopData)
+  @State isRefreshing: boolean = false
+
+  @Builder
+  DownBuilder() {
+    Row() {
+      Text('下拉刷新')
+        .fontSize(24)
+      LoadingProgress()
+        .height(30)
+    }
+  }
 
   build() {
-    Column() {
+    Refresh({ refreshing: $$this.isRefreshing, builder: this.DownBuilder() }) {
       Column() {
         Search({ placeholder: '15pro max美版全新' })
           .width('90%').height(40).border({
@@ -80,28 +89,23 @@ export default struct ShopPage {
         }).margin({ top: -10 })
         //渲染商品列表数据
         WaterFlow({ footer: this.getFooter() }) {
-          LazyForEach(this.shopData, (item: string, index: number) => {
+          LazyForEach(this.shopDataInfo, (item: shopType, index: number) => {
             FlowItem() {
-              this.waterFlowItem(index)
+              this.waterFlowItem(item, index)
             }
             .backgroundColor(Color.White)
             .border({
               radius: 15
             })
-
           })
         }
         //到底部时触发
         .onReachEnd(async () => {
           //阀门控制
           if (!this.loading) {
-            try {
-              this.loading = true //开启加载
-              await this.loadMore() //加载数据
-              this.loading = false
-            } catch (e) {
-              promptAction.showToast({ message: JSON.stringify(e) })
-            }
+            this.loading = true //开启加载
+            await this.loadMore() //加载数据
+            this.loading = false
           }
         })
         .backgroundColor('#ffe2e2e2')
@@ -111,9 +115,19 @@ export default struct ShopPage {
         .padding(10)
       }
       .margin({ top: 100 })
-
     }.width('100%')
     .height('100%').backgroundColor('#ffe2e2e2')
+    .onRefreshing(() => {
+      setTimeout(async () => {
+        await new Promise<boolean>(rs => {
+          this.shopDataInfo = this.shopDataInfo
+          this.isRefreshing = false
+          rs(true)
+        })
+        tipDialog('刷新完成,都是重复数据', 1500, Alignment.Top)
+      }, 500)
+    })
   }
 }
 
+export default ShopPage
