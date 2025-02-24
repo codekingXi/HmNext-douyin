@@ -29,4 +29,15 @@ export class DataSource<T> extends BasicDataSource {
     this.DataArray.push(data);
     this.notifyDataAdd(this.DataArray.length - 1);
   }
+
+  /**
+   * 尾部添加一组数据
+   * start 和 end === slice方法
+   * @param data 原始数据
+   * @param start 索引开始
+   * @param end 索引结束 */
+  public pushArrayData(data: T[], start: number, end: number) {
+    this.DataArray.push(...data.slice(start, end));
+    this.notifyDataAdd(this.DataArray.length - 1);
+  }
 }
