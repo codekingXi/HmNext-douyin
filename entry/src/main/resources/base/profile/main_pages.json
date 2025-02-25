@@ -8,6 +8,7 @@
     "pages/Message/MessagePage",
     "pages/Search/SearchPage",
     "pages/ChatDetail/ChatDetail",
-    "pages/My/VdDetail"
+    "pages/My/VdDetail",
+    "pages/Shop/ShopDetailPage"
   ]
 }
