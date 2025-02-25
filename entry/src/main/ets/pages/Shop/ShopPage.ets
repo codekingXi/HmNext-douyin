@@ -1,6 +1,8 @@
 import { tipDialog } from '../../common/Function/commonFn'
 import { DataSource, shopData, shopType } from '../../models'
 import { ImgComp } from '../../components'
+import { router } from '@kit.ArkUI'
+import { Constants } from '../../common'
 
 /**
  * 商品页*/
@@ -14,7 +16,7 @@ struct ShopPage {
   loadMore() {
     return new Promise<boolean>((resolve) => {
       setTimeout(() => {
-        this.shopDataInfo.pushArrayData(shopData, 0, 6)
+        this.shopDataInfo.pushArrayData(shopData, false, 0, 6)
         resolve(true)
       }, 1000)
     })
@@ -62,6 +64,10 @@ struct ShopPage {
     }
     .onClick(() => {
       tipDialog()
+      router.pushUrl({
+        url: Constants.SHOP_DETAIL,
+        params: item
+      })
     })
   }
 
