@@ -44,6 +44,9 @@ export class Constants {
    * 加载视频详情页*/
   static readonly LOADING_VdDETAIL = "pages/My/VdDetail"
   /**
+   * 商品详情页*/
+  static readonly SHOP_DETAIL = "pages/Shop/ShopDetailPage"
+  /**
    * 我的页面 视频背景图片地址*/
   static readonly GET_VIDEO_IMG_URL = "get_Video_Img_Url"
   /**
