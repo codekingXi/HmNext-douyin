@@ -75,3 +75,13 @@ export const shopData: shopType[] = [
     "sold": 129
   }
 ]
+
+export interface BuyTitle {
+  name: string
+}
+
+export const BuyTitleInfo: BuyTitle[] = [
+  { name: '进店' },
+  { name: '客服' },
+  { name: '购物车' }
+]
