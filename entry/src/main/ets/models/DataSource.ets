@@ -30,13 +30,22 @@ export class DataSource<T> extends BasicDataSource {
     this.notifyDataAdd(this.DataArray.length - 1);
   }
 
+  slice(data: T[], start: number, end: number) {
+    return data.slice(start, end)
+  }
+
   /**
-   * 尾部添加一组数据
+   * 添加一组数据
    * @param data 原始数据
+   * @param flag true头部追加 false底部追加
    * @param start 开始索引
    * @param end 结束索引 */
-  public pushArrayData(data: T[], start: number, end: number) {
-    this.DataArray.push(...data.slice(start, end));
-    this.notifyDataAdd(this.DataArray.length - 1);
+  public pushArrayData(data: T[], flag: boolean, start: number, end: number) {
+    if (flag) {
+      this.DataArray.unshift(...this.slice(data, start, end))
+    } else {
+      this.DataArray.push(...this.slice(data, start, end))
+    }
+    this.notifyDataAdd(this.DataArray.length - 1)
   }
 }
