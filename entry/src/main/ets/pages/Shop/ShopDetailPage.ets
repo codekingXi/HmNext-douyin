@@ -110,9 +110,8 @@ struct ShopDetailPage {
             Text('已售' + this.sold.toString())
               .fontSize(22)
               .fontWeight(300)
-              .titleColor().margin({ bottom: -20 })
+              .titleColor().margin({ bottom: 5 })
           }
-          .padding(15)
           .width('100%')
           .height(50)
           .justifyContent(FlexAlign.SpaceBetween)
@@ -124,9 +123,8 @@ struct ShopDetailPage {
               .fontColor(Color.Black)
               .fontWeight(600)
               .fontSize(20)
-          }.padding({ left: 10, right: 10 })
-
-        }
+          }.width('100%').justifyContent(FlexAlign.Start)
+        }.width('100%').height('100%').padding(15)
 
         //底部购买按钮
         Row({ space: 5 }) {
@@ -185,7 +183,6 @@ struct ShopDetailPage {
         color: Color.Gray,
         radius: 50,
       })
-
     }.height('100%')
     .width('100%')
     .backgroundColor('#fff1e7e7')
