@@ -18,7 +18,7 @@ struct ShopPage {
       setTimeout(() => {
         this.shopDataInfo.pushArrayData(shopData, false, 0, 6)
         resolve(true)
-      }, 1000)
+      }, 500)
     })
   }
 
@@ -35,40 +35,7 @@ struct ShopPage {
   //商品结构
   @Builder
   waterFlowItem(item: shopType, index: number) {
-    Column({ space: 10 }) {
-      ImgComp({
-        imgWidth: '100%',
-        imgSrc: item.cover
-      })
-        .height(index % 2 ? 180 : 200)
-        .borderRadius({
-          topLeft: 15, topRight: 15
-        })
-      Column() {
-        Text(item.name)
-        Row({ space: 5 }) {
-          //价格
-          Text(`￥${item.price.toString()}`)
-            .fontColor(Color.Red).fontSize(16)
-            .fontWeight(600)
-          //已售
-          Text(`已售${item.sold.toString()}`)
-            .fontColor('#ff696868').fontSize(14)
-        }
-        .width('100%')
-        .padding({
-          left: 0,
-          top: 10
-        })
-      }.margin(10)
-    }
-    .onClick(() => {
-      tipDialog()
-      router.pushUrl({
-        url: Constants.SHOP_DETAIL,
-        params: item
-      })
-    })
+    shopComp({ item, index })
   }
 
   private shopDataInfo = new DataSource(shopData)
@@ -88,11 +55,14 @@ struct ShopPage {
     Refresh({ refreshing: $$this.isRefreshing, builder: this.DownBuilder() }) {
       Column() {
         Search({ placeholder: '15pro max美版全新' })
-          .width('90%').height(40).border({
-          color: Color.Red,
-          width: 2,
-          radius: 10
-        }).margin({ top: -10 })
+          .width('90%')
+          .height(40)
+          .border({
+            color: Color.Red,
+            width: 2,
+            radius: 10
+          })
+          .margin({ top: -10 })
         //渲染商品列表数据
         WaterFlow({ footer: this.getFooter() }) {
           LazyForEach(this.shopDataInfo, (item: shopType, index: number) => {
@@ -118,6 +88,11 @@ struct ShopPage {
         .columnsTemplate('1fr 1fr')
         .rowsGap(10)
         .columnsGap(10)
+        .height('100%')
+        .nestedScroll({
+          scrollForward: NestedScrollMode.PARENT_FIRST,
+          scrollBackward: NestedScrollMode.SELF_FIRST
+        })
         .padding(10)
       }
       .margin({ top: 100 })
@@ -128,6 +103,50 @@ struct ShopPage {
         this.isRefreshing = false
         tipDialog('刷新完成,该页面都是重复数据', 1500, Alignment.Top)
       }, 500)
+    })
+  }
+}
+
+@Reusable
+@Component
+struct shopComp {
+  @Require
+  @Prop
+  item: shopType
+  index: number = 0
+
+  build() {
+    Column({ space: 10 }) {
+      ImgComp({
+        imgWidth: '100%',
+        imgSrc: this.item.cover
+      })
+        .height(this.index % 2 ? 180 : 200)
+        .borderRadius({
+          topLeft: 15, topRight: 15
+        })
+      Column() {
+        Text(this.item.name)
+        Row({ space: 5 }) {
+          //价格
+          Text(`￥${this.item.price.toString()}`)
+            .fontColor(Color.Red).fontSize(16)
+            .fontWeight(600)
+          //已售
+          Text(`已售${this.item.sold.toString()}`)
+            .fontColor('#ff696868').fontSize(14)
+        }
+        .width('100%')
+        .padding({
+          left: 0,
+          top: 10
+        })
+      }.margin(10)
+    }.onClick(() => {
+      router.pushUrl({
+        url: Constants.SHOP_DETAIL,
+        params: this.item
+      })
     })
   }
 }
