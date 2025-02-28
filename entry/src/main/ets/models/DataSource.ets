@@ -48,4 +48,12 @@ export class DataSource<T> extends BasicDataSource {
     }
     this.notifyDataAdd(this.DataArray.length - 1)
   }
+
+  /**
+   * 重新赋值
+   * @param data 原始数据 */
+  public reload(data: T[]) {
+    this.DataArray = data
+    this.notifyDataReload()
+  }
 }
