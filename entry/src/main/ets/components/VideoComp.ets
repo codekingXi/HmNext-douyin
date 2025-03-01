@@ -4,7 +4,6 @@ import { tiktokChatStory } from "../utils"
 import { Comment, ReplyInput, Sidebar, VideoDescribe } from "."
 import { common, Constants } from "../common"
 import { emitter } from "@kit.BasicServicesKit"
-import { display } from "@kit.ArkUI"
 
 @Reusable
 @Component
@@ -49,17 +48,23 @@ export struct VideoComp {
   /**是否显示遮罩层*/
   @Consume showDialog: boolean
   /**
-   * 视频高度*/
-  @State videoHeight: number = 0
-  /**
-   * 窗口高度*/
-  @State windowHeight: number = 0
-  /**
    * 模态弹层高度*/
   @State dialogHeight: number = 0
   /**
    * 视频缩放值*/
   @Provide scaleSize: number = 1
+  /**
+   * 视频播放进度*/
+  @State videoPlayProgress: number = 0
+  /**
+   * 视频总时长*/
+  @State videoTotalDuration: number = 0
+  /**
+   * 是否显示视频进度条条*/
+  @State isShowVideoProgressSlider: boolean = false
+  /**
+   * 是否显示视频描述*/
+  @State isShowDescribe: boolean = true
 
   /**
    * 更新切换索引的状态*/
@@ -180,7 +185,6 @@ export struct VideoComp {
   }
 
   aboutToAppear() {
-    this.windowHeight = px2vp(display.getDefaultDisplaySync().height)
     //获取评论数据
     this.commentList = tiktokChatStory.getOneTiktokVideoAllComment(this.item.video.play_addr.uri)
     this.getMyPageVideoUrl()
@@ -222,17 +226,17 @@ export struct VideoComp {
         controller: this.videoController,
         currentProgressRate: this.videoSpeed
       })
-        .onAppear(() => {
-          this.videoHeight = this.windowHeight - this.dialogHeight
+        .onPrepared(e => {
+          this.videoTotalDuration = e.duration
         })
-        .scale({ x: this.scaleSize,y: this.scaleSize })
+        .onUpdate(e => {
+          this.videoPlayProgress = e.time
+        })
+        .scale({ x: this.scaleSize, y: this.scaleSize })
         .margin({
           bottom: this.showCommentDialog ? this.dialogHeight - 100 : null
         })
         .animation({ duration: 200 })
-        .onAreaChange((_oldValue, newValue) => {
-          this.videoHeight = newValue.height as number
-        })
         .autoPlay(this.activeIndex === this.index)
         .loop(true)
         .objectFit(this.showCommentDialog ? ImageFit.Cover : ImageFit.Contain)
@@ -273,10 +277,38 @@ export struct VideoComp {
         .justifyContent(FlexAlign.Center)
       }
       //视频描述
-      VideoDescribe({
-        title: this.item.music.author,
-        describe: this.item.desc
-      })
+      Row() {
+        if (this.isShowDescribe) {
+          VideoDescribe({
+            title: this.item.music.author,
+            describe: this.item.desc
+          })
+        }
+      }.gesture(GestureGroup(GestureMode.Parallel,
+        LongPressGesture()
+          .onAction(() => {
+            this.isShowVideoProgressSlider = true
+            this.isShowDescribe = false
+            this.isShowNav = false
+          })
+      ))
+
+      //视频进度条
+      if (this.isShowVideoProgressSlider) {
+        Slider({
+          value: $$this.videoPlayProgress,
+          min: 0,
+          max: this.videoTotalDuration,
+          style: SliderStyle.InSet
+        })
+          .width('90%')
+          .height(20)
+          .backgroundColor('#ff5f5f5f')
+          .borderRadius(10)
+          .selectedColor('#ffeeeeee')
+          .margin({ left: 20, right: 20, bottom: 5 })
+      }
+
       //侧边功能区组件
       if (this.isShowNav) {
         Sidebar({
@@ -286,6 +318,9 @@ export struct VideoComp {
     }.onClick(() => {
       //点击控制播放和暂停 默认在播放
       this.playIng ? this.pauseVideo() : this.startVideo()
+      this.isShowVideoProgressSlider = false
+      this.isShowNav = true
+      this.isShowDescribe = true
     })
   }
 }
