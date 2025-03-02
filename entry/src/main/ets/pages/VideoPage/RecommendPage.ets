@@ -1,6 +1,6 @@
 import { common, tipDialog } from '../../common'
 import { Skeleton, VideoComp } from '../../components'
-import { DataSource as videoData, mediaType } from '../../models'
+import { DataSource, mediaType } from '../../models'
 
 
 /**
@@ -16,7 +16,7 @@ struct RecommendPage {
   /**
    * 懒加载视频数据列表*/
   @State
-  videoList: videoData<mediaType> | null = null
+  videoList: DataSource<mediaType> | null = null
 
   getVideoData() {
     const data = common.getJsonFileData('videos.json')
@@ -25,7 +25,7 @@ struct RecommendPage {
 
   aboutToAppear(): void {
     setTimeout(() => {
-      this.videoList = new videoData<mediaType>(this.getVideoData())
+      this.videoList = new DataSource<mediaType>(this.getVideoData())
       tipDialog('项目数据原因，网络条件优异才能看到视频', 3000, Alignment.Top)
     }, 1000)
   }
