@@ -1,8 +1,6 @@
 import { tipDialog } from '../../common/Function/commonFn'
 import { DataSource, shopData, shopType } from '../../models'
-import { ImgComp } from '../../components'
-import { router } from '@kit.ArkUI'
-import { Constants } from '../../common'
+import { waterFlowList } from '../../components'
 
 /**
  * 商品页*/
@@ -11,6 +9,23 @@ import { Constants } from '../../common'
 struct ShopPage {
   @State
   loading: boolean = false //加载的激活条件
+  /**
+   * 懒加载商品数据*/
+  private shopDataInfo: DataSource<shopType> = new DataSource(shopData)
+  /**
+   * 下拉刷新状态*/
+  @State isRefreshing: boolean = false
+  /**
+   * 商品搜索名*/
+  @State
+  @Watch('filterShop')
+  private searchName: string = ''
+  /**
+   * 商品信息*/
+  @State private shopInfo: shopType[] = []
+  /**
+   * 懒加载筛选后的商品信息*/
+  @State private filterInfo: DataSource<shopType> | null = null
 
   //加载更多数据
   loadMore() {
@@ -32,14 +47,12 @@ struct ShopPage {
     .height(60).justifyContent(FlexAlign.Center).margin({ bottom: 40 })
   }
 
-  //商品结构
-  @Builder
-  waterFlowItem(item: shopType, index: number) {
-    shopComp({ item, index })
+  filterShop() {
+    if (this.searchName) {
+      this.shopInfo = shopData.filter(item => item.name.includes(this.searchName))
+      this.filterInfo = new DataSource(this.shopInfo)
+    }
   }
-
-  private shopDataInfo = new DataSource(shopData)
-  @State isRefreshing: boolean = false
 
   @Builder
   DownBuilder() {
@@ -54,7 +67,7 @@ struct ShopPage {
   build() {
     Refresh({ refreshing: $$this.isRefreshing, builder: this.DownBuilder() }) {
       Column() {
-        Search({ placeholder: '15pro max美版全新' })
+        Search({ placeholder: '寻找你感兴趣的商品吧', value: $$this.searchName })
           .width('90%')
           .height(40)
           .border({
@@ -63,37 +76,22 @@ struct ShopPage {
             radius: 10
           })
           .margin({ top: -10 })
-        //渲染商品列表数据
-        WaterFlow({ footer: this.getFooter() }) {
-          LazyForEach(this.shopDataInfo, (item: shopType, index: number) => {
-            FlowItem() {
-              this.waterFlowItem(item, index)
+        if (this.searchName) {
+          //筛选后的商品列表数据
+          waterFlowList({
+            flag: true,
+            item: this.filterInfo
+          })
+        } else {
+          //渲染商品列表数据
+          waterFlowList({
+            flag: false,
+            item: this.shopDataInfo,
+            onReach: async () => {
+              await this.loadMore()
             }
-            .backgroundColor(Color.White)
-            .border({
-              radius: 15
-            })
           })
         }
-        //到底部时触发
-        .onReachEnd(async () => {
-          //阀门控制
-          if (!this.loading) {
-            this.loading = true //开启加载
-            await this.loadMore() //加载数据
-            this.loading = false
-          }
-        })
-        .backgroundColor('#ffe2e2e2')
-        .columnsTemplate('1fr 1fr')
-        .rowsGap(10)
-        .columnsGap(10)
-        .height('100%')
-        .nestedScroll({
-          scrollForward: NestedScrollMode.PARENT_FIRST,
-          scrollBackward: NestedScrollMode.SELF_FIRST
-        })
-        .padding(10)
       }
       .margin({ top: 100 })
     }.width('100%')
@@ -103,50 +101,6 @@ struct ShopPage {
         this.isRefreshing = false
         tipDialog('刷新完成,该页面都是重复数据', 1500, Alignment.Top)
       }, 500)
-    })
-  }
-}
-
-@Reusable
-@Component
-struct shopComp {
-  @Require
-  @Prop
-  item: shopType
-  index: number = 0
-
-  build() {
-    Column({ space: 10 }) {
-      ImgComp({
-        imgWidth: '100%',
-        imgSrc: this.item.cover
-      })
-        .height(this.index % 2 ? 180 : 200)
-        .borderRadius({
-          topLeft: 15, topRight: 15
-        })
-      Column() {
-        Text(this.item.name)
-        Row({ space: 5 }) {
-          //价格
-          Text(`￥${this.item.price.toString()}`)
-            .fontColor(Color.Red).fontSize(16)
-            .fontWeight(600)
-          //已售
-          Text(`已售${this.item.sold.toString()}`)
-            .fontColor('#ff696868').fontSize(14)
-        }
-        .width('100%')
-        .padding({
-          left: 0,
-          top: 10
-        })
-      }.margin(10)
-    }.onClick(() => {
-      router.pushUrl({
-        url: Constants.SHOP_DETAIL,
-        params: this.item
-      })
     })
   }
 }
