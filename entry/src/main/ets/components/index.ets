@@ -42,3 +42,7 @@ export { VideoComp } from './VideoComp'
 export { VideoGrid } from './VideoGrid'
 
 export { TitleTipBtn } from './titleTipBtn'
+
+export { waterFlowList } from './watetFlowList'
+
+export { shopComp } from './shopComp'
